@@ -1,0 +1,65 @@
+web app url for cart.html https://script.google.com/macros/s/AKfycbzTPxlgf6skoXtdFhYnXZ330ghItZqkr2i-yrYRoW4pLf4bsV7ClYfExW6dapIjwhLo/exec   
+
+app script for cart.html  
+const sheetName = 'Sheet1';
+
+// Handles POST requests from the web app
+function doPost(e) {
+  const lock = LockService.getScriptLock();
+  lock.tryLock(10000); // 10 seconds tak lock ka intezaar karein
+
+  try {
+    // URL ke data ko JSON mein parse karein
+    const data = JSON.parse(e.postData.contents);
+    
+    // Spreadsheet ko active karein aur sheet ka naam de
+    const doc = SpreadsheetApp.getActiveSpreadsheet();
+    const sheet = doc.getSheetByName(sheetName);
+
+    if (!sheet) {
+      throw new Error(`Sheet with name "${sheetName}" not found.`);
+    }
+
+    const row = [];
+
+    // Columns ka order Spreadsheet ke header ke hisab se set karein
+    const order = ['timestamp', 'name', 'phoneNumber', 'address', 'productName', 'totalPrice'];
+
+    for (let i = 0; i < order.length; i++) {
+      row.push(data[order[i]]);
+    }
+
+    // Nayi row ko sheet mein add karein
+    sheet.appendRow(row);
+
+    // Success response
+    return ContentService.createTextOutput(JSON.stringify({ 'result': 'success', 'row': row }))
+      .setMimeType(ContentService.MimeType.JSON)
+      .setCors(e);
+
+  } catch (err) {
+    // Error response
+    return ContentService.createTextOutput(JSON.stringify({ 'result': 'error', 'error': err.message }))
+      .setMimeType(ContentService.MimeType.JSON)
+      .setCors(e);
+
+  } finally {
+    // Lock ko release karein
+    lock.releaseLock();
+  }
+}
+
+// Handles GET requests (browser se direct visit karne par)
+function doGet(e) {
+  return ContentService.createTextOutput("Hello! This is the backend for Desi Cruncho orders. Please use a POST request to submit data.")
+    .setMimeType(ContentService.MimeType.TEXT);
+}
+
+// CORS (Cross-Origin Resource Sharing) support
+function setCors(e) {
+  return ContentService.createTextOutput(JSON.stringify({ 'result': 'preflight ok' }))
+    .setMimeType(ContentService.MimeType.JSON)
+    .setHeaders({ 'Access-Control-Allow-Origin': '*' })
+    .setHeaders({ 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS' })
+    .setHeaders({ 'Access-Control-Allow-Headers': 'Content-Type' });
+}
