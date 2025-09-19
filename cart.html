@@ -6,9 +6,20 @@
 <title>Your Cart</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-body { font-family: 'Inter', sans-serif; }
-.message-box { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%);
-  background:white; padding:1.5rem; border-radius:0.5rem; box-shadow:0 4px 15px rgba(0,0,0,0.2); text-align:center; z-index:1000;}
+  body { font-family: 'Inter', sans-serif; }
+  .message-box {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      text-align: center;
+      z-index: 1000;
+  }
 </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -19,114 +30,101 @@ body { font-family: 'Inter', sans-serif; }
       <div class="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold text-xl">DC</div>
       <span class="text-2xl font-bold text-orange-500">Desi Cruncho</span>
     </div>
+    <nav class="space-x-6 font-medium">
+      <a href="index.html#hero" class="hover:text-orange-500">Home</a>
+      <a href="index.html#products" class="hover:text-orange-500">Products</a>
+      <a href="index.html#ourstory" class="hover:text-orange-500">Our Story</a>
+      <a href="index.html#reviews" class="hover:text-orange-500">Reviews</a>
+      <a href="contact.html" class="hover:text-orange-500">Contact Us</a>
+    </nav>
   </div>
 </header>
 
-<main class="py-16 mt-12 max-w-6xl mx-auto px-6">
-  <h1 class="text-3xl font-bold text-center text-orange-500 mb-8">Your Cart</h1>
+<main class="py-16 mt-12">
+  <div class="max-w-4xl mx-auto px-6">
+    <h1 class="text-3xl font-bold text-center text-orange-500 mb-8">Your Cart</h1>
 
-  <!-- Sign-in first -->
-  <div id="signInSection" class="bg-white shadow-lg rounded-lg p-8 text-center">
-    <h2 class="text-2xl font-bold mb-4">Sign in to view your cart</h2>
-    <p class="text-gray-600 mb-6">Please sign in with your Gmail account to proceed with your order.</p>
-    <button id="signInButton" class="px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Sign in with Google</button>
-  </div>
+    <div id="cartSection" class="bg-white shadow-lg rounded-lg p-8">
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Product Details -->
+        <div>
+          <h2 class="text-2xl font-bold mb-4">Product Details</h2>
+          <div id="productDetails" class="flex items-center space-x-4 border-b pb-4 mb-4"></div>
+        </div>
 
-  <!-- Cart and delivery -->
-  <div id="cartSection" class="grid md:grid-cols-2 gap-8 mt-8 hidden">
-    <!-- Product details -->
-    <div id="productDetails" class="bg-white shadow-lg rounded-lg p-6 flex space-x-4 items-center">
-      <!-- Filled dynamically after sign-in -->
-    </div>
-
-    <!-- Delivery form -->
-    <div class="bg-white shadow-lg rounded-lg p-6">
-      <h2 class="text-2xl font-bold mb-4">Delivery Address</h2>
-      <form id="deliveryForm">
-        <input type="text" id="name" placeholder="Name" class="w-full border rounded-lg p-2 mb-3 focus:ring-2 focus:ring-orange-500" required>
-        <input type="tel" id="phone" placeholder="Phone" class="w-full border rounded-lg p-2 mb-3 focus:ring-2 focus:ring-orange-500" required>
-        <textarea id="address" placeholder="Address" class="w-full border rounded-lg p-2 mb-3 focus:ring-2 focus:ring-orange-500" rows="3" required></textarea>
-        <button type="submit" class="w-full px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 font-semibold">Buy Now</button>
-      </form>
+        <!-- Delivery Form -->
+        <div>
+          <h2 class="text-2xl font-bold mb-4">Delivery Address</h2>
+          <form id="deliveryForm">
+            <div class="mb-4">
+              <label class="block text-gray-700 font-semibold mb-2">Name</label>
+              <input type="text" id="name" class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" required>
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 font-semibold mb-2">Phone Number</label>
+              <input type="tel" id="phone" class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" required>
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 font-semibold mb-2">Address</label>
+              <textarea id="address" class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="w-full px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 font-semibold">Buy Now</button>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </main>
 
-<!-- Message Box -->
 <div id="messageBox" class="message-box">
-  <p id="messageText"></p>
+  <p id="messageText" class="text-gray-800"></p>
   <button id="closeMessageBox" class="mt-4 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">OK</button>
 </div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-
-// Replace with your Firebase config
-const firebaseConfig = {
-  apiKey: "...",
-  authDomain: "...",
-  projectId: "...",
-  storageBucket: "...",
-  messagingSenderId: "...",
-  appId: "..."
+// Parse product from URL
+const urlParams = new URLSearchParams(window.location.search);
+const product = {
+  name: urlParams.get('name'),
+  price: urlParams.get('price'),
+  weight: urlParams.get('weight'),
+  image: urlParams.get('image')
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
-
-const signInSection = document.getElementById('signInSection');
-const cartSection = document.getElementById('cartSection');
 const productDetailsDiv = document.getElementById('productDetails');
-const signInButton = document.getElementById('signInButton');
+const deliveryForm = document.getElementById('deliveryForm');
 const messageBox = document.getElementById('messageBox');
 const messageText = document.getElementById('messageText');
-document.getElementById('closeMessageBox').onclick = ()=>{messageBox.style.display='none';};
+document.getElementById('closeMessageBox').addEventListener('click', ()=>{ messageBox.style.display='none'; });
 
-function showMessage(msg){ messageText.textContent=msg; messageBox.style.display='block'; }
+function showMessage(msg){
+  messageText.textContent = msg;
+  messageBox.style.display='block';
+}
 
-// Get product info from URL
-const params = new URLSearchParams(window.location.search);
-const product = {
-  name: params.get('name'),
-  price: params.get('price'),
-  weight: params.get('weight'),
-  image: params.get('image')
-};
-
-// Show cart only after sign-in
-onAuthStateChanged(auth, user=>{
-  if(user){
-    signInSection.style.display='none';
-    cartSection.classList.remove('hidden');
-
-    if(product.name){
-      productDetailsDiv.innerHTML = `
-        <img src="${product.image}" alt="${product.name}" class="w-32 h-32 rounded-lg object-cover">
-        <div>
-          <h3 class="text-xl font-semibold">${product.name}</h3>
-          <p>Weight: ${product.weight}</p>
-          <p>Price: ₹${product.price}</p>
-          <p class="font-bold mt-2">Total: ₹${product.price}</p>
-        </div>
-      `;
-    }else{
-      productDetailsDiv.innerHTML = `<p class="text-red-500">No product info found. Go <a href="index.html" class="text-orange-500 hover:underline">back</a>.</p>`;
-    }
+// Render product details with fast-loading image
+function renderProductDetails() {
+  if(product.name){
+    productDetailsDiv.innerHTML = `
+      <img src="${product.image}" alt="${product.name}" class="w-24 h-24 rounded-lg object-cover" loading="eager">
+      <div>
+        <h3 class="text-xl font-semibold">${product.name}</h3>
+        <p>Price: ₹${product.price}</p>
+        <p>Weight: ${product.weight}</p>
+        <p class="font-bold mt-2">Total: ₹${product.price}</p>
+      </div>
+    `;
   } else {
-    signInSection.style.display='block';
-    cartSection.classList.add('hidden');
+    productDetailsDiv.innerHTML = `<p class="text-red-500">No product found in cart. Go back to <a href="index.html" class="text-orange-500 hover:underline">homepage</a>.</p>`;
   }
-});
+}
+renderProductDetails();
 
-// Google Sign-In
-signInButton.addEventListener('click', async ()=>{
-  try{
-    await signInWithPopup(auth, provider);
-  }catch(e){
-    showMessage("Sign-in failed. Try again.");
-  }
+// Form submission (example: just showing success message)
+deliveryForm.addEventListener('submit', e=>{
+  e.preventDefault();
+  showMessage("Order placed successfully!");  
+  deliveryForm.reset();
 });
 </script>
 </body>
