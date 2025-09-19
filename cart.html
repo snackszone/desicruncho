@@ -16,23 +16,15 @@
       background-color: white;
       padding: 1.5rem;
       border-radius: 0.5rem;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
       text-align: center;
       z-index: 1000;
   }
-  .loading {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      font-size: 1.5rem;
-      color: #FF5722;
-  }
+  .loading { display: flex; justify-content:center; align-items:center; height:100vh; font-size:1.5rem; color:#FF5722;}
 </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-<!-- Header -->
 <header class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
   <div class="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
     <div class="flex items-center space-x-3">
@@ -53,43 +45,23 @@
   <div class="max-w-4xl mx-auto px-6">
     <h1 class="text-3xl font-bold text-center text-orange-500 mb-8">Your Cart</h1>
 
-    <!-- Loading screen -->
     <div id="loading" class="loading">Loading...</div>
 
-    <!-- Sign-in section -->
-    <div id="signInSection" class="bg-white shadow-lg rounded-lg p-8 text-center hidden">
-      <h2 class="text-2xl font-bold mb-4">Sign in to view your cart</h2>
-      <p class="text-gray-600 mb-6">Please sign in with your Gmail account to proceed with your order.</p>
-      <button id="signInButton" class="px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Sign in with Google</button>
-    </div>
-
-    <!-- Cart and checkout section -->
-    <div id="cartSection" class="bg-white shadow-lg rounded-lg p-8 hidden">
+    <div id="cartSection" class="bg-white shadow-lg rounded-lg p-8 opacity-0 transition-opacity duration-500">
       <div class="grid md:grid-cols-2 gap-8">
-        <!-- Product Details -->
         <div>
           <h2 class="text-2xl font-bold mb-4">Product Details</h2>
           <div id="productDetails" class="flex items-center space-x-4 border-b pb-4 mb-4">
-            <!-- Product will be loaded here via JavaScript -->
+            <!-- Product image and info will appear here -->
           </div>
         </div>
-        <!-- Delivery Form -->
         <div>
           <h2 class="text-2xl font-bold mb-4">Delivery Address</h2>
           <form id="deliveryForm">
-            <div class="mb-4">
-              <label for="name" class="block text-gray-700 font-semibold mb-2">Name</label>
-              <input type="text" id="name" class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" required>
-            </div>
-            <div class="mb-4">
-              <label for="phone" class="block text-gray-700 font-semibold mb-2">Phone Number</label>
-              <input type="tel" id="phone" class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" required>
-            </div>
-            <div class="mb-4">
-              <label for="address" class="block text-gray-700 font-semibold mb-2">Address</label>
-              <textarea id="address" class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" rows="3" required></textarea>
-            </div>
-            <button type="submit" id="buyNowButton" class="w-full px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 font-semibold">Buy Now</button>
+            <input type="text" id="name" placeholder="Name" class="w-full border rounded-lg p-2 mb-3 focus:outline-none focus:ring-2 focus:ring-orange-500" required>
+            <input type="tel" id="phone" placeholder="Phone" class="w-full border rounded-lg p-2 mb-3 focus:outline-none focus:ring-2 focus:ring-orange-500" required>
+            <textarea id="address" placeholder="Address" class="w-full border rounded-lg p-2 mb-3 focus:outline-none focus:ring-2 focus:ring-orange-500" rows="3" required></textarea>
+            <button type="submit" class="w-full px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 font-semibold">Buy Now</button>
           </form>
         </div>
       </div>
@@ -97,221 +69,47 @@
   </div>
 </main>
 
-<!-- Custom Message Box -->
 <div id="messageBox" class="message-box">
   <p id="messageText" class="text-gray-800"></p>
   <button id="closeMessageBox" class="mt-4 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">OK</button>
 </div>
 
-<!-- Instagram & Footer -->
-<section class="py-16 bg-gray-200 text-center">
-  <h2 class="text-2xl font-bold mb-4">See our journey tuned with us</h2>
-  <p class="mb-6">Be a part of Desi Cruncho — A Desi Brand</p>
-  <a href="https://www.instagram.com/desi.cruncho" target="_blank" class="px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Follow us on Instagram</a>
-</section>
-
-<footer class="bg-orange-500 text-white py-10 px-6">
-  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-    <div>
-      <h2 class="text-2xl font-bold">Desi Cruncho</h2>
-      <p class="mt-2">A Taste of Tradition in Every Bite</p>
-    </div>
-    <div>
-      <h3 class="text-lg font-semibold">Company</h3>
-      <ul class="mt-2 space-y-2">
-        <li><a href="index.html#ourstory" class="hover:underline">Our Story</a></li>
-        <li><a href="contact.html" class="hover:underline">Contact Us</a></li>
-      </ul>
-    </div>
-    <div>
-      <h3 class="text-lg font-semibold">Quick Links</h3>
-      <ul class="mt-2 space-y-2">
-        <li><a href="index.html#products" class="hover:underline">Products</a></li>
-        <li><a href="index.html#reviews" class="hover:underline">Reviews</a></li>
-      </ul>
-    </div>
-    <div>
-      <h3 class="text-lg font-semibold">Get in touch</h3>
-      <p class="mt-2 font-bold">Vashi, Navi Mumbai 400703</p>
-      <p class="font-bold">📞 +91 9324410301</p>
-      <p class="font-bold">📧 desicruncho@gmail.com</p>
-    </div>
-  </div>
-  <div class="text-center mt-8 text-sm">© 2025 Desi Cruncho. All rights reserved.</div>
-</footer>
-
-<!-- Firebase SDKs -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, serverTimestamp, setDoc, doc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-// Global variables provided by the environment
-const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-// Firebase initialization
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const provider = new GoogleAuthProvider();
-
-// DOM Elements
+<script>
 const loadingDiv = document.getElementById('loading');
-const signInSection = document.getElementById('signInSection');
 const cartSection = document.getElementById('cartSection');
 const productDetailsDiv = document.getElementById('productDetails');
-const deliveryForm = document.getElementById('deliveryForm');
 const messageBox = document.getElementById('messageBox');
 const messageText = document.getElementById('messageText');
 const closeMessageBox = document.getElementById('closeMessageBox');
 
-// Show custom message box
-function showMessage(message) {
-  messageText.textContent = message;
-  messageBox.style.display = 'block';
-}
+closeMessageBox.addEventListener('click', ()=>{ messageBox.style.display='none'; });
 
-// Hide custom message box
-closeMessageBox.addEventListener('click', () => {
-  messageBox.style.display = 'none';
-});
-
-// Parse URL for product data
+// Get product from URL
 const urlParams = new URLSearchParams(window.location.search);
 const product = {
-    name: urlParams.get('name'),
-    price: urlParams.get('price'),
-    weight: urlParams.get('weight'),
-    image: urlParams.get('image')
+  name: urlParams.get('name'),
+  price: urlParams.get('price'),
+  image: urlParams.get('image')
 };
 
-// Listen for authentication state changes
-onAuthStateChanged(auth, async (user) => {
-  loadingDiv.classList.add('hidden'); // Hide loading spinner
-
-  if (user) {
-    // User is signed in
-    signInSection.classList.add('hidden');
-    cartSection.classList.remove('hidden');
-    renderProductDetails();
-  } else {
-    // User is signed out
-    signInSection.classList.remove('hidden');
-    cartSection.classList.add('hidden');
-    // Use custom token for sign-in if available
-    if (initialAuthToken) {
-        try {
-            await signInWithCustomToken(auth, initialAuthToken);
-        } catch (error) {
-            console.error("Error signing in with custom token:", error);
-            // Fallback to anonymous sign-in if token fails
-            await signInAnonymously(auth);
-        }
-    } else {
-        await signInAnonymously(auth);
-    }
-  }
-});
-
-// Google Sign-in functionality
-document.getElementById('signInButton').addEventListener('click', async () => {
-    try {
-        await signInWithPopup(auth, provider);
-    } catch (error) {
-        console.error("Google Sign-in failed:", error);
-        showMessage("Google sign-in failed. Please try again.");
-    }
-});
-
-function renderProductDetails() {
-  if (product.name) {
-    productDetailsDiv.innerHTML = `
-      <img src="${product.image}" alt="${product.name}" class="w-24 h-24 rounded-lg object-cover">
-      <div>
-        <h3 class="text-xl font-semibold">${product.name}</h3>
-        <p>Price: ₹${product.price}</p>
-        <p>Weight: ${product.weight}</p>
-        <!-- Added Total Price to the product details -->
-        <p class="font-bold mt-2">Total Price: ₹${product.price}</p>
-      </div>
-    `;
-  } else {
-    productDetailsDiv.innerHTML = `<p class="text-red-500">No product found in cart. Please go back to the <a href="index.html" class="text-orange-500 hover:underline">homepage</a>.</p>`;
-  }
+// Render product
+if(product.name){
+  productDetailsDiv.innerHTML = `
+    <img src="${product.image}" alt="${product.name}" class="w-24 h-24 rounded-lg object-cover" loading="lazy">
+    <div>
+      <h3 class="text-xl font-semibold">${product.name}</h3>
+      <p>Price: ₹${product.price}</p>
+      <p class="font-bold mt-2">Total Price: ₹${product.price}</p>
+    </div>
+  `;
+} else {
+  productDetailsDiv.innerHTML = `<p class="text-red-500">No product found. Go <a href="index.html" class="text-orange-500 hover:underline">back</a>.</p>`;
 }
 
-// Delivery form submission logic
-deliveryForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  const name = document.getElementById('name').value.trim();
-  const phone = document.getElementById('phone').value.trim();
-  const address = document.getElementById('address').value.trim();
-
-  // Basic validation
-  if (!name || !phone || !address) {
-    showMessage("Please fill in all the delivery details.");
-    return;
-  }
-
-  const user = auth.currentUser;
-  const userId = user ? user.uid : 'anonymous';
-
-  // Order data to be saved in Firestore and Google Sheets
-  const orderData = {
-    userId: userId,
-    userName: user ? user.displayName : name,
-    userEmail: user ? user.email : 'N/A',
-    product: product,
-    deliveryDetails: { name, phone, address },
-    timestamp: new Date().toISOString()
-  };
-
-  // 1. Save order to Firestore
-  try {
-    const ordersCollection = collection(db, `artifacts/${appId}/users/${userId}/orders`);
-    await addDoc(ordersCollection, {
-      ...orderData,
-      timestamp: serverTimestamp() // Use Firestore's serverTimestamp for more accurate time
-    });
-    console.log("Order saved to Firestore successfully.");
-  } catch (error) {
-    console.error("Error saving order to Firestore:", error);
-    showMessage("There was an error placing your order. Please try again.");
-    return; // Stop if Firestore save fails
-  }
-
-  // 2. Send order to Google Sheets
-  const googleSheetUrl = 'https://script.google.com/macros/s/AKfycbzTPxlgf6skoXtdFhYnXZ330ghItZqkr2i-yrYRoW4pLf4bsV7ClYfExW6dapIjwhLo/exec'; // Updated with the user-provided URL
-  const sheetData = {
-    timestamp: orderData.timestamp,
-    name: orderData.deliveryDetails.name,
-    phoneNumber: orderData.deliveryDetails.phone,
-    address: orderData.deliveryDetails.address,
-    productName: orderData.product.name,
-    totalPrice: orderData.product.price
-  };
-
-  try {
-    const response = await fetch(googleSheetUrl, {
-      method: 'POST',
-      mode: 'no-cors', // Required for Google Apps Script
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(sheetData)
-    });
-    // Since we're using 'no-cors', we can't check for a successful response directly.
-    // The request should be successful if the script is deployed correctly.
-    console.log("Order data sent to Google Sheets.");
-    showMessage("Thank you! Your order has been placed successfully.");
-    deliveryForm.reset();
-  } catch (error) {
-    console.error("Error sending data to Google Sheets:", error);
-    showMessage("Order saved in our system, but there was an issue updating the Google Sheet. Please contact support.");
-  }
+// Show cart section after minimal load
+window.addEventListener('load', ()=> {
+  loadingDiv.style.display='none';
+  cartSection.style.opacity='1';
 });
 </script>
 </body>
