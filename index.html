@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desi Cruncho</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-family: 'Inter', sans-serif; }
+  #hero { position: relative; width: 100%; height: 400px; overflow: hidden; margin-top: 80px; }
+  #slider { display: flex; height: 100%; transition: transform 0.5s ease-in-out; }
+  #slider img { flex-shrink: 0; width: 100%; height: 100%; object-fit: cover; }
+  .dot { width: 14px; height: 14px; border-radius: 50%; cursor: pointer; transition: all 0.3s; }
+  .nav-container { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 0.5rem; }
+  .message-box {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      z-index: 1000;
+  }
+</style>
+</head>
+<body class="bg-white text-gray-800">
+
+<!-- Header -->
+<header class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
+  <div class="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
+    <div class="flex items-center space-x-3">
+      <div class="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold text-xl">DC</div>
+      <span class="text-2xl font-bold text-orange-500">Desi Cruncho</span>
+    </div>
+    <nav class="space-x-6 font-medium">
+      <a href="#hero" class="hover:text-orange-500">Home</a>
+      <a href="#products" class="hover:text-orange-500">Products</a>
+      <a href="#ourstory" class="hover:text-orange-500">Our Story</a>
+      <a href="#reviews" class="hover:text-orange-500">Reviews</a>
+      <a href="contact.html" class="hover:text-orange-500">Contact Us</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section id="hero">
+  <div id="slider">
+    <img src="https://picsum.photos/id/1015/1200/400" alt="Slide 1">
+    <img src="https://picsum.photos/id/1016/1200/400" alt="Slide 2">
+    <img src="https://picsum.photos/id/1018/1200/400" alt="Slide 3">
+    <img src="https://picsum.photos/id/1020/1200/400" alt="Slide 4">
+  </div>
+</section>
+<div class="nav-container">
+  <button id="prev" class="bg-orange-500 hover:bg-orange-600 text-white rounded-full p-2 text-xl font-bold shadow-md">&lt;</button>
+  <div class="flex gap-2">
+    <span class="dot bg-gray-300" data-index="0"></span>
+    <span class="dot bg-gray-300" data-index="1"></span>
+    <span class="dot bg-gray-300" data-index="2"></span>
+    <span class="dot bg-gray-300" data-index="3"></span>
+  </div>
+  <button id="next" class="bg-orange-500 hover:bg-orange-600 text-white rounded-full p-2 text-xl font-bold shadow-md">&gt;</button>
+</div>
+
+<!-- Products -->
+<section id="products" class="py-16 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center text-orange-500 mb-12">Our Products</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="product-card bg-white shadow-lg rounded-lg p-6 text-center" data-name="Thekua" data-price="120" data-weight="500g" data-image="https://i.ibb.co/BHy3ZBKS/thekua.jpg">
+        <img src="https://i.ibb.co/BHy3ZBKS/thekua.jpg" alt="Thekua" class="mx-auto mb-4 rounded-lg object-cover w-full h-56">
+        <h3 class="text-xl font-semibold">Thekua</h3>
+        <p>Weight: 500g</p>
+        <p>Price: ₹120</p>
+        <button class="add-to-cart-btn mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Add to Cart</button>
+      </div>
+      <div class="product-card bg-white shadow-lg rounded-lg p-6 text-center" data-name="Nimki" data-price="80" data-weight="250g" data-image="https://i.ibb.co/tPvCDjqJ/nimki.jpg">
+        <img src="https://i.ibb.co/tPvCDjqJ/nimki.jpg" alt="Nimki" class="mx-auto mb-4 rounded-lg object-cover w-full h-56">
+        <h3 class="text-xl font-semibold">Nimki</h3>
+        <p>Weight: 250g</p>
+        <p>Price: ₹80</p>
+        <button class="add-to-cart-btn mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Add to Cart</button>
+      </div>
+      <div class="product-card bg-white shadow-lg rounded-lg p-6 text-center" data-name="Combo Pack" data-price="180" data-weight="750g" data-image="https://i.ibb.co/PGd44d83/Whats-App-Image-2025-09-19-at-11-05-35-AM.jpg">
+        <img src="https://i.ibb.co/PGd44d83/Whats-App-Image-2025-09-19-at-11-05-35-AM.jpg" alt="Combo Pack" class="mx-auto mb-4 rounded-lg object-cover w-full h-56">
+        <h3 class="text-xl font-semibold">Combo Pack</h3>
+        <p>Weight: 750g</p>
+        <p>Price: ₹180</p>
+        <button class="add-to-cart-btn mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Our Story -->
+<section id="ourstory" class="py-16">
+  <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
+    <img src="https://i.ibb.co/PGd44d83/Whats-App-Image-2025-09-19-at-11-05-35-AM.jpg" alt="Our Story" class="rounded-lg shadow-md object-cover w-full h-80">
+    <div>
+      <h2 class="text-3xl font-bold text-orange-500 mb-4">Our Story</h2>
+      <p class="font-medium">Desi Cruncho was born with a mission to bring authentic Indian snacks to your plate. Every bite tells a story of tradition and love for homemade flavors.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Reviews -->
+<section id="reviews" class="py-16 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center text-orange-500 mb-12">Customer Reviews</h2>
+    <div class="grid md:grid-cols-3 gap-6 mb-10" id="reviewsGrid">
+      <div class="bg-white p-6 rounded-lg shadow text-center">
+        <p class="text-orange-500 text-xl mb-2">⭐⭐⭐⭐⭐</p>
+        <p class="font-bold">Rahul</p>
+        <p>“Amazing taste and packaging. Totally loved it!”</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow text-center">
+        <p class="text-orange-500 text-xl mb-2">⭐⭐⭐⭐⭐</p>
+        <p class="font-bold">Priya</p>
+        <p>“Crispy and fresh. Reminds me of home snacks.”</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow text-center">
+        <p class="text-orange-500 text-xl mb-2">⭐⭐⭐⭐⭐</p>
+        <p class="font-bold">Amit</p>
+        <p>“Perfect for evening tea time. Highly recommended.”</p>
+      </div>
+    </div>
+
+    <!-- Review Form -->
+    <div class="relative max-w-2xl mx-auto">
+      <form id="reviewForm" class="bg-white p-6 rounded-lg shadow">
+        <h3 class="text-xl font-semibold mb-4 text-center">Write a Review</h3>
+        <div class="flex items-center justify-center space-x-2 mb-4" id="starContainer">
+          <span class="cursor-pointer text-2xl" data-star="1">☆</span>
+          <span class="cursor-pointer text-2xl" data-star="2">☆</span>
+          <span class="cursor-pointer text-2xl" data-star="3">☆</span>
+          <span class="cursor-pointer text-2xl" data-star="4">☆</span>
+          <span class="cursor-pointer text-2xl" data-star="5">☆</span>
+        </div>
+        <input id="reviewName" type="text" class="w-full border rounded-lg p-2 mb-4" placeholder="Your Name" required>
+        <textarea id="reviewText" class="w-full border rounded-lg p-2 mb-4" placeholder="Write your review here..." required></textarea>
+        <button type="submit" class="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 block mx-auto">Submit Review</button>
+      </form>
+      <!-- Custom Message Box -->
+      <div id="messageBox" class="message-box">
+        <p id="messageText" class="text-gray-800"></p>
+        <button id="closeMessageBox" class="mt-4 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">OK</button>
+      </div>
+      <div id="thankYou" class="hidden absolute inset-0 bg-white bg-opacity-95 flex flex-col justify-center items-center rounded-lg shadow">
+        <h3 class="text-xl font-bold text-orange-500 mb-2">Thank You!</h3>
+        <p>Your review has been submitted.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Instagram & Footer -->
+<section class="py-16 bg-gray-200 text-center">
+  <h2 class="text-2xl font-bold mb-4">See our journey tuned with us</h2>
+  <p class="mb-6">Be a part of Desi Cruncho — A Desi Brand</p>
+  <a href="https://www.instagram.com/desi.cruncho" target="_blank" class="px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Follow us on Instagram</a>
+</section>
+
+<footer class="bg-orange-500 text-white py-10 px-6">
+  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div>
+      <h2 class="text-2xl font-bold">Desi Cruncho</h2>
+      <p class="mt-2">A Taste of Tradition in Every Bite</p>
+    </div>
+    <div>
+      <h3 class="text-lg font-semibold">Company</h3>
+      <ul class="mt-2 space-y-2">
+        <li><a href="#ourstory" class="hover:underline">Our Story</a></li>
+        <li><a href="contact.html" class="hover:underline">Contact Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="text-lg font-semibold">Quick Links</h3>
+      <ul class="mt-2 space-y-2">
+        <li><a href="#products" class="hover:underline">Products</a></li>
+        <li><a href="#reviews" class="hover:underline">Reviews</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="text-lg font-semibold">Get in touch</h3>
+      <p class="mt-2 font-bold">Vashi, Navi Mumbai 400703</p>
+      <p class="font-bold">📞 +91 9324410301</p>
+      <p class="font-bold">📧 desicruncho@gmail.com</p>
+    </div>
+  </div>
+  <div class="text-center mt-8 text-sm">© 2025 Desi Cruncho. All rights reserved.</div>
+</footer>
+
+<script>
+// Slider
+const slider = document.getElementById('slider');
+const dots = document.querySelectorAll('.dot');
+const totalSlides = slider.children.length;
+let currentIndex = 0;
+let interval = null;
+
+function updateSlider(i) {
+  slider.style.transform = `translateX(-${i * 100}%)`;
+  dots.forEach(d => d.classList.remove('bg-orange-500'));
+  dots[i].classList.add('bg-orange-500');
+}
+
+function startAutoSlide() {
+  interval = setInterval(() => {
+    currentIndex = (currentIndex + 1) % totalSlides;
+    updateSlider(currentIndex)
+  }, 3000);
+}
+
+function resetInterval() {
+  clearInterval(interval);
+  startAutoSlide();
+}
+
+document.getElementById('prev').addEventListener('click', () => {
+  currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+  updateSlider(currentIndex);
+  resetInterval();
+});
+
+document.getElementById('next').addEventListener('click', () => {
+  currentIndex = (currentIndex + 1) % totalSlides;
+  updateSlider(currentIndex);
+  resetInterval();
+});
+
+dots.forEach(dot => dot.addEventListener('click', () => {
+  currentIndex = parseInt(dot.dataset.index);
+  updateSlider(currentIndex);
+  resetInterval();
+}));
+
+updateSlider(currentIndex);
+startAutoSlide();
+
+// Add-to-Cart logic
+const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+addToCartButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const productCard = button.closest('.product-card');
+    const productName = productCard.dataset.name;
+    const productPrice = productCard.dataset.price;
+    const productWeight = productCard.dataset.weight;
+    const productImage = productCard.dataset.image;
+
+    // Create a URL with query parameters
+    const cartUrl = `cart.html?name=${encodeURIComponent(productName)}&price=${encodeURIComponent(productPrice)}&weight=${encodeURIComponent(productWeight)}&image=${encodeURIComponent(productImage)}`;
+    
+    // Navigate to the cart page
+    window.location.href = cartUrl;
+  });
+});
+
+// Reviews
+const stars = document.querySelectorAll('#starContainer span');
+const reviewForm = document.getElementById('reviewForm');
+const thankYou = document.getElementById('thankYou');
+const reviewsGrid = document.getElementById('reviewsGrid');
+const messageBox = document.getElementById('messageBox');
+const messageText = document.getElementById('messageText');
+const closeMessageBox = document.getElementById('closeMessageBox');
+let selectedRating = 0;
+
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzupwBG9lrM-rMEKUFD5huRM-zWWfG6zzXLCzlKF75HRIuRSkaY-62y7Cal0mB-rkE/exec";
+
+// Show custom message box
+function showMessage(message) {
+  messageText.textContent = message;
+  messageBox.style.display = 'block';
+}
+
+// Hide custom message box
+closeMessageBox.addEventListener('click', () => {
+  messageBox.style.display = 'none';
+});
+
+
+stars.forEach(star => {
+  star.addEventListener('click', () => {
+    selectedRating = star.getAttribute('data-star');
+    // Fill the stars up to the selected one
+    stars.forEach(s => {
+      if (s.getAttribute('data-star') <= selectedRating) {
+        s.textContent = '⭐';
+      } else {
+        s.textContent = '☆';
+      }
+    });
+  });
+});
+
+reviewForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = document.getElementById('reviewName').value.trim();
+  const reviewContent = document.getElementById('reviewText').value.trim();
+
+  if (selectedRating === 0) {
+    showMessage("Please select a star rating!");
+    return;
+  }
+  if (reviewContent === "") {
+    showMessage("Please write your review!");
+    return;
+  }
+
+  // Create and append the new review locally
+  const reviewCard = document.createElement('div');
+  reviewCard.className = "bg-white p-6 rounded-lg shadow text-center";
+  const starsText = "⭐".repeat(selectedRating);
+  reviewCard.innerHTML = `<p class="text-orange-500 text-xl mb-2">${starsText}</p><p class="font-bold">${name}</p><p>${reviewContent}</p>`;
+  reviewsGrid.appendChild(reviewCard);
+
+  // Prepare data for Google Sheets
+  const formData = new FormData();
+  formData.append('name', name);
+  formData.append('rating', selectedRating);
+  formData.append('review', reviewContent);
+
+  // Send to Google Sheets
+  fetch(WEB_APP_URL, {
+      method: "POST",
+      body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log("Review saved:", data);
+    })
+    .catch(err => console.error("Error:", err));
+
+  // Show thank you message
+  thankYou.classList.remove('hidden');
+  reviewForm.reset();
+  stars.forEach(s => s.textContent = "☆");
+  selectedRating = 0;
+});
+</script>
+</body>
+</html>
