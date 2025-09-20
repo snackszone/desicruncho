@@ -3,11 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cart - Desi Cruncho</title>
+<title>Contact Us - Desi Cruncho</title>
 <script src="https://cdn.tailwindcss.com"></script>
-
-<!-- Preload Payment Page for faster navigation -->
-<link rel="preload" href="payment.html" as="document">
 </head>
 <body class="bg-orange-50">
 
@@ -21,30 +18,38 @@
     <a href="index.html#products" class="hover:text-orange-500">Products</a>
     <a href="index.html#ourstory" class="hover:text-orange-500">Our Story</a>
     <a href="index.html#reviews" class="hover:text-orange-500">Reviews</a>
-    <a href="contact.html" class="hover:text-orange-500">Contact</a>
+    <a href="contact.html" class="text-orange-600 font-semibold">Contact Us</a>
   </nav>
 </header>
 
 <section class="flex justify-center items-center min-h-screen px-4">
   <div class="bg-white shadow-lg rounded-lg p-8 md:flex md:space-x-8 max-w-4xl w-full">
+    
+    <!-- Contact Info -->
+    <div class="md:w-1/2">
+      <h2 class="text-2xl font-bold mb-4">Contact Information</h2>
+      <p class="mb-6 text-gray-600">You can meet us here or give us a call.</p>
 
-    <!-- Cart Items -->
-    <div class="md:w-full">
-      <h2 class="text-2xl font-bold mb-4">Your Cart</h2>
-
-      <!-- Single Cart Item -->
-      <div class="flex items-center mb-4">
-        <img src="https://i.ibb.co/BHy3ZBKS/thekua.jpg" alt="Thekua" class="w-20 h-20 rounded-md object-cover mr-4" loading="lazy">
-        <div>
-          <p class="font-medium">Thekua</p>
-          <p class="text-gray-500">₹120</p>
-        </div>
+      <div class="space-y-4 text-gray-700">
+        <p>📍 <strong>Desi Cruncho</strong><br> Vashi, Navi Mumbai 400703</p>
+        <p>📞 <strong>Phone:</strong> +91 9324410301</p>
+        <p>📧 <strong>Email:</strong> desicruncho@gmail.com</p>
       </div>
+    </div>
 
-      <!-- Buy Now Button -->
-      <button id="buyNowBtn" class="bg-orange-500 text-white font-semibold w-full py-3 rounded-md hover:bg-orange-600 transition-colors">
-        Buy Now
-      </button>
+    <!-- Fast-loading Map -->
+    <div class="md:w-1/2 mt-6 md:mt-0 relative">
+      <!-- Static Map Image first -->
+      <a href="https://www.google.com/maps/place/Vashi,+Navi+Mumbai,+Maharashtra" target="_blank">
+        <img src="https://maps.googleapis.com/maps/api/staticmap?center=Vashi,Navi+Mumbai&zoom=15&size=600x300&markers=color:red%7CDesi+Cruncho,Vashi,Navi+Mumbai" 
+             alt="Desi Cruncho Location" class="w-full h-60 object-cover rounded-lg">
+      </a>
+      <!-- Interactive iframe loads after 1 second -->
+      <iframe 
+        id="mapIframe"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3770.776140351793!2d72.99899321420918!3d19.07706598708783!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c12dbf6a8f3f%3A0x56f35d4af2f3f631!2sVashi%2C%20Navi%20Mumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1673364962395!5m2!1sen!2sin"
+        width="100%" height="250" style="border:0; display:none;" allowfullscreen="" loading="lazy">
+      </iframe>
     </div>
 
   </div>
@@ -55,23 +60,13 @@
 </footer>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const buyBtn = document.getElementById('buyNowBtn');
-
-  buyBtn.addEventListener('click', () => {
-    // Prepare query params
-    const productName = encodeURIComponent('Thekua');
-    const price = encodeURIComponent('120');
-    const image = encodeURIComponent('https://i.ibb.co/BHy3ZBKS/thekua.jpg');
-    const customerName = encodeURIComponent('alok'); // replace dynamically if needed
-    const customerPhone = encodeURIComponent('9324410304');
-    const customerAddress = encodeURIComponent('Vashi');
-
-    // Instant navigation to payment.html
-    const url = `payment.html?productName=${productName}&price=${price}&image=${image}&customerName=${customerName}&customerPhone=${customerPhone}&customerAddress=${customerAddress}`;
-    window.location.href = url;
+  // Show interactive map after short delay
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const iframe = document.getElementById('mapIframe');
+      iframe.style.display = 'block';
+    }, 1000);
   });
-});
 </script>
 
 </body>
