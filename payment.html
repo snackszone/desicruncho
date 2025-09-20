@@ -69,11 +69,11 @@ body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: fle
     <div class="section-container">
         <h2 class="text-xl font-bold mb-4">Pay via</h2>
         <div class="qr-code-container">
-            <img id="qr-image" src="https://i.ibb.co/sJCPGJR7/Whats-App-Image-2025-09-20-at-11-58-37-AM.jpg" alt="QR Code" class="h-full w-full object-contain blurred" loading="eager">
+            <img id="qr-image" src="https://i.ibb.co/sJCPGJR7/Whats-App-Image-2025-09-20-at-11-58-37-AM.jpg" alt="QR Code" class="h-full w-full object-cover blurred">
             <button id="show-qr-btn" class="show-qr-btn">Show QR</button>
+            <div id="qr-timer" class="timer"></div>
         </div>
-        <div id="qr-timer" class="timer mt-2">02:00</div>
-        <button id="cod-btn" class="cod-button mt-4">
+        <button id="cod-btn" class="cod-button">
             <div class="cod-text">
                 <i class="fas fa-cash-register mr-2"></i> Partial COD
             </div>
@@ -121,18 +121,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const qrImage = document.getElementById('qr-image');
     const qrTimer = document.getElementById('qr-timer');
 
-    const webAppURL = 'https://script.google.com/macros/s/AKfycbyNQZv6Y0Um4cZmGQKea6tEuv9gV28xp5mcuUVb44fzeLqrAedgNq_97GsOvlV8TfHqcw/exec';
+    const webAppURL = 'https://script.google.com/macros/s/AKfycbw7UUWzYY3kb_JfxwyYVDkC2W2feWF-DPqHco0kJWSCgbY_JQ1W5PsB-Kuk7IYWMSpI-A/exec';
 
     function sendPaymentData(method){
         const data = {
             productName, price: productPrice, customerName, customerPhone, customerAddress, paymentMethod: method
         };
         fetch(webAppURL, {
-            method: 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)
+            method: 'POST',
+            mode: 'no-cors',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify(data)
         }).catch(err=>console.error(err));
     }
 
-    codBtn.addEventListener('click', ()=> {
+    codBtn.addEventListener('click', ()=>{
         sendPaymentData('COD');
         codBtn.textContent = 'Order Confirmed';
         codBtn.disabled = true;
@@ -143,28 +146,30 @@ document.addEventListener('DOMContentLoaded', () => {
         thankYou.classList.add('active');
     });
 
-    showQrBtn.addEventListener('click', () => {
+    showQrBtn.addEventListener('click', ()=>{
         qrImage.classList.remove('blurred');
         showQrBtn.style.display='none';
         qrTimer.style.display='block';
 
         sendPaymentData('UPI');
 
-        let timeLeft = 120;
-        qrTimer.textContent = "02:00";
-
-        const interval = setInterval(() => {
-            timeLeft--;
+        let timeLeft = 120; // 2 minutes
+        const updateTimer = () => {
             let minutes = Math.floor(timeLeft/60);
             let seconds = timeLeft%60;
             qrTimer.textContent = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+        };
+        updateTimer();
+        const interval = setInterval(()=>{
+            timeLeft--;
+            updateTimer();
             if(timeLeft <= 0){
                 clearInterval(interval);
                 qrImage.classList.add('blurred');
                 qrTimer.style.display='none';
                 showQrBtn.style.display='block';
             }
-        }, 1000);
+        },1000);
     });
 });
 </script>
