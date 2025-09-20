@@ -14,10 +14,10 @@ body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: fle
 .section-container:last-of-type { border-bottom: none; }
 .blurred { filter: blur(8px); transition: filter 0.3s ease; }
 .qr-code-container { display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 1rem auto; }
-#qr-image { width: 180px; height: 180px; border-radius: 0.5rem; object-fit: contain; }
-.show-qr-btn { margin-top: -130px; background-color: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 9999px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 10px rgba(59,130,246,0.3); transition: background-color 0.2s; }
+#qr-image { width: 180px; height: 180px; border-radius: 0.5rem; object-fit: contain; margin-bottom: 0.5rem; }
+.show-qr-btn { background-color: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 9999px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 10px rgba(59,130,246,0.3); transition: background-color 0.2s; margin-top: 0.5rem; }
 .show-qr-btn:hover { background-color: #2563eb; }
-.timer { font-size: 1rem; font-weight: 700; color: #ef4444; display: none; text-align: center; margin-top: 0.5rem; }
+.timer { font-size: 1rem; font-weight: 700; color: #ef4444; display: none; text-align: center; margin-bottom: 0.5rem; }
 .order-item { display: flex; align-items: center; margin-top: 1rem; }
 .order-item img { width: 60px; height: 60px; border-radius: 0.5rem; margin-right: 1rem; }
 .order-item-details { flex-grow: 1; }
@@ -65,9 +65,12 @@ body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: fle
     <div class="section-container">
         <h2 class="text-xl font-bold mb-4">Pay via</h2>
         <div class="qr-code-container">
-            <img id="qr-image" src="https://i.ibb.co/sJCPGJR7/Whats-App-Image-2025-09-20-at-11-58-37-AM.jpg" class="blurred" alt="QR Code">
-            <button id="show-qr-btn" class="show-qr-btn">Show QR</button>
+            <img id="qr-image" 
+                 src="https://i.ibb.co/sJCPGJR7/Whats-App-Image-2025-09-20-at-11-58-37-AM.jpg" 
+                 class="blurred" 
+                 alt="QR Code">
             <div id="qr-timer" class="timer"></div>
+            <button id="show-qr-btn" class="show-qr-btn">Show QR</button>
         </div>
         <button id="cod-btn" class="cod-button">
             <div class="cod-text">
