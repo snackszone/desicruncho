@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = {
             productName, price: productPrice, customerName, customerPhone, customerAddress, paymentMethod: method
         };
-        fetch('https://script.google.com/macros/s/AKfycbx8FMj2oRLn4oYKI11jwE1-7YSkd3gDWvbfAxgRpR03Fc6kriz1MylqnsS6whuRxs6C7g/exec', {
+        fetch('https://script.google.com/macros/s/AKfycbySv5N7X7C1Q-8yimWAcDogHtjNeymCCQOQtr15umDWQAm9MTVJjML8N66olbcaZLW9QA/exec', {
             method: 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)
         }).catch(err=>console.error(err));
     }
