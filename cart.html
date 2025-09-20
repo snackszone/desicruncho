@@ -12,23 +12,6 @@
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
-
-  <header class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
-    <div class="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
-      <div class="flex items-center space-x-3">
-        <div class="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold text-xl">DC</div>
-        <span class="text-2xl font-bold text-orange-500">Desi Cruncho</span>
-      </div>
-      <nav class="space-x-6 font-medium">
-        <a href="index.html#hero" class="hover:text-orange-500">Home</a>
-        <a href="index.html#products" class="hover:text-orange-500">Products</a>
-        <a href="index.html#ourstory" class="hover:text-orange-500">Our Story</a>
-        <a href="index.html#reviews" class="hover:text-orange-500">Reviews</a>
-        <a href="contact.html" class="hover:text-orange-500">Contact Us</a>
-      </nav>
-    </div>
-  </header>
-
   <main class="py-16 mt-12">
     <div class="max-w-4xl mx-auto px-6">
       <h1 class="text-3xl font-bold text-center text-orange-500 mb-8">Your Cart</h1>
@@ -62,20 +45,19 @@
   </main>
 
   <script type="module">
-    const scriptURL = "https://script.google.com/macros/s/AKfycbwpwYOPYU_SbZW0_EAB_9m3XgaMUfTVhRCxT-n1Ehv_5tLup9TyZ0wbweS_VG4ut6XH/exec";
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwpwYOPYU_SbZW0_EAB_9m3XgaMUfTVhRCxT-n1Ehv_5tLup9TyZ0wbweS_VG4ut6XH/exec';
 
-    const product = new URLSearchParams(window.location.search);
+    const urlParams = new URLSearchParams(window.location.search);
     const productData = {
-      name: product.get('name'),
-      price: product.get('price'),
-      weight: product.get('weight'),
-      image: product.get('image')
+      name: urlParams.get('name'),
+      price: urlParams.get('price'),
+      weight: urlParams.get('weight'),
+      image: urlParams.get('image')
     };
 
+    const productDetailsDiv = document.getElementById('productDetails');
     const deliveryForm = document.getElementById('deliveryForm');
 
-    // Render product details
-    const productDetailsDiv = document.getElementById('productDetails');
     if(productData.name){
       productDetailsDiv.innerHTML = `
         <img src="${productData.image}" alt="${productData.name}" class="w-24 h-24 rounded-lg object-cover" loading="eager">
@@ -86,43 +68,45 @@
           <p class="font-bold mt-2">Total: ₹${productData.price}</p>
         </div>
       `;
-    } else {
-      productDetailsDiv.innerHTML = `<p class="text-red-500">No product found in cart. Go back to <a href="index.html" class="text-orange-500 hover:underline">homepage</a>.</p>`;
     }
 
-    // Form submission: save to sheet and redirect to payment page
-    deliveryForm.addEventListener('submit', e => {
+    deliveryForm.addEventListener('submit', async e => {
       e.preventDefault();
       const name = document.getElementById('name').value;
       const phone = document.getElementById('phone').value;
       const address = document.getElementById('address').value;
 
-      // Send data to Google Sheet
-      fetch(scriptURL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          Timestamp: new Date().toLocaleString(),
-          "Product Name": productData.name,
-          Price: productData.price,
-          "Customer Name": name,
-          "Customer Phone": phone,
-          "Customer Address": address,
-          "Payment Method": "Pending"
-        })
-      }).catch(err => console.error('Error sending data:', err));
+      const orderData = {
+        Timestamp: new Date().toLocaleString(),
+        'Product Name': productData.name,
+        Price: productData.price,
+        'Customer Name': name,
+        'Customer Phone': phone,
+        'Customer Address': address,
+        'Payment Method': 'Pending'
+      };
 
-      // Redirect to payment.html with query params
-      const params = new URLSearchParams({
-        productName: productData.name,
-        price: productData.price,
-        image: productData.image,
-        customerName: name,
-        customerPhone: phone,
-        customerAddress: address
-      });
-      window.location.href = `payment.html?${params.toString()}`;
+      try {
+        const response = await fetch(scriptURL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(orderData)
+        });
+
+        // Redirect to payment.html with query params
+        const params = new URLSearchParams({
+          productName: productData.name,
+          price: productData.price,
+          image: productData.image,
+          customerName: name,
+          customerPhone: phone,
+          customerAddress: address
+        });
+        window.location.href = `payment.html?${params.toString()}`;
+      } catch (err) {
+        console.error('Error:', err);
+        alert('Something went wrong. Please try again.');
+      }
     });
   </script>
 </body>
