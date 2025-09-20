@@ -12,6 +12,7 @@
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
+
   <main class="py-16 mt-12">
     <div class="max-w-4xl mx-auto px-6">
       <h1 class="text-3xl font-bold text-center text-orange-500 mb-8">Your Cart</h1>
@@ -44,8 +45,13 @@
     </div>
   </main>
 
+  <div id="messageBox" class="message-box">
+    <p id="messageText" class="text-gray-800"></p>
+    <button id="closeMessageBox" class="mt-4 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">OK</button>
+  </div>
+
   <script type="module">
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwpwYOPYU_SbZW0_EAB_9m3XgaMUfTVhRCxT-n1Ehv_5tLup9TyZ0wbweS_VG4ut6XH/exec';
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwIv5-pI61uIygbU2Xp0x8Da77AqaOKuK9DcboRZLMe1GRGtI_njg9g5_YnJXkTR-3y/exec";
 
     const urlParams = new URLSearchParams(window.location.search);
     const productData = {
@@ -55,9 +61,21 @@
       image: urlParams.get('image')
     };
 
-    const productDetailsDiv = document.getElementById('productDetails');
     const deliveryForm = document.getElementById('deliveryForm');
+    const productDetailsDiv = document.getElementById('productDetails');
+    const messageBox = document.getElementById('messageBox');
+    const messageText = document.getElementById('messageText');
 
+    document.getElementById('closeMessageBox').addEventListener('click', ()=>{
+      messageBox.style.display='none';
+    });
+
+    function showMessage(msg){
+      messageText.textContent = msg;
+      messageBox.style.display='block';
+    }
+
+    // Render product details
     if(productData.name){
       productDetailsDiv.innerHTML = `
         <img src="${productData.image}" alt="${productData.name}" class="w-24 h-24 rounded-lg object-cover" loading="eager">
@@ -68,44 +86,42 @@
           <p class="font-bold mt-2">Total: ₹${productData.price}</p>
         </div>
       `;
+    } else {
+      productDetailsDiv.innerHTML = `<p class="text-red-500">No product found in cart. Go back to <a href="index.html" class="text-orange-500 hover:underline">homepage</a>.</p>`;
     }
 
+    // Form submission
     deliveryForm.addEventListener('submit', async e => {
       e.preventDefault();
-      const name = document.getElementById('name').value;
-      const phone = document.getElementById('phone').value;
-      const address = document.getElementById('address').value;
-
       const orderData = {
-        Timestamp: new Date().toLocaleString(),
-        'Product Name': productData.name,
-        Price: productData.price,
-        'Customer Name': name,
-        'Customer Phone': phone,
-        'Customer Address': address,
-        'Payment Method': 'Pending'
+        timestamp: new Date().toLocaleString(),
+        productName: productData.name,
+        price: productData.price,
+        customerName: document.getElementById('name').value,
+        customerPhone: document.getElementById('phone').value,
+        customerAddress: document.getElementById('address').value
       };
 
       try {
-        const response = await fetch(scriptURL, {
+        await fetch(scriptURL, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {'Content-Type': 'application/json'},
           body: JSON.stringify(orderData)
         });
 
-        // Redirect to payment.html with query params
+        // Redirect to payment page with query params
         const params = new URLSearchParams({
-          productName: productData.name,
-          price: productData.price,
-          image: productData.image,
-          customerName: name,
-          customerPhone: phone,
-          customerAddress: address
+          productName: orderData.productName,
+          price: orderData.price,
+          customerName: orderData.customerName,
+          customerPhone: orderData.customerPhone,
+          customerAddress: orderData.customerAddress,
+          image: productData.image
         });
+
         window.location.href = `payment.html?${params.toString()}`;
-      } catch (err) {
-        console.error('Error:', err);
-        alert('Something went wrong. Please try again.');
+      } catch (error) {
+        showMessage("❌ Something went wrong. Please try again.");
       }
     });
   </script>
