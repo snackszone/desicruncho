@@ -6,6 +6,10 @@
 <title>Your Cart</title>
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Preload payment.html for faster navigation -->
+<link rel="preload" href="payment.html" as="document">
+
 <style>
   body { font-family: 'Inter', sans-serif; }
   .message-box {
@@ -64,6 +68,7 @@
 </div>
 
 <script type="module">
+// Your existing Google Sheets Web App URL (unchanged)
 const webAppURL = "https://script.google.com/macros/s/AKfycbzQ7srMx1T7fzlZvyqOfgacDYIeOGlVCCSJTJCAHsaj7yAptx2EBWFlJbOmiZB3bovT/exec";
 
 // Get product from URL
@@ -98,8 +103,8 @@ if(product.name){
   productDetailsDiv.innerHTML = `<p class="text-red-500">No product found in cart. Go back to <a href="index.html" class="text-orange-500 hover:underline">homepage</a>.</p>`;
 }
 
-// Submit form: save to sheet and redirect
-deliveryForm.addEventListener('submit', async e => {
+// Submit form: save to sheet and redirect immediately
+deliveryForm.addEventListener('submit', e => {
   e.preventDefault();
   const orderData = {
     name: document.getElementById('name').value,
@@ -108,15 +113,15 @@ deliveryForm.addEventListener('submit', async e => {
   };
 
   try {
-    // Send data to Google Sheet
-    await fetch(webAppURL, {
+    // Send data to Google Sheet (no waiting for response)
+    fetch(webAppURL, {
       method: 'POST',
-      mode: 'no-cors',
+      mode: 'no-cors',   // minimal network delay
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(orderData)
     });
 
-    // Redirect to payment.html with all details
+    // Redirect immediately to payment.html with all details
     const params = new URLSearchParams({
       productName: product.name,
       price: product.price,
