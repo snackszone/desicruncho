@@ -4,33 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Payment Page</title>
-
-<!-- Preconnect & Load Fonts Fast -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<!-- Tailwind CSS Optimized CDN -->
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
-
-<!-- FontAwesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
 <style>
 body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
 .payment-modal { max-width: 420px; width: 100%; background-color: white; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; padding: 1.5rem; box-sizing: border-box; }
 .section-container { padding: 1rem 0; border-bottom: 1px solid #e5e7eb; }
 .section-container:last-of-type { border-bottom: none; }
 .blurred { filter: blur(8px); transition: filter 0.3s ease; }
-.qr-code-container { position: relative; width: 180px; height: 180px; margin: 1rem auto; display: flex; justify-content: center; align-items: center; border-radius: 0.5rem; overflow: hidden; background-color: #f9fafb; }
+.qr-code-container { position: relative; width: 200px; height: 200px; margin: 1rem auto; display: flex; justify-content: center; align-items: center; border-radius: 0.5rem; overflow: hidden; background-color: #f9fafb; }
 .show-qr-btn { position: absolute; z-index: 10; background-color: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 9999px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 10px rgba(59,130,246,0.3); transition: background-color 0.2s; }
 .show-qr-btn:hover { background-color: #2563eb; }
 .timer { font-size: 1rem; font-weight: 700; color: #ef4444; display: none; text-align: center; margin-top: 0.5rem; }
+.payment-option { padding: 1rem; border-radius: 0.5rem; margin-bottom: 0.75rem; background-color: #f3f4f6; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 500; transition: background-color 0.2s; }
+.payment-option:hover { background-color: #e5e7eb; }
+.cod-charge { font-size: 0.75rem; color: #6b7280; }
 .helpline-section { padding: 1rem 0; text-align: center; font-size: 0.875rem; color: #6b7280; }
 .order-item { display: flex; align-items: center; margin-top: 1rem; }
 .order-item img { width: 60px; height: 60px; border-radius: 0.5rem; margin-right: 1rem; object-fit: cover; }
 .order-item-details { flex-grow: 1; }
-.logo-section { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 2rem; }
+.logo-section { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 2rem; }
+.logo-section img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
 .hidden { display: none; }
 #thank-you-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background-color: white; padding: 2.5rem; border-radius: 1rem; box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: center; z-index: 20; opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease; }
 #thank-you-modal.active { opacity: 1; transform: translate(-50%, -50%) scale(1); }
@@ -42,7 +37,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: fle
 
 <div id="payment-modal" class="payment-modal">
     <div class="logo-section">
-        <img src="https://i.ibb.co/jvTgqjjG/logo-png.png" alt="Desi Cruncho Logo" class="w-16 h-16 rounded-full mb-2">
+        <img src="https://i.ibb.co/jvTgqjjG/logo-png.png" alt="Desi Cruncho Logo" loading="eager">
         <h1 class="text-3xl font-bold" style="color: #FF5722;">Desi Cruncho</h1>
     </div>
 
@@ -53,7 +48,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: fle
         </div>
         <p class="text-gray-500 text-sm"><span id="total-items">1</span> items</p>
         <div class="order-item">
-            <img id="product-image" src="https://placehold.co/60x60" alt="Product Image" loading="lazy">
+            <img id="product-image" src="" alt="Product Image" loading="eager">
             <div class="order-item-details">
                 <p class="font-medium" id="product-name">Product Name</p>
                 <p class="text-gray-500 text-sm">Rs. <span id="item-price">0</span></p>
@@ -75,7 +70,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: fle
     <div class="section-container">
         <h2 class="text-xl font-bold mb-4">Pay via</h2>
         <div class="qr-code-container">
-            <img id="qr-image" src="https://i.ibb.co/sJCPGJR7/Whats-App-Image-2025-09-20-at-11-58-37-AM.jpg" alt="QR Code" class="h-full w-full object-cover blurred" loading="lazy">
+            <img id="qr-image" src="https://i.ibb.co/sJCPGJR7/Whats-App-Image-2025-09-20-at-11-58-37-AM.jpg" alt="QR Code" class="h-full w-full object-contain blurred" loading="eager">
             <button id="show-qr-btn" class="show-qr-btn">Show QR</button>
             <div id="qr-timer" class="timer">02:00</div>
         </div>
@@ -104,23 +99,20 @@ body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: fle
     </div>
 </div>
 
-<!-- JS Deferred -->
-<script defer>
+<script>
 document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     const productName = params.get('productName') || 'Product Name';
     const productPrice = params.get('price') || '0';
-    const productImage = params.get('image') || 'https://placehold.co/60x60';
+    const productImage = params.get('image') || 'https://placehold.co/60x60/d4d4d4/000?text=Product';
     const customerName = params.get('customerName') || 'Customer Name';
     const customerPhone = params.get('customerPhone') || '0000000000';
     const customerAddress = params.get('customerAddress') || 'Customer Address';
 
-    // Set product & customer details
     document.getElementById('product-name').textContent = productName;
     document.getElementById('item-price').textContent = productPrice;
     document.getElementById('total-price').textContent = productPrice;
-    const prodImg = document.getElementById('product-image');
-    prodImg.src = productImage;
+    document.getElementById('product-image').src = productImage;
     document.getElementById('customer-name').textContent = customerName;
     document.getElementById('customer-phone').textContent = customerPhone;
     document.getElementById('customer-address').textContent = customerAddress;
@@ -129,19 +121,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const showQrBtn = document.getElementById('show-qr-btn');
     const qrImage = document.getElementById('qr-image');
     const qrTimer = document.getElementById('qr-timer');
-    const webAppURL = 'https://script.google.com/macros/s/AKfycbz0cBWO6BFfExm4GB0XLZGMPUkvqN9oYazjANIdHSnzAEbdnG4UFT6gGPlfGt8IfJQgBg/exec';
+
+    const webAppURL = 'https://script.google.com/macros/s/AKfycbyNQZv6Y0Um4cZmGQKea6tEuv9gV28xp5mcuUVb44fzeLqrAedgNq_97GsOvlV8TfHqcw/exec';
 
     function sendPaymentData(method){
-        const data = { productName, price: productPrice, customerName, customerPhone, customerAddress, paymentMethod: method };
-        fetch(webAppURL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        }).catch(err => console.error(err));
+        const data = {
+            productName, price: productPrice, customerName, customerPhone, customerAddress, paymentMethod: method
+        };
+        fetch(webAppURL, { method: 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data) }).catch(err=>console.error(err));
     }
 
-    codBtn.addEventListener('click', () => {
+    codBtn.addEventListener('click', ()=>{
         sendPaymentData('COD');
         codBtn.textContent = 'Order Confirmed';
         codBtn.disabled = true;
@@ -152,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
         thankYou.classList.add('active');
     });
 
-    showQrBtn.addEventListener('click', () => {
+    showQrBtn.addEventListener('click', ()=>{
         qrImage.classList.remove('blurred');
         showQrBtn.style.display='none';
         qrTimer.style.display='block';
@@ -160,11 +150,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let timeLeft = 120;
         qrTimer.textContent = "02:00";
-
-        const interval = setInterval(() => {
+        const interval = setInterval(()=>{
             timeLeft--;
-            let minutes = Math.floor(timeLeft / 60);
-            let seconds = timeLeft % 60;
+            let minutes = Math.floor(timeLeft/60);
+            let seconds = timeLeft%60;
             qrTimer.textContent = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
             if(timeLeft <= 0){
                 clearInterval(interval);
