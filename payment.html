@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Page</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Your existing CSS here */
+</style>
+</head>
+<body>
+
+<div id="payment-modal" class="payment-modal">
+    <!-- Your existing modal HTML -->
+</div>
+
+<div id="thank-you-modal" class="hidden">
+    <!-- Your existing thank you modal -->
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const codBtn = document.getElementById('cod-btn');
+
+    function sendPaymentData(paymentMethod) {
+        const data = {
+            productName: document.getElementById('product-name').textContent,
+            price: document.getElementById('total-price').textContent,
+            customerName: document.getElementById('customer-name').textContent,
+            customerPhone: document.getElementById('customer-phone').textContent,
+            customerAddress: document.getElementById('customer-address').textContent,
+            paymentMethod: paymentMethod
+        };
+
+        fetch('https://script.google.com/macros/s/AKfycbx8FMj2oRLn4oYKI11jwE1-7YSkd3gDWvbfAxgRpR03Fc6kriz1MylqnsS6whuRxs6C7g/exec', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(response => console.log('Sheet Response:', response))
+        .catch(err => console.error('Error sending data:', err));
+    }
+
+    // COD button click
+    codBtn.addEventListener('click', () => {
+        sendPaymentData('COD');
+        codBtn.textContent = 'Order Confirmed';
+        codBtn.disabled = true;
+        codBtn.style.backgroundColor = '#15803d';
+        document.getElementById('payment-modal').classList.add('hidden');
+        document.getElementById('thank-you-modal').classList.remove('hidden');
+        document.getElementById('thank-you-modal').classList.add('active');
+    });
+
+    // QR payment button logic (example)
+    const showQrBtn = document.getElementById('show-qr-btn');
+    showQrBtn.addEventListener('click', () => {
+        // Your existing QR logic here
+        sendPaymentData('UPI'); // send UPI payment data when QR is shown or completed
+    });
+});
+</script>
+</body>
+</html>
