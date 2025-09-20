@@ -4,65 +4,147 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Payment Page</title>
-<script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
 <style>
-/* Your existing CSS here */
+body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+.payment-modal { max-width: 420px; width: 100%; background-color: white; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; padding: 1.5rem; box-sizing: border-box; }
+.section-container { padding: 1rem 0; border-bottom: 1px solid #e5e7eb; }
+.section-container:last-of-type { border-bottom: none; }
+.blurred { filter: blur(8px); transition: filter 0.3s ease; }
+.qr-code-container { position: relative; width: 180px; height: 180px; margin: 1rem auto; display: flex; justify-content: center; align-items: center; border-radius: 0.5rem; overflow: hidden; background-color: #f9fafb; }
+.show-qr-btn { position: absolute; z-index: 10; background-color: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 9999px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 10px rgba(59,130,246,0.3); transition: background-color 0.2s; }
+.show-qr-btn:hover { background-color: #2563eb; }
+.timer { font-size: 1rem; font-weight: 700; color: #ef4444; display: none; text-shadow: 1px 1px 2px white; }
+.payment-option { padding: 1rem; border-radius: 0.5rem; margin-bottom: 0.75rem; background-color: #f3f4f6; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 500; transition: background-color 0.2s; }
+.payment-option:hover { background-color: #e5e7eb; }
+.cod-charge { font-size: 0.75rem; color: #6b7280; }
+.helpline-section { padding: 1rem 0; text-align: center; font-size: 0.875rem; color: #6b7280; }
+.order-item { display: flex; align-items: center; margin-top: 1rem; }
+.order-item img { width: 60px; height: 60px; border-radius: 0.5rem; margin-right: 1rem; }
+.order-item-details { flex-grow: 1; }
+.logo-section { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 2rem; }
+.hidden { display: none; }
+#thank-you-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background-color: white; padding: 2.5rem; border-radius: 1rem; box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: center; z-index: 20; opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease; }
+#thank-you-modal.active { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.cod-button { background-color: #3b82f6; color: white; font-weight: 600; border-radius: 0.5rem; padding: 1rem; cursor: pointer; width: 100%; border: none; display: flex; justify-content: space-between; align-items: center; transition: background-color 0.2s; }
+.cod-button:hover { background-color: #2563eb; }
 </style>
 </head>
 <body>
 
 <div id="payment-modal" class="payment-modal">
-    <!-- Your existing modal HTML -->
+    <div class="logo-section">
+        <img src="https://i.ibb.co/jvTgqjjG/logo-png.png" alt="Desi Cruncho Logo" class="w-16 h-16 rounded-full mb-2">
+        <h1 class="text-3xl font-bold" style="color: #FF5722;">Desi Cruncho</h1>
+    </div>
+
+    <div class="section-container">
+        <div class="flex justify-between items-center mb-2">
+            <h2 class="text-xl font-bold">Order summary</h2>
+            <span class="text-lg font-bold">₹<span id="total-price">0</span></span>
+        </div>
+        <p class="text-gray-500 text-sm"><span id="total-items">1</span> items</p>
+        <div class="order-item">
+            <img id="product-image" src="" alt="Product Image">
+            <div class="order-item-details">
+                <p class="font-medium" id="product-name">Product Name</p>
+                <p class="text-gray-500 text-sm">Rs. <span id="item-price">0</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <div class="flex justify-between items-center mb-2">
+            <h2 class="text-xl font-bold">Delivery details</h2>
+        </div>
+        <p class="text-gray-700 text-sm font-medium" id="customer-name">Customer Name</p>
+        <p class="text-gray-600 text-sm mb-2" id="customer-address">Customer Address</p>
+        <div class="mt-4 flex justify-between items-center text-gray-700">
+            <span>+91 <span id="customer-phone">0000000000</span></span>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <h2 class="text-xl font-bold mb-4">Pay via</h2>
+        <div class="qr-code-container">
+            <img id="qr-image" src="https://placehold.co/180x180/E5E7EB/E5E7EB?text=QR+Code" alt="QR Code" class="h-full w-full object-cover blurred">
+            <button id="show-qr-btn" class="show-qr-btn">Show QR</button>
+        </div>
+        <button id="cod-btn" class="cod-button">
+            <div class="cod-text">
+                <i class="fas fa-cash-register mr-2"></i> Partial COD
+            </div>
+            <span id="cod-price">₹0 + ₹50.00</span>
+        </button>
+    </div>
+
+    <div class="helpline-section">
+        <p class="text-gray-500 font-medium">
+            <i class="fas fa-phone mr-2"></i>Our helpline: <a href="tel:9324410301" class="text-blue-500 hover:underline">9324410301</a>
+        </p>
+    </div>
 </div>
 
 <div id="thank-you-modal" class="hidden">
-    <!-- Your existing thank you modal -->
+    <div class="flex flex-col items-center">
+        <div class="bg-green-500 rounded-full p-4 mb-4">
+            <i class="fas fa-check text-white text-4xl"></i>
+        </div>
+        <h2 class="text-3xl font-bold mb-2">Thank you!</h2>
+        <p class="text-gray-600">Your order has been confirmed.</p>
+    </div>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const productName = params.get('productName') || 'Product Name';
+    const productPrice = params.get('price') || '0';
+    const productImage = params.get('image') || 'https://placehold.co/60x60/d4d4d4/000?text=Product';
+    const customerName = params.get('customerName') || 'Customer Name';
+    const customerPhone = params.get('customerPhone') || '0000000000';
+    const customerAddress = params.get('customerAddress') || 'Customer Address';
+
+    document.getElementById('product-name').textContent = productName;
+    document.getElementById('item-price').textContent = productPrice;
+    document.getElementById('total-price').textContent = productPrice;
+    document.getElementById('product-image').src = productImage;
+    document.getElementById('customer-name').textContent = customerName;
+    document.getElementById('customer-phone').textContent = customerPhone;
+    document.getElementById('customer-address').textContent = customerAddress;
+
     const codBtn = document.getElementById('cod-btn');
+    const showQrBtn = document.getElementById('show-qr-btn');
 
-    function sendPaymentData(paymentMethod) {
+    function sendPaymentData(method){
         const data = {
-            productName: document.getElementById('product-name').textContent,
-            price: document.getElementById('total-price').textContent,
-            customerName: document.getElementById('customer-name').textContent,
-            customerPhone: document.getElementById('customer-phone').textContent,
-            customerAddress: document.getElementById('customer-address').textContent,
-            paymentMethod: paymentMethod
+            productName, price: productPrice, customerName, customerPhone, customerAddress, paymentMethod: method
         };
-
         fetch('https://script.google.com/macros/s/AKfycbx8FMj2oRLn4oYKI11jwE1-7YSkd3gDWvbfAxgRpR03Fc6kriz1MylqnsS6whuRxs6C7g/exec', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        })
-        .then(res => res.json())
-        .then(response => console.log('Sheet Response:', response))
-        .catch(err => console.error('Error sending data:', err));
+            method: 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)
+        }).catch(err=>console.error(err));
     }
 
-    // COD button click
-    codBtn.addEventListener('click', () => {
+    codBtn.addEventListener('click', ()=>{
         sendPaymentData('COD');
         codBtn.textContent = 'Order Confirmed';
         codBtn.disabled = true;
         codBtn.style.backgroundColor = '#15803d';
         document.getElementById('payment-modal').classList.add('hidden');
-        document.getElementById('thank-you-modal').classList.remove('hidden');
-        document.getElementById('thank-you-modal').classList.add('active');
+        const thankYou = document.getElementById('thank-you-modal');
+        thankYou.classList.remove('hidden');
+        thankYou.classList.add('active');
     });
 
-    // QR payment button logic (example)
-    const showQrBtn = document.getElementById('show-qr-btn');
-    showQrBtn.addEventListener('click', () => {
-        // Your existing QR logic here
-        sendPaymentData('UPI'); // send UPI payment data when QR is shown or completed
+    showQrBtn.addEventListener('click', ()=>{
+        sendPaymentData('UPI');
+        document.getElementById('qr-image').classList.remove('blurred');
+        showQrBtn.style.display='none';
     });
 });
 </script>
+
 </body>
 </html>
