@@ -17,9 +17,6 @@ body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: fle
 .show-qr-btn { position: absolute; z-index: 10; background-color: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 9999px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 10px rgba(59,130,246,0.3); transition: background-color 0.2s; }
 .show-qr-btn:hover { background-color: #2563eb; }
 .timer { font-size: 1rem; font-weight: 700; color: #ef4444; display: none; text-align: center; margin-top: 0.5rem; }
-.payment-option { padding: 1rem; border-radius: 0.5rem; margin-bottom: 0.75rem; background-color: #f3f4f6; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 500; transition: background-color 0.2s; }
-.payment-option:hover { background-color: #e5e7eb; }
-.cod-charge { font-size: 0.75rem; color: #6b7280; }
 .helpline-section { padding: 1rem 0; text-align: center; font-size: 0.875rem; color: #6b7280; }
 .order-item { display: flex; align-items: center; margin-top: 1rem; }
 .order-item img { width: 60px; height: 60px; border-radius: 0.5rem; margin-right: 1rem; }
@@ -121,20 +118,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const qrImage = document.getElementById('qr-image');
     const qrTimer = document.getElementById('qr-timer');
 
-    const webAppURL = 'https://script.google.com/macros/s/AKfycbwtdv36FCEjmw1jLL34T4R-b2MaF0p8zohZ8DqWB5RFbvVAr2MsqpvZ8DxvqzU83fTYPg/exec';
+    const webAppURL = 'https://script.google.com/macros/s/AKfycbz0cBWO6BFfExm4GB0XLZGMPUkvqN9oYazjANIdHSnzAEbdnG4UFT6gGPlfGt8IfJQgBg/exec';
 
     function sendPaymentData(method){
-        const data = {
-            productName, price: productPrice, customerName, customerPhone, customerAddress, paymentMethod: method
-        };
+        const data = { productName, price: productPrice, customerName, customerPhone, customerAddress, paymentMethod: method };
         fetch(webAppURL, {
             method: 'POST',
-            headers:{'Content-Type':'application/json'},
+            mode: 'no-cors', // bypass CORS
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
-        }).catch(err=>console.error(err));
+        }).catch(err => console.error(err));
     }
 
-    codBtn.addEventListener('click', ()=>{
+    codBtn.addEventListener('click', () => {
         sendPaymentData('COD');
         codBtn.textContent = 'Order Confirmed';
         codBtn.disabled = true;
@@ -145,20 +141,19 @@ document.addEventListener('DOMContentLoaded', () => {
         thankYou.classList.add('active');
     });
 
-    showQrBtn.addEventListener('click', ()=>{
+    showQrBtn.addEventListener('click', () => {
         qrImage.classList.remove('blurred');
         showQrBtn.style.display='none';
         qrTimer.style.display='block';
-
         sendPaymentData('UPI');
 
         let timeLeft = 120; // 2 minutes
         qrTimer.textContent = "02:00";
 
-        const interval = setInterval(()=>{
+        const interval = setInterval(() => {
             timeLeft--;
-            let minutes = Math.floor(timeLeft/60);
-            let seconds = timeLeft%60;
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
             qrTimer.textContent = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
             if(timeLeft <= 0){
                 clearInterval(interval);
