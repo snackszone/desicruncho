@@ -4,9 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Payment Page</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<!-- Preconnect & Load Fonts Fast -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Tailwind CSS Optimized CDN -->
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
+
+<!-- FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 <style>
 body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
 .payment-modal { max-width: 420px; width: 100%; background-color: white; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; padding: 1.5rem; box-sizing: border-box; }
@@ -19,7 +28,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: fle
 .timer { font-size: 1rem; font-weight: 700; color: #ef4444; display: none; text-align: center; margin-top: 0.5rem; }
 .helpline-section { padding: 1rem 0; text-align: center; font-size: 0.875rem; color: #6b7280; }
 .order-item { display: flex; align-items: center; margin-top: 1rem; }
-.order-item img { width: 60px; height: 60px; border-radius: 0.5rem; margin-right: 1rem; }
+.order-item img { width: 60px; height: 60px; border-radius: 0.5rem; margin-right: 1rem; object-fit: cover; }
 .order-item-details { flex-grow: 1; }
 .logo-section { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 2rem; }
 .hidden { display: none; }
@@ -44,7 +53,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: fle
         </div>
         <p class="text-gray-500 text-sm"><span id="total-items">1</span> items</p>
         <div class="order-item">
-            <img id="product-image" src="" alt="Product Image">
+            <img id="product-image" src="https://placehold.co/60x60" alt="Product Image" loading="lazy">
             <div class="order-item-details">
                 <p class="font-medium" id="product-name">Product Name</p>
                 <p class="text-gray-500 text-sm">Rs. <span id="item-price">0</span></p>
@@ -66,7 +75,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: fle
     <div class="section-container">
         <h2 class="text-xl font-bold mb-4">Pay via</h2>
         <div class="qr-code-container">
-            <img id="qr-image" src="https://i.ibb.co/sJCPGJR7/Whats-App-Image-2025-09-20-at-11-58-37-AM.jpg" alt="QR Code" class="h-full w-full object-cover blurred">
+            <img id="qr-image" src="https://i.ibb.co/sJCPGJR7/Whats-App-Image-2025-09-20-at-11-58-37-AM.jpg" alt="QR Code" class="h-full w-full object-cover blurred" loading="lazy">
             <button id="show-qr-btn" class="show-qr-btn">Show QR</button>
             <div id="qr-timer" class="timer">02:00</div>
         </div>
@@ -95,20 +104,23 @@ body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: fle
     </div>
 </div>
 
-<script>
+<!-- JS Deferred -->
+<script defer>
 document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     const productName = params.get('productName') || 'Product Name';
     const productPrice = params.get('price') || '0';
-    const productImage = params.get('image') || 'https://placehold.co/60x60/d4d4d4/000?text=Product';
+    const productImage = params.get('image') || 'https://placehold.co/60x60';
     const customerName = params.get('customerName') || 'Customer Name';
     const customerPhone = params.get('customerPhone') || '0000000000';
     const customerAddress = params.get('customerAddress') || 'Customer Address';
 
+    // Set product & customer details
     document.getElementById('product-name').textContent = productName;
     document.getElementById('item-price').textContent = productPrice;
     document.getElementById('total-price').textContent = productPrice;
-    document.getElementById('product-image').src = productImage;
+    const prodImg = document.getElementById('product-image');
+    prodImg.src = productImage;
     document.getElementById('customer-name').textContent = customerName;
     document.getElementById('customer-phone').textContent = customerPhone;
     document.getElementById('customer-address').textContent = customerAddress;
@@ -117,14 +129,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const showQrBtn = document.getElementById('show-qr-btn');
     const qrImage = document.getElementById('qr-image');
     const qrTimer = document.getElementById('qr-timer');
-
     const webAppURL = 'https://script.google.com/macros/s/AKfycbz0cBWO6BFfExm4GB0XLZGMPUkvqN9oYazjANIdHSnzAEbdnG4UFT6gGPlfGt8IfJQgBg/exec';
 
     function sendPaymentData(method){
         const data = { productName, price: productPrice, customerName, customerPhone, customerAddress, paymentMethod: method };
         fetch(webAppURL, {
             method: 'POST',
-            mode: 'no-cors', // bypass CORS
+            mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         }).catch(err => console.error(err));
@@ -147,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
         qrTimer.style.display='block';
         sendPaymentData('UPI');
 
-        let timeLeft = 120; // 2 minutes
+        let timeLeft = 120;
         qrTimer.textContent = "02:00";
 
         const interval = setInterval(() => {
