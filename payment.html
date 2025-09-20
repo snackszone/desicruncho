@@ -13,7 +13,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: fle
 .section-container { padding: 1rem 0; border-bottom: 1px solid #e5e7eb; }
 .section-container:last-of-type { border-bottom: none; }
 .blurred { filter: blur(8px); transition: filter 0.3s ease; }
-.qr-code-container { width: 200px; height: 200px; margin: 0 auto; display: flex; justify-content: center; align-items: center; border-radius: 0.5rem; overflow: hidden; background-color: #f9fafb; }
+.qr-code-container { position: relative; width: 180px; height: 180px; margin: 1rem auto; display: flex; justify-content: center; align-items: center; border-radius: 0.5rem; overflow: hidden; background-color: #f9fafb; }
 .show-qr-btn { position: absolute; z-index: 10; background-color: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 9999px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 10px rgba(59,130,246,0.3); transition: background-color 0.2s; }
 .show-qr-btn:hover { background-color: #2563eb; }
 .timer { font-size: 1rem; font-weight: 700; color: #ef4444; display: none; text-align: center; margin-top: 0.5rem; }
@@ -25,7 +25,6 @@ body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: fle
 .order-item img { width: 60px; height: 60px; border-radius: 0.5rem; margin-right: 1rem; }
 .order-item-details { flex-grow: 1; }
 .logo-section { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 2rem; }
-.logo-section img { width: 64px; height: 64px; border-radius: 50%; } /* Small circle logo */
 .hidden { display: none; }
 #thank-you-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background-color: white; padding: 2.5rem; border-radius: 1rem; box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: center; z-index: 20; opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease; }
 #thank-you-modal.active { opacity: 1; transform: translate(-50%, -50%) scale(1); }
@@ -37,7 +36,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: fle
 
 <div id="payment-modal" class="payment-modal">
     <div class="logo-section">
-        <img src="https://i.ibb.co/jvTgqjjG/logo-png.png" alt="Desi Cruncho Logo">
+        <img src="https://i.ibb.co/jvTgqjjG/logo-png.png" alt="Desi Cruncho Logo" class="w-16 h-16 rounded-full mb-2">
         <h1 class="text-3xl font-bold" style="color: #FF5722;">Desi Cruncho</h1>
     </div>
 
@@ -69,15 +68,12 @@ body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: fle
 
     <div class="section-container">
         <h2 class="text-xl font-bold mb-4">Pay via</h2>
-        <div class="flex flex-col items-center">
-            <div class="qr-code-container">
-                <img id="qr-image" src="https://i.ibb.co/sJCPGJR7/Whats-App-Image-2025-09-20-at-11-58-37-AM.jpg" 
-                     alt="QR Code" class="h-full w-full object-contain" loading="eager">
-                <button id="show-qr-btn" class="show-qr-btn">Show QR</button>
-            </div>
-            <div id="qr-timer" class="timer mt-2">02:00</div>
+        <div class="qr-code-container">
+            <img id="qr-image" src="https://i.ibb.co/sJCPGJR7/Whats-App-Image-2025-09-20-at-11-58-37-AM.jpg" alt="QR Code" class="h-full w-full object-contain blurred" loading="eager">
+            <button id="show-qr-btn" class="show-qr-btn">Show QR</button>
         </div>
-        <button id="cod-btn" class="cod-button">
+        <div id="qr-timer" class="timer mt-2">02:00</div>
+        <button id="cod-btn" class="cod-button mt-4">
             <div class="cod-text">
                 <i class="fas fa-cash-register mr-2"></i> Partial COD
             </div>
@@ -136,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }).catch(err=>console.error(err));
     }
 
-    codBtn.addEventListener('click', ()=>{
+    codBtn.addEventListener('click', ()=> {
         sendPaymentData('COD');
         codBtn.textContent = 'Order Confirmed';
         codBtn.disabled = true;
@@ -147,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
         thankYou.classList.add('active');
     });
 
-    showQrBtn.addEventListener('click', ()=>{
+    showQrBtn.addEventListener('click', () => {
         qrImage.classList.remove('blurred');
         showQrBtn.style.display='none';
         qrTimer.style.display='block';
@@ -157,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let timeLeft = 120;
         qrTimer.textContent = "02:00";
 
-        const interval = setInterval(()=>{
+        const interval = setInterval(() => {
             timeLeft--;
             let minutes = Math.floor(timeLeft/60);
             let seconds = timeLeft%60;
