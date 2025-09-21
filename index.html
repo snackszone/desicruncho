@@ -7,11 +7,10 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   body { font-family: 'Inter', sans-serif; }
-  #heroSlider { position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; margin-top: 80px; }
+  #heroSlider { position: relative; width: 100%; height: 400px; overflow: hidden; margin-top: 80px; }
   .hero-slide { width: 100%; height: 100%; position: absolute; top:0; left:0; }
   .hero-slide.hidden { display: none; }
   .dot { width: 14px; height: 14px; border-radius: 50%; cursor: pointer; transition: all 0.3s; }
-  .nav-container { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 0.5rem; }
 </style>
 </head>
 <body class="bg-white text-gray-800">
@@ -199,7 +198,6 @@
   </div>
 </footer>
 
-<!-- Scripts -->
 <script>
 // Hero slider logic
 const heroSlides = document.querySelectorAll('#heroSlider .hero-slide');
@@ -208,7 +206,10 @@ let heroIndex = 0;
 
 function showHeroSlide(index){
   heroSlides.forEach((slide,i)=>slide.classList.toggle('hidden',i!==index));
-  heroDots.forEach((dot,i)=>{ dot.classList.toggle('bg-white',i===index); dot.classList.toggle('bg-gray-300',i!==index); });
+  heroDots.forEach((dot,i)=>{
+    if(i===index){ dot.classList.remove('bg-gray-300'); dot.classList.add('bg-orange-500'); }
+    else { dot.classList.remove('bg-orange-500'); dot.classList.add('bg-gray-300'); }
+  });
   heroIndex = index;
 }
 
@@ -251,7 +252,6 @@ reviewForm.addEventListener('submit',async (e)=>{
   stars.forEach(s=>s.textContent="☆");
   selectedRating=0;
 });
-
 closeThankYou.addEventListener('click',()=>{ thankYou.classList.add('hidden'); });
 </script>
 
