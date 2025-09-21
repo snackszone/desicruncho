@@ -5,6 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact Us - Desi Cruncho</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<style>
+  /* Placeholder background while iframe loads */
+  #mapContainer {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: url('https://maps.googleapis.com/maps/api/staticmap?center=Vashi,Navi+Mumbai&zoom=15&size=600x300&markers=color:red%7CDesi+Cruncho,Vashi,Navi+Mumbai') center/cover no-repeat;
+  }
+  #mapIframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+</style>
 </head>
 <body class="bg-orange-50">
 
@@ -38,18 +55,19 @@
     </div>
 
     <!-- Map Section -->
-    <div class="md:w-1/2 mt-6 md:mt-0 rounded-lg overflow-hidden">
-      <!-- Static placeholder image first for fast load -->
-      <a href="https://www.google.com/maps/place/Vashi,+Navi+Mumbai,+Maharashtra" target="_blank">
-        <img src="https://maps.googleapis.com/maps/api/staticmap?center=Vashi,Navi+Mumbai&zoom=15&size=600x300&markers=color:red%7CDesi+Cruncho,Vashi,Navi+Mumbai" 
-             alt="Desi Cruncho Location" class="w-full h-60 object-cover rounded-lg">
-      </a>
-      <!-- Interactive iframe loads once page is loaded -->
-      <iframe 
-        id="mapIframe"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3770.776140351793!2d72.99899321420918!3d19.07706598708783!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c12dbf6a8f3f%3A0x56f35d4af2f3f631!2sVashi%2C%20Navi%20Mumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1673364962395!5m2!1sen!2sin"
-        width="100%" height="250" style="border:0; display:none;" allowfullscreen="" loading="lazy">
-      </iframe>
+    <div class="md:w-1/2 mt-6 md:mt-0">
+      <div class="mb-2 flex items-center gap-2 text-orange-600 font-semibold text-lg">
+        <span>📍</span>
+        <span>Our Location</span>
+      </div>
+      <div id="mapContainer" class="rounded-lg overflow-hidden">
+        <iframe 
+          id="mapIframe"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3770.776140351793!2d72.99899321420918!3d19.07706598708783!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c12dbf6a8f3f%3A0x56f35d4af2f3f631!2sVashi%2C%20Navi%20Mumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1673364962395!5m2!1sen!2sin"
+          allowfullscreen=""
+          loading="lazy">
+        </iframe>
+      </div>
     </div>
 
   </div>
@@ -58,15 +76,6 @@
 <footer class="bg-orange-500 text-white py-6 text-center">
   © 2025 Desi Cruncho. All rights reserved.
 </footer>
-
-<script>
-  // Only show interactive map after page load (prevent duplicate map)
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      document.getElementById('mapIframe').style.display = 'block';
-    }, 1000);
-  });
-</script>
 
 </body>
 </html>
