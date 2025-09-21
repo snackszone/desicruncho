@@ -38,12 +38,13 @@
 <!-- Hero -->
 <section id="hero">
   <div id="slider">
-    <video src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-1.mp4" autoplay muted loop preload="auto" loading="eager"></video>
-    <video src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-2.mp4" autoplay muted loop preload="auto" loading="eager"></video>
-    <img src="https://i.ibb.co/XxcdQHqn/cropped-Gemini-Generated-Image-29gvb329gvb329gv.png" alt="Slide 3" loading="eager">
-    <img src="https://i.ibb.co/q3DpTnjZ/Whats-App-Image-2025-09-20-at-10-40-11-PM-1.jpg" alt="Slide 4" loading="eager">
+    <video src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-1.mp4" autoplay muted loop preload="auto"></video>
+    <video src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-2.mp4" autoplay muted loop preload="auto"></video>
+    <img src="https://i.ibb.co/XxcdQHqn/cropped-Gemini-Generated-Image-29gvb329gvb329gv.png" alt="Slide 3">
+    <img src="https://i.ibb.co/q3DpTnjZ/Whats-App-Image-2025-09-20-at-10-40-11-PM-1.jpg" alt="Slide 4">
   </div>
 </section>
+
 <div class="nav-container">
   <button id="prev" class="bg-orange-500 hover:bg-orange-600 text-white rounded-full p-2 text-xl font-bold shadow-md">&lt;</button>
   <div class="flex gap-2">
@@ -67,7 +68,8 @@
         <h3 class="text-xl font-semibold">Thekua</h3>
         <p>Weight: 800g</p>
         <p>Price: ₹280</p>
-        <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 add-to-cart" data-product="Thekua" data-price="280" data-weight="800g" data-image="https://i.ibb.co/BHy3ZBKS/thekua.jpg">Add to Cart</button>
+        <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 add-to-cart"
+          data-product="Thekua" data-price="280" data-weight="800g" data-image="https://i.ibb.co/BHy3ZBKS/thekua.jpg">Add to Cart</button>
       </div>
 
       <!-- Nimki -->
@@ -76,7 +78,8 @@
         <h3 class="text-xl font-semibold">Nimki</h3>
         <p>Weight: 800g</p>
         <p>Price: ₹300</p>
-        <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 add-to-cart" data-product="Nimki" data-price="300" data-weight="800g" data-image="https://i.ibb.co/tPvCDjqJ/nimki.jpg">Add to Cart</button>
+        <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 add-to-cart"
+          data-product="Nimki" data-price="300" data-weight="800g" data-image="https://i.ibb.co/tPvCDjqJ/nimki.jpg">Add to Cart</button>
       </div>
 
       <!-- Combo Pack -->
@@ -85,7 +88,8 @@
         <h3 class="text-xl font-semibold">Combo Pack</h3>
         <p>Weight: 1600g</p>
         <p>Price: ₹580</p>
-        <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 add-to-cart" data-product="Combo Pack" data-price="580" data-weight="1600g" data-image="https://i.ibb.co/fVJFtnVB/Whats-App-Image-2025-09-20-at-11-05-53-PM.jpg">Add to Cart</button>
+        <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 add-to-cart"
+          data-product="Combo Pack" data-price="580" data-weight="1600g" data-image="https://i.ibb.co/fVJFtnVB/Whats-App-Image-2025-09-20-at-11-05-53-PM.jpg">Add to Cart</button>
       </div>
 
     </div>
@@ -122,29 +126,6 @@
         <p class="text-orange-500 text-xl mb-2">⭐⭐⭐⭐⭐</p>
         <p class="font-bold">Amit</p>
         <p>“Perfect for evening tea time. Highly recommended.”</p>
-      </div>
-    </div>
-
-    <!-- Review Form -->
-    <div class="relative max-w-2xl mx-auto">
-      <form id="reviewForm" class="bg-white p-6 rounded-lg shadow">
-        <h3 class="text-xl font-semibold mb-4 text-center">Write a Review</h3>
-        <div class="flex items-center justify-center space-x-2 mb-4" id="starContainer">
-          <span class="cursor-pointer text-2xl" data-star="1">☆</span>
-          <span class="cursor-pointer text-2xl" data-star="2">☆</span>
-          <span class="cursor-pointer text-2xl" data-star="3">☆</span>
-          <span class="cursor-pointer text-2xl" data-star="4">☆</span>
-          <span class="cursor-pointer text-2xl" data-star="5">☆</span>
-        </div>
-        <input id="reviewName" type="text" class="w-full border rounded-lg p-2 mb-4" placeholder="Your Name" required>
-        <textarea id="reviewText" class="w-full border rounded-lg p-2 mb-4" placeholder="Write your review here..." required></textarea>
-        <button type="submit" class="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 block mx-auto">Submit Review</button>
-      </form>
-
-      <div id="thankYou" class="hidden absolute inset-0 bg-white bg-opacity-95 flex flex-col justify-center items-center rounded-lg shadow">
-        <button id="closeThankYou" class="absolute top-2 right-2 text-gray-600 hover:text-red-500 text-xl font-bold">✖</button>
-        <h3 class="text-xl font-bold text-orange-500 mb-2">Thank You!</h3>
-        <p>Your review has been submitted.</p>
       </div>
     </div>
   </div>
@@ -184,92 +165,52 @@
 </footer>
 
 <script>
-// ---------------- SLIDER ----------------
-const slider=document.getElementById('slider');
-const dots=document.querySelectorAll('.dot');
-const totalSlides=slider.children.length;
-let currentIndex=0; let interval=null;
+const slider = document.getElementById('slider');
+const dots = document.querySelectorAll('.dot');
+const totalSlides = slider.children.length;
+let currentIndex = 0;
+let interval = null;
+
 function updateSlider(index){
-  slider.style.transform=`translateX(-${index*100}%)`;
+  slider.style.transform = `translateX(-${index*100}%)`;
   dots.forEach(dot=>dot.classList.remove('bg-orange-700'));
   dots[index].classList.add('bg-orange-700');
 }
-function startAutoSlide(){ interval=setInterval(()=>{currentIndex=(currentIndex+1)%totalSlides;updateSlider(currentIndex)},3000);}
-function resetInterval(){ clearInterval(interval); startAutoSlide();}
+function startAutoSlide(){
+  interval = setInterval(()=>{ currentIndex=(currentIndex+1)%totalSlides; updateSlider(currentIndex); },3000);
+}
+function resetInterval(){ clearInterval(interval); startAutoSlide(); }
+
 document.getElementById('prev').addEventListener('click',()=>{currentIndex=(currentIndex-1+totalSlides)%totalSlides;updateSlider(currentIndex);resetInterval();});
 document.getElementById('next').addEventListener('click',()=>{currentIndex=(currentIndex+1)%totalSlides;updateSlider(currentIndex);resetInterval();});
 dots.forEach(dot=>{dot.addEventListener('click',()=>{currentIndex=parseInt(dot.dataset.index);updateSlider(currentIndex);resetInterval();});});
+
 updateSlider(currentIndex); startAutoSlide();
 
-// ---------------- GOOGLE SHEET LOGGING ----------------
-const SCRIPT_URL="https://script.google.com/macros/s/AKfycbzoWl2KwBOPq7_2hRHCsd7p1pPm7tDzCxMY7UvZXdZj64V1IeoeY5KxVvgZdsHNDSc8Kw/exec";
-function logEvent(eventType, product=""){
-  const ref=document.referrer || "Direct";
-  const payload={ "Event type": eventType, "Product": product, "Traffic source": ref };
-  try{
-    fetch(SCRIPT_URL,{ method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
-  }catch(err){console.error("Logging error:",err);}
-}
+// Add to Cart + Logging
+const webAppURL = "https://script.google.com/macros/s/AKfycbxCv8I3K6vSVhGubqRz77DEXMat4JVSXT7aBv7PAZxCONSlsAvthdEfhjlfZeThkEK9kQ/exec";
 
-// ---------------- ADD TO CART ----------------
 document.querySelectorAll('.add-to-cart').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    const product=btn.dataset.product;
-    const price=btn.dataset.price;
-    const weight=btn.dataset.weight;
-    const image=btn.dataset.image;
+  btn.addEventListener('click', async ()=>{
+    const product = btn.dataset.product;
+    const price = btn.dataset.price;
+    const weight = btn.dataset.weight;
+    const image = btn.dataset.image;
 
-    // Log Add to Cart
-    logEvent("Order", product);
+    // Save to Google Sheet (no-cors)
+    fetch(webAppURL,{
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({product, referrer: document.referrer})
+    });
 
-    // Redirect to cart.html with product info
-    const params=new URLSearchParams({name:product,price:price,weight:weight,image:image});
-    window.location.href=`cart.html?${params.toString()}`;
+    // Redirect to cart.html
+    const params = new URLSearchParams({name:product, price:price, weight:weight, image:image});
+    window.location.href = `cart.html?${params.toString()}`;
   });
 });
-
-// ---------------- REVIEW FORM ----------------
-const stars=document.querySelectorAll('#starContainer span');
-let selectedRating=0;
-stars.forEach(star=>{
-  star.addEventListener('click',()=>{
-    selectedRating=star.dataset.star;
-    stars.forEach(s=>s.textContent="☆");
-    for(let i=0;i<selectedRating;i++) stars[i].textContent="⭐";
-  });
-});
-
-const reviewForm=document.getElementById('reviewForm');
-const thankYou=document.getElementById('thankYou');
-const closeThankYou=document.getElementById('closeThankYou');
-const reviewsGrid=document.getElementById('reviewsGrid');
-
-reviewForm.addEventListener('submit',async e=>{
-  e.preventDefault();
-  const name=document.getElementById('reviewName').value.trim();
-  const reviewText=document.getElementById('reviewText').value.trim();
-  if(selectedRating==0){alert("Please select a star rating!");return;}
-  if(reviewText==""){alert("Please write your review!");return;}
-
-  // Log review
-  try{
-    fetch(SCRIPT_URL,{ method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ "Event type":"Review", "Product":"", "Traffic source":document.referrer||"Direct", name, review:reviewText, rating:selectedRating })});
-  }catch(err){console.error(err);}
-
-  // Append review
-  const reviewCard=document.createElement('div');
-  reviewCard.className="bg-white p-6 rounded-lg shadow text-center";
-  const starsText="⭐".repeat(selectedRating);
-  reviewCard.innerHTML=`<p class="text-orange-500 text-xl mb-2">${starsText}</p><p class="font-bold">${name}</p><p>${reviewText}</p>`;
-  reviewsGrid.appendChild(reviewCard);
-
-  thankYou.classList.remove('hidden');
-  reviewForm.reset();
-  stars.forEach(s=>s.textContent="☆");
-  selectedRating=0;
-});
-
-closeThankYou.addEventListener('click',()=>{thankYou.classList.add('hidden');});
 </script>
+
 </body>
 </html>
