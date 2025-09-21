@@ -21,7 +21,7 @@
   <div class="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
     <div class="flex items-center space-x-3">
       <div class="w-12 h-12 rounded-full overflow-hidden">
-        <img src="https://i.ibb.co/KjXFB887/logo-png.png" alt="Logo" class="w-full h-full object-cover">
+        <img src="https://i.ibb.co/KjXFB887/logo-png.png" alt="Logo" class="w-full h-full object-cover" loading="lazy">
       </div>
       <span class="text-2xl font-bold text-orange-500">Desi Cruncho</span>
     </div>
@@ -38,10 +38,10 @@
 <!-- Hero -->
 <section id="hero">
   <div id="slider">
-    <video src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-1.mp4" autoplay muted loop></video>
-    <video src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-2.mp4" autoplay muted loop></video>
-    <img src="https://i.ibb.co/XxcdQHqn/cropped-Gemini-Generated-Image-29gvb329gvb329gv.png" alt="Slide 3">
-    <img src="https://i.ibb.co/q3DpTnjZ/Whats-App-Image-2025-09-20-at-10-40-11-PM-1.jpg" alt="Slide 4">
+    <video src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-1.mp4" autoplay muted loop preload="auto"></video>
+    <video src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-2.mp4" autoplay muted loop preload="auto"></video>
+    <img src="https://i.ibb.co/XxcdQHqn/cropped-Gemini-Generated-Image-29gvb329gvb329gv.png" alt="Slide 3" loading="lazy">
+    <img src="https://i.ibb.co/q3DpTnjZ/Whats-App-Image-2025-09-20-at-10-40-11-PM-1.jpg" alt="Slide 4" loading="lazy">
   </div>
 </section>
 
@@ -62,21 +62,21 @@
     <h2 class="text-3xl font-bold text-center text-orange-500 mb-12">Our Products</h2>
     <div class="grid md:grid-cols-3 gap-8">
       <div class="bg-white shadow-lg rounded-lg p-6 text-center">
-        <img src="https://i.ibb.co/BHy3ZBKS/thekua.jpg" alt="Thekua" class="mx-auto mb-4 rounded-lg object-cover w-full h-56">
+        <img src="https://i.ibb.co/BHy3ZBKS/thekua.jpg" alt="Thekua" class="mx-auto mb-4 rounded-lg w-full h-56 object-contain bg-gray-100 p-2" loading="lazy">
         <h3 class="text-xl font-semibold">Thekua</h3>
         <p>Weight: 800g</p>
         <p>Price: ₹280</p>
         <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 add-to-cart" data-product="Thekua" data-price="280" data-weight="800g" data-image="https://i.ibb.co/BHy3ZBKS/thekua.jpg">Add to Cart</button>
       </div>
       <div class="bg-white shadow-lg rounded-lg p-6 text-center">
-        <img src="https://i.ibb.co/tPvCDjqJ/nimki.jpg" alt="Nimki" class="mx-auto mb-4 rounded-lg object-cover w-full h-56">
+        <img src="https://i.ibb.co/tPvCDjqJ/nimki.jpg" alt="Nimki" class="mx-auto mb-4 rounded-lg w-full h-56 object-contain bg-gray-100 p-2" loading="lazy">
         <h3 class="text-xl font-semibold">Nimki</h3>
         <p>Weight: 800g</p>
         <p>Price: ₹300</p>
         <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 add-to-cart" data-product="Nimki" data-price="300" data-weight="800g" data-image="https://i.ibb.co/tPvCDjqJ/nimki.jpg">Add to Cart</button>
       </div>
       <div class="bg-white shadow-lg rounded-lg p-6 text-center">
-        <img src="https://i.ibb.co/fVJFtnVB/Whats-App-Image-2025-09-20-at-11-05-53-PM.jpg" alt="Combo Pack" class="mx-auto mb-4 rounded-lg object-cover w-full h-56">
+        <img src="https://i.ibb.co/fVJFtnVB/Whats-App-Image-2025-09-20-at-11-05-53-PM.jpg" alt="Combo Pack" class="mx-auto mb-4 rounded-lg w-full h-56 object-contain bg-gray-100 p-2" loading="lazy">
         <h3 class="text-xl font-semibold">Combo Pack</h3>
         <p>Weight: 1600g</p>
         <p>Price: ₹580</p>
@@ -89,7 +89,7 @@
 <!-- Our Story -->
 <section id="ourstory" class="py-16">
   <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
-    <img src="https://i.ibb.co/GfntzfgK/Gemini-Generated-Image-20zv3620zv3620zv.png" alt="Our Story" class="rounded-lg shadow-md object-cover w-full h-80">
+    <img src="https://i.ibb.co/GfntzfgK/Gemini-Generated-Image-20zv3620zv3620zv.png" alt="Our Story" class="rounded-lg shadow-md object-cover w-full h-80" loading="lazy">
     <div>
       <h2 class="text-3xl font-bold text-orange-500 mb-4">Our Story</h2>
       <p class="font-medium">Desi Cruncho was born with a mission to bring authentic Indian snacks to your plate. Every bite tells a story of tradition and love for homemade flavors.</p>
@@ -180,7 +180,7 @@
 <script>
 // === WebApp URLs ===
 const clickLogURL="https://script.google.com/macros/s/AKfycbx79AzC5DJYp6xdGWhBgJu46ynqtFHvAg5WnYoC_iaC6ixhUwhinCm0pUbqSWD1X7_lsQ/exec";
-const reviewURL="https://script.google.com/macros/s/AKfycb79AzC5DJYp6xdGWhBgJu46ynqtFHvAg5WnYoC_iaC6ixhUwhinCm0pUbqSWD1X7_lsQ/exec";
+const reviewURL="https://script.google.com/macros/s/AKfycbzupwBG9lrM-rMEKUFD5huRM-zWWfG6zzXLCzlKF75HRIuRSkaY-62y7Cal0mB-rkE/exec";
 
 // Traffic Source Detector
 function detectSource(){
@@ -203,12 +203,7 @@ dots.forEach(d=>d.addEventListener('click',()=>{currentIndex=parseInt(d.dataset.
 updateSlider(currentIndex);startAutoSlide();
 
 // === Page Visit Log ===
-window.addEventListener("load",()=>{
-  fetch(clickLogURL,{
-    method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({type:"Page Visit",product:"",referrer:detectSource()})
-  });
-});
+window.addEventListener("load",()=>{fetch(clickLogURL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:"Page Visit",product:"",referrer:detectSource()})});});
 
 // === Add to Cart Logging ===
 document.querySelectorAll('.add-to-cart').forEach(btn=>{
@@ -217,10 +212,7 @@ document.querySelectorAll('.add-to-cart').forEach(btn=>{
     const price=btn.dataset.price;
     const weight=btn.dataset.weight;
     const image=btn.dataset.image;
-    fetch(clickLogURL,{
-      method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({type:"Add to Cart",product:product,referrer:detectSource()})
-    });
+    fetch(clickLogURL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:"Add to Cart",product:product,referrer:detectSource()})});
     const params=new URLSearchParams({name:product,price:price,weight:weight,image:image});
     window.location.href=`cart.html?${params.toString()}`;
   });
@@ -240,10 +232,7 @@ reviewForm.addEventListener('submit',async(e)=>{
   if(selectedRating==0){alert("Please select a star rating!");return;}
   if(reviewText==""){alert("Please write your review!");return;}
   try{
-    await fetch(reviewURL,{
-      method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({type:"Review",name:name,rating:selectedRating,review:reviewText,referrer:detectSource()})
-    });
+    await fetch(reviewURL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams({name:name,rating:selectedRating,review:reviewText})});
     const div=document.createElement('div');
     div.className="bg-white p-6 rounded-lg shadow text-center";
     div.innerHTML=`<p class="text-orange-500 text-xl mb-2">${"⭐".repeat(selectedRating)}</p><p class="font-bold">${name}</p><p>${reviewText}</p>`;
