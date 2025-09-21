@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +14,6 @@
   .nav-container { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 0.5rem; }
 </style>
 </head>
-
 <body class="bg-white text-gray-800">
 
 <!-- Header -->
@@ -40,12 +38,17 @@
 <!-- Hero -->
 <section id="hero">
   <div id="slider">
-    <video src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-1.mp4" autoplay muted loop></video>
-    <video src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-2.mp4" autoplay muted loop></video>
+    <video autoplay muted loop playsinline preload="metadata" poster="https://i.ibb.co/XxcdQHqn/cropped-Gemini-Generated-Image-29gvb329gvb329gv.png">
+      <source src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-1.mp4" type="video/mp4">
+    </video>
+    <video autoplay muted loop playsinline preload="metadata" poster="https://i.ibb.co/XxcdQHqn/cropped-Gemini-Generated-Image-29gvb329gvb329gv.png">
+      <source src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-2.mp4" type="video/mp4">
+    </video>
     <img src="https://i.ibb.co/XxcdQHqn/cropped-Gemini-Generated-Image-29gvb329gvb329gv.png" alt="Slide 3">
     <img src="https://i.ibb.co/q3DpTnjZ/Whats-App-Image-2025-09-20-at-10-40-11-PM-1.jpg" alt="Slide 4">
   </div>
 </section>
+
 <div class="nav-container">
   <button id="prev" class="bg-orange-500 hover:bg-orange-600 text-white rounded-full p-2 text-xl font-bold shadow-md">&lt;</button>
   <div class="flex gap-2">
@@ -62,8 +65,6 @@
   <div class="max-w-6xl mx-auto px-6">
     <h2 class="text-3xl font-bold text-center text-orange-500 mb-12">Our Products</h2>
     <div class="grid md:grid-cols-3 gap-8">
-
-      <!-- Thekua -->
       <div class="bg-white shadow-lg rounded-lg p-6 text-center">
         <img src="https://i.ibb.co/BHy3ZBKS/thekua.jpg" alt="Thekua" class="mx-auto mb-4 rounded-lg object-cover w-full h-56">
         <h3 class="text-xl font-semibold">Thekua</h3>
@@ -71,8 +72,6 @@
         <p>Price: ₹280</p>
         <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 add-to-cart" data-product="Thekua">Add to Cart</button>
       </div>
-
-      <!-- Nimki -->
       <div class="bg-white shadow-lg rounded-lg p-6 text-center">
         <img src="https://i.ibb.co/tPvCDjqJ/nimki.jpg" alt="Nimki" class="mx-auto mb-4 rounded-lg object-cover w-full h-56">
         <h3 class="text-xl font-semibold">Nimki</h3>
@@ -80,8 +79,6 @@
         <p>Price: ₹300</p>
         <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 add-to-cart" data-product="Nimki">Add to Cart</button>
       </div>
-
-      <!-- Combo Pack -->
       <div class="bg-white shadow-lg rounded-lg p-6 text-center">
         <img src="https://i.ibb.co/fVJFtnVB/Whats-App-Image-2025-09-20-at-11-05-53-PM.jpg" alt="Combo Pack" class="mx-auto mb-4 rounded-lg object-cover w-full h-56">
         <h3 class="text-xl font-semibold">Combo Pack</h3>
@@ -89,7 +86,6 @@
         <p>Price: ₹580</p>
         <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 add-to-cart" data-product="Combo Pack">Add to Cart</button>
       </div>
-
     </div>
   </div>
 </section>
@@ -186,28 +182,6 @@
 </footer>
 
 <script>
-const sheetWebAppUrl = "https://script.google.com/macros/s/AKfycbzoWl2KwBOPq7_2hRHCsd7p1pPm7tDzCxMY7UvZXdZj64V1IeoeY5KxVvgZdsHNDSc8Kw/exec";
-
-// -------- Visitor Logging --------
-function logEvent(eventType, extraData={}) {
-  const payload = {
-    eventType: eventType,
-    trafficSource: document.referrer || "Direct",
-    ...extraData
-  };
-  fetch(sheetWebAppUrl, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  }).catch(err => console.error("Logging error:", err));
-}
-
-// On Page Visit
-window.addEventListener("load", () => {
-  logEvent("Page Visit");
-});
-
-// Slider Logic
 const slider = document.getElementById('slider');
 const dots = document.querySelectorAll('.dot');
 const totalSlides = slider.children.length;
@@ -219,40 +193,32 @@ function updateSlider(index){
   dots.forEach(dot=>dot.classList.remove('bg-orange-700'));
   dots[index].classList.add('bg-orange-700');
 }
-function startAutoSlide(){
-  interval = setInterval(()=>{ currentIndex=(currentIndex+1)%totalSlides; updateSlider(currentIndex); },3000);
-}
+function startAutoSlide(){ interval = setInterval(()=>{ currentIndex=(currentIndex+1)%totalSlides; updateSlider(currentIndex); },3000);}
 function resetInterval(){ clearInterval(interval); startAutoSlide(); }
 document.getElementById('prev').addEventListener('click',()=>{currentIndex=(currentIndex-1+totalSlides)%totalSlides;updateSlider(currentIndex);resetInterval();});
 document.getElementById('next').addEventListener('click',()=>{currentIndex=(currentIndex+1)%totalSlides;updateSlider(currentIndex);resetInterval();});
 dots.forEach(dot=>{dot.addEventListener('click',()=>{currentIndex=parseInt(dot.dataset.index);updateSlider(currentIndex);resetInterval();});});
 updateSlider(currentIndex); startAutoSlide();
 
-// Add to Cart Logic
+// Event Logging
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw2uWhidNvCeBlfZbeMLED4rNy_j8zwdlV4-ZPoycjHX8fQACklWMQJq4nK2uHQaw4n3Q/exec";
+async function logEvent(eventType, product=""){
+  try {
+    await fetch(SCRIPT_URL, { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ eventType, product, referrer:document.referrer })});
+  } catch(err){ console.error("Logging error:", err);}
+}
+
+// Page visit
+window.addEventListener("load",()=>logEvent("Page Visit"));
+
+// Add to cart
 document.querySelectorAll('.add-to-cart').forEach(btn=>{
-  btn.addEventListener('click', async ()=>{
-    const product = btn.dataset.product;
-
-    // Log Order Event
-    logEvent("Order", { product: product });
-
-    try{
-      await fetch("https://script.google.com/macros/s/AKfycbzS92MKe8Mo2u4M40muexPaz44DFPvS6E7PWpQWcHP8X8cfB3alwCVpQ1KRUvUqzWJ5uA/exec", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-          type: "order",
-          product: product
-        })
-      });
-    }catch(err){console.error(err);}
-    
-    // Redirect to cart.html
-    window.location.href="cart.html";
+  btn.addEventListener('click',()=>{
+    logEvent("Order", btn.dataset.product);
   });
 });
 
-// Review Logic
+// Review stars
 const stars = document.querySelectorAll('#starContainer span');
 let selectedRating=0;
 stars.forEach(star=>{
@@ -263,6 +229,7 @@ stars.forEach(star=>{
   });
 });
 
+// Review form
 const reviewForm=document.getElementById('reviewForm');
 const thankYou=document.getElementById('thankYou');
 const closeThankYou=document.getElementById('closeThankYou');
@@ -274,36 +241,19 @@ reviewForm.addEventListener('submit',async (e)=>{
   const reviewText=document.getElementById('reviewText').value.trim();
   if(selectedRating==0){alert("Please select a star rating!");return;}
   if(reviewText==""){alert("Please write your review!");return;}
-
-  // Log Review Event
-  logEvent("Review", { name: name, rating: selectedRating });
-
-  try {
-    await fetch("https://script.google.com/macros/s/AKfycbzS92MKe8Mo2u4M40muexPaz44DFPvS6E7PWpQWcHP8X8cfB3alwCVpQ1KRUvUqzWJ5uA/exec", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({
-        type: "review",
-        name: name,
-        rating: selectedRating,
-        review: reviewText
-      })
-    });
-  } catch (err) { console.error(err); }
-
+  logEvent("Review");
   const reviewCard=document.createElement('div');
   reviewCard.className="bg-white p-6 rounded-lg shadow text-center";
   const starsText="⭐".repeat(selectedRating);
   reviewCard.innerHTML=`<p class="text-orange-500 text-xl mb-2">${starsText}</p><p class="font-bold">${name}</p><p>${reviewText}</p>`;
   reviewsGrid.appendChild(reviewCard);
-
   thankYou.classList.remove('hidden');
   reviewForm.reset();
   stars.forEach(s=>s.textContent="☆");
   selectedRating=0;
 });
-
 closeThankYou.addEventListener('click',()=>{thankYou.classList.add('hidden');});
 </script>
+
 </body>
 </html>
