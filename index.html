@@ -85,7 +85,7 @@
 
       <!-- Nimki -->
       <div class="bg-white shadow-lg rounded-lg p-6 text-center">
-        <img src="https://i.ibb.co/tPvCDjqJ/nimki.jpg" alt="Nimki" class="mx-auto mb-4 rounded-lg object-cover w-full h-56">
+        <img src="https://i.ibb.co/tPvCDjqJ/nimki.jpg" alt="Nimki" class="mx-auto mb-4 rounded-lg object-contain w-full h-56 bg-white">
         <h3 class="text-xl font-semibold">Nimki</h3>
         <p>Weight: 800g</p>
         <p>Price: ₹300</p>
@@ -200,49 +200,59 @@
   </div>
 </footer>
 
+<!-- Scripts -->
 <script>
-// Hero slider logic
-const heroSlides = document.querySelectorAll('#heroSlider .hero-slide');
-const heroDots = document.querySelectorAll('#heroSlider .dot');
-let heroIndex = 0;
-
-function showHeroSlide(index){
-  heroSlides.forEach((slide,i)=>slide.classList.toggle('hidden',i!==index));
-  heroDots.forEach((dot,i)=>{
-    if(i===index){ dot.classList.remove('bg-gray-300'); dot.classList.add('bg-orange-500'); }
-    else { dot.classList.remove('bg-orange-500'); dot.classList.add('bg-gray-300'); }
-  });
-  heroIndex = index;
+// Hero Slider Logic
+const slides = document.querySelectorAll('.hero-slide');
+const dots = document.querySelectorAll('.dot');
+let currentSlide = 0;
+function showSlide(index){
+  slides.forEach(s=>s.classList.add('hidden'));
+  slides[index].classList.remove('hidden');
+  dots.forEach(d=>d.classList.remove('bg-orange-500'));
+  dots[index].classList.add('bg-orange-500');
 }
+document.getElementById('prevSlide').addEventListener('click', ()=>{
+  currentSlide = (currentSlide-1+slides.length)%slides.length; showSlide(currentSlide);
+});
+document.getElementById('nextSlide').addEventListener('click', ()=>{
+  currentSlide = (currentSlide+1)%slides.length; showSlide(currentSlide);
+});
+dots.forEach(dot=>{dot.addEventListener('click', ()=>{
+  currentSlide = parseInt(dot.dataset.index); showSlide(currentSlide);
+})});
+showSlide(currentSlide);
 
-document.getElementById('prevSlide').addEventListener('click',()=>{ showHeroSlide((heroIndex-1+heroSlides.length)%heroSlides.length); });
-document.getElementById('nextSlide').addEventListener('click',()=>{ showHeroSlide((heroIndex+1)%heroSlides.length); });
-heroDots.forEach((dot,i)=>{ dot.addEventListener('click',()=>showHeroSlide(i)); });
-setInterval(()=>{ showHeroSlide((heroIndex+1)%heroSlides.length); },8000);
-showHeroSlide(heroIndex);
-
-// Reviews logic
+// Review Logic
 const stars = document.querySelectorAll('#starContainer span');
 let selectedRating=0;
-stars.forEach(star=>{ star.addEventListener('click',()=>{ selectedRating=star.getAttribute('data-star'); stars.forEach(s=>s.textContent="☆"); for(let i=0;i<selectedRating;i++){stars[i].textContent="⭐";} }); });
+stars.forEach(star=>{
+  star.addEventListener('click', ()=>{
+    selectedRating=star.dataset.star;
+    stars.forEach(s=>s.textContent="☆");
+    for(let i=0;i<selectedRating;i++){stars[i].textContent="⭐";}
+  });
+});
 
 const reviewForm=document.getElementById('reviewForm');
 const thankYou=document.getElementById('thankYou');
 const closeThankYou=document.getElementById('closeThankYou');
 const reviewsGrid=document.getElementById('reviewsGrid');
 
-reviewForm.addEventListener('submit',async (e)=>{
+reviewForm.addEventListener('submit', async (e)=>{
   e.preventDefault();
   const name=document.getElementById('reviewName').value.trim();
   const reviewText=document.getElementById('reviewText').value.trim();
-  if(selectedRating==0){alert("Please select a star rating!");return;}
-  if(reviewText==""){alert("Please write your review!");return;}
+  if(selectedRating==0){alert("Please select a star rating!"); return;}
+  if(reviewText==""){alert("Please write your review!"); return;}
   
-  try { await fetch("https://script.google.com/macros/s/AKfycbzupwBG9lrM-rMEKUFD5huRM-zWWfG6zzXLCzlKF75HRIuRSkaY-62y7Cal0mB-rkE/exec", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({ name: name, rating: selectedRating, review: reviewText })
-  }); } catch(err){ console.error("Error saving review:", err); }
+  try {
+    await fetch("https://script.google.com/macros/s/AKfycbzupwBG9lrM-rMEKUFD5huRM-zWWfG6zzXLCzlKF75HRIuRSkaY-62y7Cal0mB-rkE/exec", {
+      method:"POST",
+      headers:{"Content-Type":"application/x-www-form-urlencoded"},
+      body:new URLSearchParams({name:name,rating:selectedRating,review:reviewText})
+    });
+  } catch(err){ console.error("Error saving review:", err); }
 
   const reviewCard=document.createElement('div');
   reviewCard.className="bg-white p-6 rounded-lg shadow text-center";
@@ -254,8 +264,7 @@ reviewForm.addEventListener('submit',async (e)=>{
   stars.forEach(s=>s.textContent="☆");
   selectedRating=0;
 });
-closeThankYou.addEventListener('click',()=>{ thankYou.classList.add('hidden'); });
+closeThankYou.addEventListener('click', ()=>{ thankYou.classList.add('hidden'); });
 </script>
-
 </body>
 </html>
