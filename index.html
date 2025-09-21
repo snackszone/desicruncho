@@ -38,12 +38,8 @@
 <!-- Hero -->
 <section id="hero">
   <div id="slider">
-    <video autoplay muted loop playsinline preload="metadata" poster="https://i.ibb.co/XxcdQHqn/cropped-Gemini-Generated-Image-29gvb329gvb329gv.png">
-      <source src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-1.mp4" type="video/mp4">
-    </video>
-    <video autoplay muted loop playsinline preload="metadata" poster="https://i.ibb.co/XxcdQHqn/cropped-Gemini-Generated-Image-29gvb329gvb329gv.png">
-      <source src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-2.mp4" type="video/mp4">
-    </video>
+    <video src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-1.mp4" autoplay muted loop playsinline preload="auto"></video>
+    <video src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-2.mp4" autoplay muted loop playsinline preload="auto"></video>
     <img src="https://i.ibb.co/XxcdQHqn/cropped-Gemini-Generated-Image-29gvb329gvb329gv.png" alt="Slide 3">
     <img src="https://i.ibb.co/q3DpTnjZ/Whats-App-Image-2025-09-20-at-10-40-11-PM-1.jpg" alt="Slide 4">
   </div>
@@ -65,6 +61,8 @@
   <div class="max-w-6xl mx-auto px-6">
     <h2 class="text-3xl font-bold text-center text-orange-500 mb-12">Our Products</h2>
     <div class="grid md:grid-cols-3 gap-8">
+
+      <!-- Thekua -->
       <div class="bg-white shadow-lg rounded-lg p-6 text-center">
         <img src="https://i.ibb.co/BHy3ZBKS/thekua.jpg" alt="Thekua" class="mx-auto mb-4 rounded-lg object-cover w-full h-56">
         <h3 class="text-xl font-semibold">Thekua</h3>
@@ -72,6 +70,8 @@
         <p>Price: ₹280</p>
         <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 add-to-cart" data-product="Thekua">Add to Cart</button>
       </div>
+
+      <!-- Nimki -->
       <div class="bg-white shadow-lg rounded-lg p-6 text-center">
         <img src="https://i.ibb.co/tPvCDjqJ/nimki.jpg" alt="Nimki" class="mx-auto mb-4 rounded-lg object-cover w-full h-56">
         <h3 class="text-xl font-semibold">Nimki</h3>
@@ -79,6 +79,8 @@
         <p>Price: ₹300</p>
         <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 add-to-cart" data-product="Nimki">Add to Cart</button>
       </div>
+
+      <!-- Combo Pack -->
       <div class="bg-white shadow-lg rounded-lg p-6 text-center">
         <img src="https://i.ibb.co/fVJFtnVB/Whats-App-Image-2025-09-20-at-11-05-53-PM.jpg" alt="Combo Pack" class="mx-auto mb-4 rounded-lg object-cover w-full h-56">
         <h3 class="text-xl font-semibold">Combo Pack</h3>
@@ -86,6 +88,7 @@
         <p>Price: ₹580</p>
         <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 add-to-cart" data-product="Combo Pack">Add to Cart</button>
       </div>
+
     </div>
   </div>
 </section>
@@ -182,76 +185,49 @@
 </footer>
 
 <script>
+// Slider Logic
 const slider = document.getElementById('slider');
 const dots = document.querySelectorAll('.dot');
 const totalSlides = slider.children.length;
 let currentIndex = 0;
 let interval = null;
-
-// Slider
-function updateSlider(index){
-  slider.style.transform = `translateX(-${index*100}%)`;
-  dots.forEach(dot=>dot.classList.remove('bg-orange-700'));
-  dots[index].classList.add('bg-orange-700');
-}
-function startAutoSlide(){ interval = setInterval(()=>{ currentIndex=(currentIndex+1)%totalSlides; updateSlider(currentIndex); },3000);}
-function resetInterval(){ clearInterval(interval); startAutoSlide(); }
+function updateSlider(index){slider.style.transform=`translateX(-${index*100}%)`;dots.forEach(dot=>dot.classList.remove('bg-orange-700'));dots[index].classList.add('bg-orange-700');}
+function startAutoSlide(){interval=setInterval(()=>{currentIndex=(currentIndex+1)%totalSlides;updateSlider(currentIndex);},3000);}
+function resetInterval(){clearInterval(interval);startAutoSlide();}
 document.getElementById('prev').addEventListener('click',()=>{currentIndex=(currentIndex-1+totalSlides)%totalSlides;updateSlider(currentIndex);resetInterval();});
 document.getElementById('next').addEventListener('click',()=>{currentIndex=(currentIndex+1)%totalSlides;updateSlider(currentIndex);resetInterval();});
 dots.forEach(dot=>{dot.addEventListener('click',()=>{currentIndex=parseInt(dot.dataset.index);updateSlider(currentIndex);resetInterval();});});
-updateSlider(currentIndex); startAutoSlide();
+updateSlider(currentIndex);startAutoSlide();
 
-// Logging function (GET request to avoid CORS)
-const SCRIPT_URL="https://script.google.com/macros/s/AKfycbzoWl2KwBOPq7_2hRHCsd7p1pPm7tDzCxMY7UvZXdZj64V1IeoeY5KxVvgZdsHNDSc8Kw/exec";
-function logEvent(eventType, product=""){
-  const ref=encodeURIComponent(document.referrer||"Direct");
-  const url=`${SCRIPT_URL}?eventType=${encodeURIComponent(eventType)}&product=${encodeURIComponent(product)}&referrer=${ref}`;
-  fetch(url).catch(err=>console.error("Logging error:",err));
-}
-
-// Page visit
+// Google Sheets Logging
+const SCRIPT_URL="https://script.google.com/macros/s/AKfycbw2uWhidNvCeBlfZbeMLED4rNy_j8zwdlV4-ZPoycjHX8fQACklWMQJq4nK2uHQaw4n3Q/exec";
+function logEvent(eventType, product=""){const ref=document.referrer||"Direct";const params=new URLSearchParams({eventType,eventType,product,product,referrer:ref});fetch(`${SCRIPT_URL}?${params.toString()}`).catch(err=>console.error("Logging error:",err));}
 window.addEventListener("load",()=>logEvent("Page Visit"));
 
-// Add to cart
+// Add to Cart
 document.querySelectorAll('.add-to-cart').forEach(btn=>{
   btn.addEventListener('click',()=>{
-    logEvent("Order", btn.dataset.product);
+    const productName=btn.dataset.product;
+    let productPrice="",productWeight="",productImage="";
+    if(productName==="Thekua"){productPrice="280";productWeight="800g";productImage="https://i.ibb.co/BHy3ZBKS/thekua.jpg";}
+    else if(productName==="Nimki"){productPrice="300";productWeight="800g";productImage="https://i.ibb.co/tPvCDjqJ/nimki.jpg";}
+    else if(productName==="Combo Pack"){productPrice="580";productWeight="1600g";productImage="https://i.ibb.co/fVJFtnVB/Whats-App-Image-2025-09-20-at-11-05-53-PM.jpg";}
+    logEvent("Add to Cart",productName);
+    const params=new URLSearchParams({name:productName,price:productPrice,weight:productWeight,image:productImage});
+    window.location.href=`cart.html?${params.toString()}`;
   });
 });
 
-// Reviews
-const stars = document.querySelectorAll('#starContainer span');
-let selectedRating=0;
-stars.forEach(star=>{
-  star.addEventListener('click',()=>{
-    selectedRating=star.getAttribute('data-star');
-    stars.forEach(s=>s.textContent="☆");
-    for(let i=0;i<selectedRating;i++){stars[i].textContent="⭐";}
-  });
-});
-
+// Review Form
 const reviewForm=document.getElementById('reviewForm');
 const thankYou=document.getElementById('thankYou');
 const closeThankYou=document.getElementById('closeThankYou');
-const reviewsGrid=document.getElementById('reviewsGrid');
-
-reviewForm.addEventListener('submit',e=>{
-  e.preventDefault();
-  const name=document.getElementById('reviewName').value.trim();
-  const reviewText=document.getElementById('reviewText').value.trim();
-  if(selectedRating==0){alert("Please select a star rating!");return;}
-  if(reviewText==""){alert("Please write your review!");return;}
-  logEvent("Review");
-  const reviewCard=document.createElement('div');
-  reviewCard.className="bg-white p-6 rounded-lg shadow text-center";
-  reviewCard.innerHTML=`<p class="text-orange-500 text-xl mb-2>${"⭐".repeat(selectedRating)}</p><p class="font-bold">${name}</p><p>${reviewText}</p>`;
-  reviewsGrid.appendChild(reviewCard);
-  thankYou.classList.remove('hidden');
-  reviewForm.reset();
-  stars.forEach(s=>s.textContent="☆");
-  selectedRating=0;
-});
-closeThankYou.addEventListener('click',()=>{thankYou.classList.add('hidden');});
+const stars=document.querySelectorAll('#starContainer span');
+let selectedStars=0;
+stars.forEach(s=>{s.addEventListener('click',()=>{selectedStars=parseInt(s.dataset.star);stars.forEach(st=>{st.textContent=st.dataset.star<=selectedStars?"★":"☆";});});});
+reviewForm.addEventListener('submit',e=>{e.preventDefault();const reviewData={name:document.getElementById('reviewName').value,review:document.getElementById('reviewText').value,stars:selectedStars};fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(reviewData)});thankYou.classList.remove('hidden');reviewForm.reset();stars.forEach(st=>st.textContent="☆");});
+closeThankYou.addEventListener('click',()=>thankYou.classList.add('hidden'));
 </script>
+
 </body>
 </html>
