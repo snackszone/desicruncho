@@ -179,8 +179,8 @@
 
 <script>
 // === WebApp URLs ===
-const clickLogURL="https://script.google.com/macros/s/AKfycbx3pKTgDLMqBU8jNsbSQHvGe4W9W0HzbLui18O9yPTNmnK0WvA7SRMHHr2snJhovGueUA/exec";
-const reviewURL="https://script.google.com/macros/s/AKfycbzupwBG9lrM-rMEKUFD5huRM-zWWfG6zzXLCzlKF75HRIuRSkaY-62y7Cal0mB-rkE/exec";
+const clickLogURL="https://script.google.com/macros/s/AKfycbx79AzC5DJYp6xdGWhBgJu46ynqtFHvAg5WnYoC_iaC6ixhUwhinCm0pUbqSWD1X7_lsQ/exec";
+const reviewURL="https://script.google.com/macros/s/AKfycb79AzC5DJYp6xdGWhBgJu46ynqtFHvAg5WnYoC_iaC6ixhUwhinCm0pUbqSWD1X7_lsQ/exec";
 
 // Traffic Source Detector
 function detectSource(){
@@ -228,11 +228,7 @@ document.querySelectorAll('.add-to-cart').forEach(btn=>{
 
 // === Reviews Logging ===
 const stars=document.querySelectorAll('#starContainer span');let selectedRating=0;
-stars.forEach(star=>star.addEventListener('click',()=>{
-  selectedRating=star.dataset.star;
-  stars.forEach(s=>s.textContent="☆");
-  for(let i=0;i<selectedRating;i++){stars[i].textContent="⭐";}
-}));
+stars.forEach(star=>star.addEventListener('click',()=>{selectedRating=star.dataset.star;stars.forEach(s=>s.textContent="☆");for(let i=0;i<selectedRating;i++){stars[i].textContent="⭐";}}));
 const reviewForm=document.getElementById('reviewForm');
 const thankYou=document.getElementById('thankYou');
 const closeThankYou=document.getElementById('closeThankYou');
@@ -245,8 +241,8 @@ reviewForm.addEventListener('submit',async(e)=>{
   if(reviewText==""){alert("Please write your review!");return;}
   try{
     await fetch(reviewURL,{
-      method:"POST",mode:"no-cors",headers:{"Content-Type":"application/x-www-form-urlencoded"},
-      body:new URLSearchParams({name:name,rating:selectedRating,review:reviewText})
+      method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({type:"Review",name:name,rating:selectedRating,review:reviewText,referrer:detectSource()})
     });
     const div=document.createElement('div');
     div.className="bg-white p-6 rounded-lg shadow text-center";
