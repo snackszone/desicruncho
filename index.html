@@ -188,6 +188,7 @@ const totalSlides = slider.children.length;
 let currentIndex = 0;
 let interval = null;
 
+// Slider
 function updateSlider(index){
   slider.style.transform = `translateX(-${index*100}%)`;
   dots.forEach(dot=>dot.classList.remove('bg-orange-700'));
@@ -200,12 +201,12 @@ document.getElementById('next').addEventListener('click',()=>{currentIndex=(curr
 dots.forEach(dot=>{dot.addEventListener('click',()=>{currentIndex=parseInt(dot.dataset.index);updateSlider(currentIndex);resetInterval();});});
 updateSlider(currentIndex); startAutoSlide();
 
-// Event Logging
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw2uWhidNvCeBlfZbeMLED4rNy_j8zwdlV4-ZPoycjHX8fQACklWMQJq4nK2uHQaw4n3Q/exec";
-async function logEvent(eventType, product=""){
-  try {
-    await fetch(SCRIPT_URL, { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ eventType, product, referrer:document.referrer })});
-  } catch(err){ console.error("Logging error:", err);}
+// Logging function (GET request to avoid CORS)
+const SCRIPT_URL="https://script.google.com/macros/s/AKfycbzoWl2KwBOPq7_2hRHCsd7p1pPm7tDzCxMY7UvZXdZj64V1IeoeY5KxVvgZdsHNDSc8Kw/exec";
+function logEvent(eventType, product=""){
+  const ref=encodeURIComponent(document.referrer||"Direct");
+  const url=`${SCRIPT_URL}?eventType=${encodeURIComponent(eventType)}&product=${encodeURIComponent(product)}&referrer=${ref}`;
+  fetch(url).catch(err=>console.error("Logging error:",err));
 }
 
 // Page visit
@@ -218,7 +219,7 @@ document.querySelectorAll('.add-to-cart').forEach(btn=>{
   });
 });
 
-// Review stars
+// Reviews
 const stars = document.querySelectorAll('#starContainer span');
 let selectedRating=0;
 stars.forEach(star=>{
@@ -229,13 +230,12 @@ stars.forEach(star=>{
   });
 });
 
-// Review form
 const reviewForm=document.getElementById('reviewForm');
 const thankYou=document.getElementById('thankYou');
 const closeThankYou=document.getElementById('closeThankYou');
 const reviewsGrid=document.getElementById('reviewsGrid');
 
-reviewForm.addEventListener('submit',async (e)=>{
+reviewForm.addEventListener('submit',e=>{
   e.preventDefault();
   const name=document.getElementById('reviewName').value.trim();
   const reviewText=document.getElementById('reviewText').value.trim();
@@ -244,8 +244,7 @@ reviewForm.addEventListener('submit',async (e)=>{
   logEvent("Review");
   const reviewCard=document.createElement('div');
   reviewCard.className="bg-white p-6 rounded-lg shadow text-center";
-  const starsText="⭐".repeat(selectedRating);
-  reviewCard.innerHTML=`<p class="text-orange-500 text-xl mb-2">${starsText}</p><p class="font-bold">${name}</p><p>${reviewText}</p>`;
+  reviewCard.innerHTML=`<p class="text-orange-500 text-xl mb-2>${"⭐".repeat(selectedRating)}</p><p class="font-bold">${name}</p><p>${reviewText}</p>`;
   reviewsGrid.appendChild(reviewCard);
   thankYou.classList.remove('hidden');
   reviewForm.reset();
@@ -254,6 +253,5 @@ reviewForm.addEventListener('submit',async (e)=>{
 });
 closeThankYou.addEventListener('click',()=>{thankYou.classList.add('hidden');});
 </script>
-
 </body>
 </html>
