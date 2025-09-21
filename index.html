@@ -7,9 +7,6 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   body { font-family: 'Inter', sans-serif; }
-  #hero { position: relative; width: 100%; height: 400px; overflow: hidden; margin-top: 80px; }
-  #slider { display: flex; height: 100%; transition: transform 0.5s ease-in-out; }
-  #slider img { flex-shrink: 0; width: 100%; height: 100%; object-fit: cover; }
   .dot { width: 14px; height: 14px; border-radius: 50%; cursor: pointer; transition: all 0.3s; }
   .nav-container { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 0.5rem; }
 </style>
@@ -20,8 +17,8 @@
 <header class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
   <div class="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
     <div class="flex items-center space-x-3">
-      <div class="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-white">
-        <img src="https://i.ibb.co/KjXFB887/logo-png.png" alt="Desi Cruncho Logo" class="w-full h-full object-cover">
+      <div class="w-12 h-12 rounded-full overflow-hidden bg-orange-500 flex items-center justify-center">
+        <img src="https://i.ibb.co/KjXFB887/logo-png.png" alt="Logo" class="w-full h-full object-cover">
       </div>
       <span class="text-2xl font-bold text-orange-500">Desi Cruncho</span>
     </div>
@@ -35,25 +32,35 @@
   </div>
 </header>
 
-<!-- Hero -->
-<section id="hero">
-  <div id="slider">
-    <img src="https://picsum.photos/id/1015/1200/400" alt="Slide 1">
-    <img src="https://picsum.photos/id/1016/1200/400" alt="Slide 2">
-    <img src="https://picsum.photos/id/1018/1200/400" alt="Slide 3">
-    <img src="https://picsum.photos/id/1020/1200/400" alt="Slide 4">
+<!-- Hero Section -->
+<section id="hero" class="relative w-full h-screen overflow-hidden mt-20">
+  <div id="heroSlider" class="relative w-full h-full">
+    <!-- Slide 1: Video -->
+    <video autoplay muted loop playsinline class="absolute w-full h-full object-cover hidden">
+      <source src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-1.mp4" type="video/mp4">
+    </video>
+
+    <!-- Slide 2: Video -->
+    <video autoplay muted loop playsinline class="absolute w-full h-full object-cover hidden">
+      <source src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-2.mp4" type="video/mp4">
+    </video>
+
+    <!-- Slide 3: Image -->
+    <img src="https://i.ibb.co/XxcdQHqn/cropped-Gemini-Generated-Image-29gvb329gvb329gv.png" 
+         alt="Hero Slide 3" 
+         class="absolute w-full h-full object-cover hidden">
+
+    <!-- Slide 4: Image -->
+    <img src="https://i.ibb.co/q3DpTnjZ/Whats-App-Image-2025-09-20-at-10-40-11-PM-1.jpg" 
+         alt="Hero Slide 4" 
+         class="absolute w-full h-full object-cover hidden">
+  </div>
+
+  <!-- Overlay Text -->
+  <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+    <h1 class="text-4xl md:text-6xl font-bold text-white">Desi Cruncho</h1>
   </div>
 </section>
-<div class="nav-container">
-  <button id="prev" class="bg-orange-500 hover:bg-orange-600 text-white rounded-full p-2 text-xl font-bold shadow-md">&lt;</button>
-  <div class="flex gap-2">
-    <span class="dot bg-gray-300" data-index="0"></span>
-    <span class="dot bg-gray-300" data-index="1"></span>
-    <span class="dot bg-gray-300" data-index="2"></span>
-    <span class="dot bg-gray-300" data-index="3"></span>
-  </div>
-  <button id="next" class="bg-orange-500 hover:bg-orange-600 text-white rounded-full p-2 text-xl font-bold shadow-md">&gt;</button>
-</div>
 
 <!-- Products -->
 <section id="products" class="py-16 bg-gray-50">
@@ -73,10 +80,7 @@
 
       <!-- Nimki -->
       <div class="bg-white shadow-lg rounded-lg p-6 text-center">
-        <img src="https://i.ibb.co/RpNG013C/Gemini-Generated-Image-k8gaj3k8gaj3k8ga.png" 
-             alt="Nimki" 
-             class="mx-auto mb-4 rounded-lg object-cover w-full h-56" 
-             loading="lazy">
+        <img src="https://i.ibb.co/RpNG013C/Gemini-Generated-Image-k8gaj3k8gaj3k8ga.png" alt="Nimki" class="mx-auto mb-4 rounded-lg object-cover w-full h-56" loading="lazy">
         <h3 class="text-xl font-semibold">Nimki</h3>
         <p>Weight: 800g</p>
         <p>Price: ₹300</p>
@@ -91,7 +95,7 @@
         <h3 class="text-xl font-semibold">Combo Pack</h3>
         <p>Weight: 800g + 800g</p>
         <p>Price: ₹580</p>
-        <a href="cart.html?name=Combo%20Pack&price=580&weight=800g+800g&image=https://i.ibb.co/fVJFtnVB/Whats-App-Image-2025-09-20-at-11-05-53-PM.jpg">
+        <a href="cart.html?name=Combo%20Pack&price=580&weight=800g%2B800g&image=https://i.ibb.co/fVJFtnVB/Whats-App-Image-2025-09-20-at-11-05-53-PM.jpg">
           <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Add to Cart</button>
         </a>
       </div>
@@ -199,27 +203,23 @@
 
 <!-- Scripts -->
 <script>
-// Slider Logic
-const slider = document.getElementById('slider');
-const dots = document.querySelectorAll('.dot');
-const totalSlides = slider.children.length;
-let currentIndex = 0;
-let interval = null;
-function updateSlider(index){
-  slider.style.transform = `translateX(-${index*100}%)`;
-  dots.forEach(dot=>dot.classList.remove('bg-orange-500'));
-  dots[index].classList.add('bg-orange-500');
-}
-function startAutoSlide(){
-  interval = setInterval(()=>{ currentIndex=(currentIndex+1)%totalSlides; updateSlider(currentIndex); },3000);
-}
-function resetInterval(){ clearInterval(interval); startAutoSlide(); }
-document.getElementById('prev').addEventListener('click',()=>{currentIndex=(currentIndex-1+totalSlides)%totalSlides;updateSlider(currentIndex);resetInterval();});
-document.getElementById('next').addEventListener('click',()=>{currentIndex=(currentIndex+1)%totalSlides;updateSlider(currentIndex);resetInterval();});
-dots.forEach(dot=>{dot.addEventListener('click',()=>{currentIndex=parseInt(dot.dataset.index);updateSlider(currentIndex);resetInterval();});});
-updateSlider(currentIndex); startAutoSlide();
+// Hero Slider Logic
+const heroSlides = document.querySelectorAll('#heroSlider video, #heroSlider img');
+let heroIndex = 0;
 
-// Review Logic + Google Sheets Integration
+function showHeroSlide(index){
+  heroSlides.forEach(s => s.classList.add('hidden'));
+  heroSlides[index].classList.remove('hidden');
+}
+
+setInterval(()=>{
+  heroIndex = (heroIndex + 1) % heroSlides.length;
+  showHeroSlide(heroIndex);
+}, 8000);
+
+showHeroSlide(heroIndex);
+
+// Review Logic
 const stars = document.querySelectorAll('#starContainer span');
 let selectedRating=0;
 stars.forEach(star=>{
@@ -241,21 +241,6 @@ reviewForm.addEventListener('submit',async (e)=>{
   const reviewText=document.getElementById('reviewText').value.trim();
   if(selectedRating==0){alert("Please select a star rating!");return;}
   if(reviewText==""){alert("Please write your review!");return;}
-  
-  // Send to Google Sheet backend
-  try {
-    await fetch("https://script.google.com/macros/s/AKfycbzupwBG9lrM-rMEKUFD5huRM-zWWfG6zzXLCzlKF75HRIuRSkaY-62y7Cal0mB-rkE/exec", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({
-        name: name,
-        rating: selectedRating,
-        review: reviewText
-      })
-    });
-  } catch (err) {
-    console.error("Error saving review:", err);
-  }
 
   const reviewCard=document.createElement('div');
   reviewCard.className="bg-white p-6 rounded-lg shadow text-center";
