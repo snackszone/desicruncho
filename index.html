@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,19 +11,19 @@
   #hero { position: relative; width: 100%; height: 400px; overflow: hidden; margin-top: 80px; }
   #slider { display: flex; height: 100%; transition: transform 0.5s ease-in-out; }
   #slider img, #slider video { flex-shrink: 0; width: 100%; height: 100%; object-fit: cover; }
-  .dot { width: 14px; height: 14px; border-radius: 50%; cursor: pointer; transition: all 0.3s; background-color: gray; }
-  .dot.active { background-color: orange; }
+  .dot { width: 14px; height: 14px; border-radius: 50%; cursor: pointer; transition: all 0.3s; }
   .nav-container { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 0.5rem; }
 </style>
 </head>
+
 <body class="bg-white text-gray-800">
 
 <!-- Header -->
 <header class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
   <div class="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
     <div class="flex items-center space-x-3">
-      <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center">
-        <img src="https://i.ibb.co/jvTgqjjG/logo-png.png" alt="Logo" class="w-10 h-10 object-cover rounded-full">
+      <div class="w-12 h-12 rounded-full overflow-hidden">
+        <img src="https://i.ibb.co/KjXFB887/logo-png.png" alt="Logo" class="w-full h-full object-cover">
       </div>
       <span class="text-2xl font-bold text-orange-500">Desi Cruncho</span>
     </div>
@@ -39,8 +40,8 @@
 <!-- Hero -->
 <section id="hero">
   <div id="slider">
-    <video src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-1.mp4" autoplay muted loop playsinline></video>
-    <video src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-2.mp4" autoplay muted loop playsinline></video>
+    <video src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-1.mp4" autoplay muted loop></video>
+    <video src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-2.mp4" autoplay muted loop></video>
     <img src="https://i.ibb.co/XxcdQHqn/cropped-Gemini-Generated-Image-29gvb329gvb329gv.png" alt="Slide 3">
     <img src="https://i.ibb.co/q3DpTnjZ/Whats-App-Image-2025-09-20-at-10-40-11-PM-1.jpg" alt="Slide 4">
   </div>
@@ -48,10 +49,10 @@
 <div class="nav-container">
   <button id="prev" class="bg-orange-500 hover:bg-orange-600 text-white rounded-full p-2 text-xl font-bold shadow-md">&lt;</button>
   <div class="flex gap-2">
-    <span class="dot active" data-index="0"></span>
-    <span class="dot" data-index="1"></span>
-    <span class="dot" data-index="2"></span>
-    <span class="dot" data-index="3"></span>
+    <span class="dot bg-orange-500" data-index="0"></span>
+    <span class="dot bg-orange-500" data-index="1"></span>
+    <span class="dot bg-orange-500" data-index="2"></span>
+    <span class="dot bg-orange-500" data-index="3"></span>
   </div>
   <button id="next" class="bg-orange-500 hover:bg-orange-600 text-white rounded-full p-2 text-xl font-bold shadow-md">&gt;</button>
 </div>
@@ -61,36 +62,34 @@
   <div class="max-w-6xl mx-auto px-6">
     <h2 class="text-3xl font-bold text-center text-orange-500 mb-12">Our Products</h2>
     <div class="grid md:grid-cols-3 gap-8">
+
       <!-- Thekua -->
       <div class="bg-white shadow-lg rounded-lg p-6 text-center">
         <img src="https://i.ibb.co/BHy3ZBKS/thekua.jpg" alt="Thekua" class="mx-auto mb-4 rounded-lg object-cover w-full h-56">
         <h3 class="text-xl font-semibold">Thekua</h3>
         <p>Weight: 800g</p>
         <p>Price: ₹280</p>
-        <a href="cart.html?name=Thekua&price=280&weight=800g&image=https://i.ibb.co/BHy3ZBKS/thekua.jpg">
-          <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Add to Cart</button>
-        </a>
+        <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 add-to-cart" data-product="Thekua">Add to Cart</button>
       </div>
+
       <!-- Nimki -->
       <div class="bg-white shadow-lg rounded-lg p-6 text-center">
         <img src="https://i.ibb.co/tPvCDjqJ/nimki.jpg" alt="Nimki" class="mx-auto mb-4 rounded-lg object-cover w-full h-56">
         <h3 class="text-xl font-semibold">Nimki</h3>
         <p>Weight: 800g</p>
         <p>Price: ₹300</p>
-        <a href="cart.html?name=Nimki&price=300&weight=800g&image=https://i.ibb.co/tPvCDjqJ/nimki.jpg">
-          <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Add to Cart</button>
-        </a>
+        <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 add-to-cart" data-product="Nimki">Add to Cart</button>
       </div>
+
       <!-- Combo Pack -->
       <div class="bg-white shadow-lg rounded-lg p-6 text-center">
         <img src="https://i.ibb.co/fVJFtnVB/Whats-App-Image-2025-09-20-at-11-05-53-PM.jpg" alt="Combo Pack" class="mx-auto mb-4 rounded-lg object-cover w-full h-56">
         <h3 class="text-xl font-semibold">Combo Pack</h3>
-        <p>Weight: 800+800g</p>
+        <p>Weight: 1600g</p>
         <p>Price: ₹580</p>
-        <a href="cart.html?name=Combo%20Pack&price=580&weight=1600g&image=https://i.ibb.co/fVJFtnVB/Whats-App-Image-2025-09-20-at-11-05-53-PM.jpg">
-          <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Add to Cart</button>
-        </a>
+        <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 add-to-cart" data-product="Combo Pack">Add to Cart</button>
       </div>
+
     </div>
   </div>
 </section>
@@ -98,7 +97,7 @@
 <!-- Our Story -->
 <section id="ourstory" class="py-16">
   <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
-    <img src="https://i.ibb.co/GfntzfgK/Gemini-Generated-Image-20zv3620zv3620zv.png" alt="Our Story" class="rounded-lg shadow-md object-contain w-full h-80">
+    <img src="https://i.ibb.co/GfntzfgK/Gemini-Generated-Image-20zv3620zv3620zv.png" alt="Our Story" class="rounded-lg shadow-md object-cover w-full h-80">
     <div>
       <h2 class="text-3xl font-bold text-orange-500 mb-4">Our Story</h2>
       <p class="font-medium">Desi Cruncho was born with a mission to bring authentic Indian snacks to your plate. Every bite tells a story of tradition and love for homemade flavors.</p>
@@ -139,89 +138,172 @@
           <span class="cursor-pointer text-2xl" data-star="4">☆</span>
           <span class="cursor-pointer text-2xl" data-star="5">☆</span>
         </div>
-        <input type="text" id="reviewName" placeholder="Your Name" class="w-full border rounded-lg p-2 mb-4" required>
-        <textarea id="reviewText" placeholder="Write your review..." class="w-full border rounded-lg p-2 mb-4" rows="3" required></textarea>
-        <button type="submit" class="w-full px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Submit Review</button>
+        <input id="reviewName" type="text" class="w-full border rounded-lg p-2 mb-4" placeholder="Your Name" required>
+        <textarea id="reviewText" class="w-full border rounded-lg p-2 mb-4" placeholder="Write your review here..." required></textarea>
+        <button type="submit" class="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 block mx-auto">Submit Review</button>
       </form>
+
+      <div id="thankYou" class="hidden absolute inset-0 bg-white bg-opacity-95 flex flex-col justify-center items-center rounded-lg shadow">
+        <button id="closeThankYou" class="absolute top-2 right-2 text-gray-600 hover:text-red-500 text-xl font-bold">✖</button>
+        <h3 class="text-xl font-bold text-orange-500 mb-2">Thank You!</h3>
+        <p>Your review has been submitted.</p>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- Footer -->
-<footer class="bg-orange-500 text-white py-6 text-center">
-  © 2025 Desi Cruncho. All rights reserved.
+<footer class="bg-orange-500 text-white py-10 px-6">
+  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div>
+      <h2 class="text-2xl font-bold">Desi Cruncho</h2>
+      <p class="mt-2">A Taste of Tradition in Every Bite</p>
+    </div>
+    <div>
+      <h3 class="text-lg font-semibold">Company</h3>
+      <ul class="mt-2 space-y-2">
+        <li><a href="#ourstory" class="hover:underline">Our Story</a></li>
+        <li><a href="contact.html" class="hover:underline">Contact Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="text-lg font-semibold">Quick Links</h3>
+      <ul class="mt-2 space-y-2">
+        <li><a href="#products" class="hover:underline">Products</a></li>
+        <li><a href="#reviews" class="hover:underline">Reviews</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="text-lg font-semibold">Get in touch</h3>
+      <p class="mt-2 font-bold">Vashi, Navi Mumbai 400703</p>
+      <p class="font-bold">📞 +91 9324410301</p>
+      <p class="font-bold">📧 desicruncho@gmail.com</p>
+    </div>
+  </div>
+  <div class="text-center mt-8 text-sm">
+    © 2025 Desi Cruncho. All rights reserved.
+  </div>
 </footer>
 
 <script>
-const slider = document.getElementById('slider');
-const dots = document.querySelectorAll('.dot');
-const prevBtn = document.getElementById('prev');
-const nextBtn = document.getElementById('next');
-let currentIndex = 0;
+const sheetWebAppUrl = "https://script.google.com/macros/s/AKfycbzoWl2KwBOPq7_2hRHCsd7p1pPm7tDzCxMY7UvZXdZj64V1IeoeY5KxVvgZdsHNDSc8Kw/exec";
 
-function showSlide(index){
-  slider.style.transform = `translateX(-${index * 100}%)`;
-  dots.forEach(dot => dot.classList.remove('active'));
-  dots[index].classList.add('active');
+// -------- Visitor Logging --------
+function logEvent(eventType, extraData={}) {
+  const payload = {
+    eventType: eventType,
+    trafficSource: document.referrer || "Direct",
+    ...extraData
+  };
+  fetch(sheetWebAppUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  }).catch(err => console.error("Logging error:", err));
 }
 
-dots.forEach(dot => {
-  dot.addEventListener('click', () => {
-    currentIndex = parseInt(dot.dataset.index);
-    showSlide(currentIndex);
+// On Page Visit
+window.addEventListener("load", () => {
+  logEvent("Page Visit");
+});
+
+// Slider Logic
+const slider = document.getElementById('slider');
+const dots = document.querySelectorAll('.dot');
+const totalSlides = slider.children.length;
+let currentIndex = 0;
+let interval = null;
+
+function updateSlider(index){
+  slider.style.transform = `translateX(-${index*100}%)`;
+  dots.forEach(dot=>dot.classList.remove('bg-orange-700'));
+  dots[index].classList.add('bg-orange-700');
+}
+function startAutoSlide(){
+  interval = setInterval(()=>{ currentIndex=(currentIndex+1)%totalSlides; updateSlider(currentIndex); },3000);
+}
+function resetInterval(){ clearInterval(interval); startAutoSlide(); }
+document.getElementById('prev').addEventListener('click',()=>{currentIndex=(currentIndex-1+totalSlides)%totalSlides;updateSlider(currentIndex);resetInterval();});
+document.getElementById('next').addEventListener('click',()=>{currentIndex=(currentIndex+1)%totalSlides;updateSlider(currentIndex);resetInterval();});
+dots.forEach(dot=>{dot.addEventListener('click',()=>{currentIndex=parseInt(dot.dataset.index);updateSlider(currentIndex);resetInterval();});});
+updateSlider(currentIndex); startAutoSlide();
+
+// Add to Cart Logic
+document.querySelectorAll('.add-to-cart').forEach(btn=>{
+  btn.addEventListener('click', async ()=>{
+    const product = btn.dataset.product;
+
+    // Log Order Event
+    logEvent("Order", { product: product });
+
+    try{
+      await fetch("https://script.google.com/macros/s/AKfycbzS92MKe8Mo2u4M40muexPaz44DFPvS6E7PWpQWcHP8X8cfB3alwCVpQ1KRUvUqzWJ5uA/exec", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          type: "order",
+          product: product
+        })
+      });
+    }catch(err){console.error(err);}
+    
+    // Redirect to cart.html
+    window.location.href="cart.html";
   });
 });
 
-prevBtn.addEventListener('click', () => {
-  currentIndex = (currentIndex - 1 + dots.length) % dots.length;
-  showSlide(currentIndex);
-});
-
-nextBtn.addEventListener('click', () => {
-  currentIndex = (currentIndex + 1) % dots.length;
-  showSlide(currentIndex);
-});
-
-// Auto slide every 5 sec
-setInterval(() => {
-  currentIndex = (currentIndex + 1) % dots.length;
-  showSlide(currentIndex);
-}, 5000);
-
-// Review Form Submission
-const webAppURL = "https://script.google.com/macros/s/AKfycbxLYkypm_i-8rhyeOMEfKK4atmZmSHRrb7_nOcndOc6-JScZsLpDgX9lklONyS1SLlPrA/exec";
-
-document.getElementById('reviewForm').addEventListener('submit', e=>{
-  e.preventDefault();
-  const reviewData = {
-    name: document.getElementById('reviewName').value,
-    review: document.getElementById('reviewText').value,
-    rating: document.querySelector('#starContainer .selected')?.dataset.star || 5,
-    page: 'Homepage'
-  };
-
-  fetch(webAppURL,{
-    method: 'POST',
-    mode: 'no-cors',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify(reviewData)
-  });
-
-  alert('Review submitted successfully!');
-  document.getElementById('reviewForm').reset();
-});
-
-// Star rating selection
+// Review Logic
 const stars = document.querySelectorAll('#starContainer span');
+let selectedRating=0;
 stars.forEach(star=>{
-  star.addEventListener('click', ()=>{
-    stars.forEach(s=>s.classList.remove('selected'));
-    for(let i=0;i<parseInt(star.dataset.star);i++){
-      stars[i].classList.add('selected');
-    }
+  star.addEventListener('click',()=>{
+    selectedRating=star.getAttribute('data-star');
+    stars.forEach(s=>s.textContent="☆");
+    for(let i=0;i<selectedRating;i++){stars[i].textContent="⭐";}
   });
 });
-</script>
 
+const reviewForm=document.getElementById('reviewForm');
+const thankYou=document.getElementById('thankYou');
+const closeThankYou=document.getElementById('closeThankYou');
+const reviewsGrid=document.getElementById('reviewsGrid');
+
+reviewForm.addEventListener('submit',async (e)=>{
+  e.preventDefault();
+  const name=document.getElementById('reviewName').value.trim();
+  const reviewText=document.getElementById('reviewText').value.trim();
+  if(selectedRating==0){alert("Please select a star rating!");return;}
+  if(reviewText==""){alert("Please write your review!");return;}
+
+  // Log Review Event
+  logEvent("Review", { name: name, rating: selectedRating });
+
+  try {
+    await fetch("https://script.google.com/macros/s/AKfycbzS92MKe8Mo2u4M40muexPaz44DFPvS6E7PWpQWcHP8X8cfB3alwCVpQ1KRUvUqzWJ5uA/exec", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        type: "review",
+        name: name,
+        rating: selectedRating,
+        review: reviewText
+      })
+    });
+  } catch (err) { console.error(err); }
+
+  const reviewCard=document.createElement('div');
+  reviewCard.className="bg-white p-6 rounded-lg shadow text-center";
+  const starsText="⭐".repeat(selectedRating);
+  reviewCard.innerHTML=`<p class="text-orange-500 text-xl mb-2">${starsText}</p><p class="font-bold">${name}</p><p>${reviewText}</p>`;
+  reviewsGrid.appendChild(reviewCard);
+
+  thankYou.classList.remove('hidden');
+  reviewForm.reset();
+  stars.forEach(s=>s.textContent="☆");
+  selectedRating=0;
+});
+
+closeThankYou.addEventListener('click',()=>{thankYou.classList.add('hidden');});
+</script>
 </body>
 </html>
