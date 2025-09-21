@@ -81,6 +81,9 @@
         <h3 class="text-xl font-semibold">Thekua</h3>
         <p>Weight: 800g</p>
         <p>Price: ₹280</p>
+        <a href="cart.html?name=Thekua&price=280&weight=800g&image=https://i.ibb.co/BHy3ZBKS/thekua.jpg">
+          <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Add to Cart</button>
+        </a>
       </div>
 
       <!-- Nimki -->
@@ -89,6 +92,9 @@
         <h3 class="text-xl font-semibold">Nimki</h3>
         <p>Weight: 800g</p>
         <p>Price: ₹300</p>
+        <a href="cart.html?name=Nimki&price=300&weight=800g&image=https://i.ibb.co/tPvCDjqJ/nimki.jpg">
+          <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Add to Cart</button>
+        </a>
       </div>
 
       <!-- Combo Pack -->
@@ -97,6 +103,9 @@
         <h3 class="text-xl font-semibold">Combo Pack</h3>
         <p>Weight: 800+800g</p>
         <p>Price: ₹580</p>
+        <a href="cart.html?name=Combo%20Pack&price=580&weight=800+800g&image=https://i.ibb.co/fVJFtnVB/Whats-App-Image-2025-09-20-at-11-05-53-PM.jpg">
+          <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Add to Cart</button>
+        </a>
       </div>
     </div>
   </div>
@@ -233,19 +242,16 @@ stars.forEach(star=>{
     for(let i=0;i<selectedRating;i++){stars[i].textContent="⭐";}
   });
 });
-
 const reviewForm=document.getElementById('reviewForm');
 const thankYou=document.getElementById('thankYou');
 const closeThankYou=document.getElementById('closeThankYou');
 const reviewsGrid=document.getElementById('reviewsGrid');
-
 reviewForm.addEventListener('submit', async (e)=>{
   e.preventDefault();
   const name=document.getElementById('reviewName').value.trim();
   const reviewText=document.getElementById('reviewText').value.trim();
   if(selectedRating==0){alert("Please select a star rating!"); return;}
   if(reviewText==""){alert("Please write your review!"); return;}
-  
   try {
     await fetch("https://script.google.com/macros/s/AKfycbzupwBG9lrM-rMEKUFD5huRM-zWWfG6zzXLCzlKF75HRIuRSkaY-62y7Cal0mB-rkE/exec", {
       method:"POST",
@@ -253,12 +259,10 @@ reviewForm.addEventListener('submit', async (e)=>{
       body:new URLSearchParams({name:name,rating:selectedRating,review:reviewText})
     });
   } catch(err){ console.error("Error saving review:", err); }
-
   const reviewCard=document.createElement('div');
   reviewCard.className="bg-white p-6 rounded-lg shadow text-center";
   reviewCard.innerHTML=`<p class="text-orange-500 text-xl mb-2">${'⭐'.repeat(selectedRating)}</p><p class="font-bold">${name}</p><p>${reviewText}</p>`;
   reviewsGrid.appendChild(reviewCard);
-
   thankYou.classList.remove('hidden');
   reviewForm.reset();
   stars.forEach(s=>s.textContent="☆");
