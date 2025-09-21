@@ -11,6 +11,7 @@
   #slider { display: flex; height: 100%; transition: transform 0.5s ease-in-out; }
   #slider img, #slider video { flex-shrink: 0; width: 100%; height: 100%; object-fit: cover; }
   .dot { width: 14px; height: 14px; border-radius: 50%; cursor: pointer; transition: all 0.3s; }
+  .dot.bg-active { background-color: #f97316; } /* Orange active dot */
   .nav-container { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 0.5rem; }
 </style>
 </head>
@@ -20,7 +21,9 @@
 <header class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
   <div class="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
     <div class="flex items-center space-x-3">
-      <img src="https://i.ibb.co/KjXFB887/logo-png.png" alt="Logo" class="w-12 h-12 rounded-full">
+      <div class="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-white">
+        <img src="https://i.ibb.co/KjXFB887/logo-png.png" alt="Logo" class="w-full h-full object-cover">
+      </div>
       <span class="text-2xl font-bold text-orange-500">Desi Cruncho</span>
     </div>
     <nav class="space-x-6 font-medium">
@@ -36,24 +39,19 @@
 <!-- Hero -->
 <section id="hero">
   <div id="slider">
-    <video autoplay muted loop>
-      <source src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-1.mp4" type="video/mp4">
-    </video>
-    <video autoplay muted loop>
-      <source src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-2.mp4" type="video/mp4">
-    </video>
+    <video src="https://github.com/ALOK67807/DESI-CRUNCHO/raw/refs/heads/main/hero-video-1.mp4" autoplay muted loop></video>
+    <video src="https://github.com/ALOK67807/DESI-CRUNCHO/raw/refs/heads/main/hero-video-2.mp4" autoplay muted loop></video>
     <img src="https://i.ibb.co/XxcdQHqn/cropped-Gemini-Generated-Image-29gvb329gvb329gv.png" alt="Slide 3">
     <img src="https://i.ibb.co/q3DpTnjZ/Whats-App-Image-2025-09-20-at-10-40-11-PM-1.jpg" alt="Slide 4">
   </div>
 </section>
-
 <div class="nav-container">
   <button id="prev" class="bg-orange-500 hover:bg-orange-600 text-white rounded-full p-2 text-xl font-bold shadow-md">&lt;</button>
   <div class="flex gap-2">
-    <span class="dot bg-orange-500" data-index="0"></span>
-    <span class="dot bg-orange-500" data-index="1"></span>
-    <span class="dot bg-orange-500" data-index="2"></span>
-    <span class="dot bg-orange-500" data-index="3"></span>
+    <span class="dot bg-gray-300" data-index="0"></span>
+    <span class="dot bg-gray-300" data-index="1"></span>
+    <span class="dot bg-gray-300" data-index="2"></span>
+    <span class="dot bg-gray-300" data-index="3"></span>
   </div>
   <button id="next" class="bg-orange-500 hover:bg-orange-600 text-white rounded-full p-2 text-xl font-bold shadow-md">&gt;</button>
 </div>
@@ -69,9 +67,7 @@
         <h3 class="text-xl font-semibold">Thekua</h3>
         <p>Weight: 800g</p>
         <p>Price: ₹280</p>
-        <a href="cart.html?name=Thekua&price=280&weight=800g&image=https://i.ibb.co/BHy3ZBKS/thekua.jpg">
-          <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Add to Cart</button>
-        </a>
+        <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 add-to-cart" data-product="Thekua | 800g | ₹280">Add to Cart</button>
       </div>
 
       <!-- Nimki -->
@@ -80,9 +76,7 @@
         <h3 class="text-xl font-semibold">Nimki</h3>
         <p>Weight: 800g</p>
         <p>Price: ₹300</p>
-        <a href="cart.html?name=Nimki&price=300&weight=800g&image=https://i.ibb.co/tPvCDjqJ/nimki.jpg">
-          <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Add to Cart</button>
-        </a>
+        <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 add-to-cart" data-product="Nimki | 800g | ₹300">Add to Cart</button>
       </div>
 
       <!-- Combo Pack -->
@@ -91,9 +85,7 @@
         <h3 class="text-xl font-semibold">Combo Pack</h3>
         <p>Weight: 1600g</p>
         <p>Price: ₹580</p>
-        <a href="cart.html?name=Combo%20Pack&price=580&weight=1600g&image=https://i.ibb.co/fVJFtnVB/Whats-App-Image-2025-09-20-at-11-05-53-PM.jpg">
-          <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Add to Cart</button>
-        </a>
+        <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 add-to-cart" data-product="Combo Pack | 1600g | ₹580">Add to Cart</button>
       </div>
     </div>
   </div>
@@ -102,7 +94,7 @@
 <!-- Our Story -->
 <section id="ourstory" class="py-16">
   <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
-    <img src="https://i.ibb.co/GfntzfgK/Gemini-Generated-Image-20zv3620zv3620zv.png" alt="Our Story" class="rounded-lg shadow-md object-cover w-full h-80">
+    <img src="https://i.ibb.co/GfntzfgK/Gemini-Generated-Image-20zv3620zv3620zv.png" alt="Our Story" class="rounded-lg shadow-md object-contain w-full h-80">
     <div>
       <h2 class="text-3xl font-bold text-orange-500 mb-4">Our Story</h2>
       <p class="font-medium">Desi Cruncho was born with a mission to bring authentic Indian snacks to your plate. Every bite tells a story of tradition and love for homemade flavors.</p>
@@ -199,78 +191,103 @@
 
 <!-- Scripts -->
 <script>
-  // Slider Logic
-  const slider = document.getElementById('slider');
-  const dots = document.querySelectorAll('.dot');
-  const totalSlides = slider.children.length;
-  let currentIndex = 0;
-  let interval = null;
-  function updateSlider(index){
-    slider.style.transform = `translateX(-${index*100}%)`;
-    dots.forEach(dot=>dot.classList.remove('bg-orange-600'));
-    dots[index].classList.add('bg-orange-600');
-  }
-  function startAutoSlide(){
-    interval = setInterval(()=>{ currentIndex=(currentIndex+1)%totalSlides; updateSlider(currentIndex); },3000);
-  }
-  function resetInterval(){ clearInterval(interval); startAutoSlide(); }
-  document.getElementById('prev').addEventListener('click',()=>{currentIndex=(currentIndex-1+totalSlides)%totalSlides;updateSlider(currentIndex);resetInterval();});
-  document.getElementById('next').addEventListener('click',()=>{currentIndex=(currentIndex+1)%totalSlides;updateSlider(currentIndex);resetInterval();});
-  dots.forEach(dot=>{dot.addEventListener('click',()=>{currentIndex=parseInt(dot.dataset.index);updateSlider(currentIndex);resetInterval();});});
-  updateSlider(currentIndex); startAutoSlide();
+// Slider Logic
+const slider = document.getElementById('slider');
+const dots = document.querySelectorAll('.dot');
+const totalSlides = slider.children.length;
+let currentIndex = 0;
+let interval = null;
+function updateSlider(index){
+  slider.style.transform = `translateX(-${index*100}%)`;
+  dots.forEach(dot=>dot.classList.remove('bg-active'));
+  dots[index].classList.add('bg-active');
+}
+function startAutoSlide(){
+  interval = setInterval(()=>{ currentIndex=(currentIndex+1)%totalSlides; updateSlider(currentIndex); },3000);
+}
+function resetInterval(){ clearInterval(interval); startAutoSlide(); }
+document.getElementById('prev').addEventListener('click',()=>{currentIndex=(currentIndex-1+totalSlides)%totalSlides;updateSlider(currentIndex);resetInterval();});
+document.getElementById('next').addEventListener('click',()=>{currentIndex=(currentIndex+1)%totalSlides;updateSlider(currentIndex);resetInterval();});
+dots.forEach(dot=>{dot.addEventListener('click',()=>{currentIndex=parseInt(dot.dataset.index);updateSlider(currentIndex);resetInterval();});});
+updateSlider(currentIndex); startAutoSlide();
 
-  // Review Stars & Form Logic
-  const stars = document.querySelectorAll('#starContainer span');
-  let selectedRating=0;
-  stars.forEach(star=>{
-    star.addEventListener('click',()=>{
-      selectedRating=star.getAttribute('data-star');
-      stars.forEach(s=>s.textContent="☆");
-      for(let i=0;i<selectedRating;i++){stars[i].textContent="⭐";}
-    });
+// Review Logic + Google Sheets Integration
+const stars = document.querySelectorAll('#starContainer span');
+let selectedRating=0;
+stars.forEach(star=>{
+  star.addEventListener('click',()=>{
+    selectedRating=star.getAttribute('data-star');
+    stars.forEach(s=>s.textContent="☆");
+    for(let i=0;i<selectedRating;i++){stars[i].textContent="⭐";}
   });
-  const reviewForm=document.getElementById('reviewForm');
-  const thankYou=document.getElementById('thankYou');
-  const closeThankYou=document.getElementById('closeThankYou');
-  const reviewsGrid=document.getElementById('reviewsGrid');
-  reviewForm.addEventListener('submit',async (e)=>{
-    e.preventDefault();
-    const name=document.getElementById('reviewName').value.trim();
-    const reviewText=document.getElementById('reviewText').value.trim();
-    if(selectedRating==0){alert("Please select a star rating!");return;}
-    if(reviewText==""){alert("Please write your review!");return;}
+});
+
+const reviewForm=document.getElementById('reviewForm');
+const thankYou=document.getElementById('thankYou');
+const closeThankYou=document.getElementById('closeThankYou');
+const reviewsGrid=document.getElementById('reviewsGrid');
+
+reviewForm.addEventListener('submit',async (e)=>{
+  e.preventDefault();
+  const name=document.getElementById('reviewName').value.trim();
+  const reviewText=document.getElementById('reviewText').value.trim();
+  if(selectedRating==0){alert("Please select a star rating!");return;}
+  if(reviewText==""){alert("Please write your review!");return;}
+
+  // Send to Google Sheet backend
+  try {
+    await fetch("https://script.google.com/macros/s/AKfycbzSv9YsrRzR8WpRbTJk8u3nwMD2sCptmqQ_GV4ewuiDCYw26bZ7kmsLD2SgftxIOfFm2w/exec", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        name: name,
+        rating: selectedRating,
+        review: reviewText
+      })
+    });
+  } catch (err) { console.error("Error saving review:", err); }
+
+  const reviewCard=document.createElement('div');
+  reviewCard.className="bg-white p-6 rounded-lg shadow text-center";
+  const starsText="⭐".repeat(selectedRating);
+  reviewCard.innerHTML=`<p class="text-orange-500 text-xl mb-2">${starsText}</p><p class="font-bold">${name}</p><p>${reviewText}</p>`;
+  reviewsGrid.appendChild(reviewCard);
+
+  thankYou.classList.remove('hidden');
+  reviewForm.reset();
+  stars.forEach(s=>s.textContent="☆");
+  selectedRating=0;
+});
+
+// Close Thank You
+closeThankYou.addEventListener('click',()=>{thankYou.classList.add('hidden');});
+
+// Add to Cart Tracking
+document.querySelectorAll('.add-to-cart').forEach(btn=>{
+  btn.addEventListener('click', async ()=>{
+    const productData = btn.getAttribute('data-product');
     try {
-      await fetch("https://script.google.com/macros/s/AKfycbzupwBG9lrM-rMEKUFD5huRM-zWWfG6zzXLCzlKF75HRIuRSkaY-62y7Cal0mB-rkE/exec", {
+      await fetch("https://script.google.com/macros/s/AKfycbzSv9YsrRzR8WpRbTJk8u3nwMD2sCptmqQ_GV4ewuiDCYw26bZ7kmsLD2SgftxIOfFm2w/exec", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-          name: name,
-          rating: selectedRating,
-          review: reviewText
-        })
+        body: new URLSearchParams({ product: productData, type: "add_to_cart" })
       });
-    } catch (err) { console.error(err); }
-    const reviewCard=document.createElement('div');
-    reviewCard.className="bg-white p-6 rounded-lg shadow text-center";
-    const starsText="⭐".repeat(selectedRating);
-    reviewCard.innerHTML=`<p class="text-orange-500 text-xl mb-2">${starsText}</p><p class="font-bold">${name}</p><p>${reviewText}</p>`;
-    reviewsGrid.appendChild(reviewCard);
-    thankYou.classList.remove('hidden');
-    reviewForm.reset();
-    stars.forEach(s=>s.textContent="☆");
-    selectedRating=0;
+    } catch(err){ console.error("Add to Cart Error:", err); }
+    alert(`${productData} added to cart!`);
   });
-  closeThankYou.addEventListener('click',()=>{thankYou.classList.add('hidden');});
+});
 
-  // Visitor tracking snippet
-  (function(){
-    fetch("https://script.google.com/macros/s/AKfycbyefVFMpklWhiF2loKfvaBhLIUkkjh44hKG8sU8CFcCqFFIkXY1ZPjAt2wOQjf7RFxoIQ/exec?userAgent=" 
-          + encodeURIComponent(navigator.userAgent) 
-          + "&pageUrl=" + encodeURIComponent(window.location.href) 
-          + "&ip=Unknown", 
-          { method: "GET", mode: "no-cors" });
-  })();
+// Visitor Logging (page visit)
+(async ()=>{
+  try {
+    const urlParams = new URLSearchParams({ page: window.location.href, type:"page_visit", source: document.referrer || "direct" });
+    await fetch("https://script.google.com/macros/s/AKfycbzSv9YsrRzR8WpRbTJk8u3nwMD2sCptmqQ_GV4ewuiDCYw26bZ7kmsLD2SgftxIOfFm2w/exec", {
+      method:"POST",
+      headers:{"Content-Type":"application/x-www-form-urlencoded"},
+      body: new URLSearchParams({ "User Agent": navigator.userAgent, "Page URL/product": window.location.href, "Traffic source": document.referrer || "direct" })
+    });
+  } catch(err){ console.error("Visitor logging error:", err); }
+})();
 </script>
-
 </body>
 </html>
