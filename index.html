@@ -7,6 +7,9 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   body { font-family: 'Inter', sans-serif; }
+  #heroSlider { position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; margin-top: 80px; }
+  .hero-slide { width: 100%; height: 100%; position: absolute; top:0; left:0; }
+  .hero-slide.hidden { display: none; }
   .dot { width: 14px; height: 14px; border-radius: 50%; cursor: pointer; transition: all 0.3s; }
   .nav-container { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 0.5rem; }
 </style>
@@ -17,13 +20,13 @@
 <header class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
   <div class="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
     <div class="flex items-center space-x-3">
-      <div class="w-12 h-12 rounded-full overflow-hidden bg-orange-500 flex items-center justify-center">
-        <img src="https://i.ibb.co/KjXFB887/logo-png.png" alt="Logo" class="w-full h-full object-cover">
+      <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center">
+        <img src="https://i.ibb.co/KjXFB887/logo-png.png" alt="Logo" class="w-12 h-12 rounded-full">
       </div>
       <span class="text-2xl font-bold text-orange-500">Desi Cruncho</span>
     </div>
     <nav class="space-x-6 font-medium">
-      <a href="#hero" class="hover:text-orange-500">Home</a>
+      <a href="#heroSlider" class="hover:text-orange-500">Home</a>
       <a href="#products" class="hover:text-orange-500">Products</a>
       <a href="#ourstory" class="hover:text-orange-500">Our Story</a>
       <a href="#reviews" class="hover:text-orange-500">Reviews</a>
@@ -32,33 +35,39 @@
   </div>
 </header>
 
-<!-- Hero Section -->
-<section id="hero" class="relative w-full h-screen overflow-hidden mt-20">
-  <div id="heroSlider" class="relative w-full h-full">
-    <!-- Slide 1: Video -->
-    <video autoplay muted loop playsinline class="absolute w-full h-full object-cover hidden">
+<!-- Hero Slider -->
+<section id="heroSlider">
+  <!-- Slide 1 Video -->
+  <div class="hero-slide">
+    <video autoplay muted loop playsinline class="w-full h-full object-cover">
       <source src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-1.mp4" type="video/mp4">
     </video>
-
-    <!-- Slide 2: Video -->
-    <video autoplay muted loop playsinline class="absolute w-full h-full object-cover hidden">
+  </div>
+  <!-- Slide 2 Video -->
+  <div class="hero-slide hidden">
+    <video autoplay muted loop playsinline class="w-full h-full object-cover">
       <source src="https://github.com/snackszone/desicruncho/raw/refs/heads/main/hero-video-2.mp4" type="video/mp4">
     </video>
-
-    <!-- Slide 3: Image -->
-    <img src="https://i.ibb.co/XxcdQHqn/cropped-Gemini-Generated-Image-29gvb329gvb329gv.png" 
-         alt="Hero Slide 3" 
-         class="absolute w-full h-full object-cover hidden">
-
-    <!-- Slide 4: Image -->
-    <img src="https://i.ibb.co/q3DpTnjZ/Whats-App-Image-2025-09-20-at-10-40-11-PM-1.jpg" 
-         alt="Hero Slide 4" 
-         class="absolute w-full h-full object-cover hidden">
+  </div>
+  <!-- Slide 3 Image -->
+  <div class="hero-slide hidden">
+    <img src="https://i.ibb.co/XxcdQHqn/cropped-Gemini-Generated-Image-29gvb329gvb329gv.png" alt="Slide 3" class="w-full h-full object-cover">
+  </div>
+  <!-- Slide 4 Image -->
+  <div class="hero-slide hidden">
+    <img src="https://i.ibb.co/q3DpTnjZ/Whats-App-Image-2025-09-20-at-10-40-11-PM-1.jpg" alt="Slide 4" class="w-full h-full object-cover">
   </div>
 
-  <!-- Overlay Text -->
-  <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-    <h1 class="text-4xl md:text-6xl font-bold text-white">Desi Cruncho</h1>
+  <!-- Arrows -->
+  <button id="prevSlide" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full">❮</button>
+  <button id="nextSlide" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full">❯</button>
+
+  <!-- Dots -->
+  <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+    <span class="dot bg-gray-300" data-index="0"></span>
+    <span class="dot bg-gray-300" data-index="1"></span>
+    <span class="dot bg-gray-300" data-index="2"></span>
+    <span class="dot bg-gray-300" data-index="3"></span>
   </div>
 </section>
 
@@ -73,31 +82,20 @@
         <h3 class="text-xl font-semibold">Thekua</h3>
         <p>Weight: 800g</p>
         <p>Price: ₹280</p>
-        <a href="cart.html?name=Thekua&price=280&weight=800g&image=https://i.ibb.co/BHy3ZBKS/thekua.jpg">
-          <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Add to Cart</button>
-        </a>
       </div>
-
       <!-- Nimki -->
       <div class="bg-white shadow-lg rounded-lg p-6 text-center">
-        <img src="https://i.ibb.co/RpNG013C/Gemini-Generated-Image-k8gaj3k8gaj3k8ga.png" alt="Nimki" class="mx-auto mb-4 rounded-lg object-cover w-full h-56" loading="lazy">
+        <img src="https://i.ibb.co/fVJFtnVB/Whats-App-Image-2025-09-20-at-11-05-53-PM.jpg" alt="Nimki" class="mx-auto mb-4 rounded-lg object-cover w-full h-56">
         <h3 class="text-xl font-semibold">Nimki</h3>
         <p>Weight: 800g</p>
         <p>Price: ₹300</p>
-        <a href="cart.html?name=Nimki&price=300&weight=800g&image=https://i.ibb.co/RpNG013C/Gemini-Generated-Image-k8gaj3k8gaj3k8ga.png">
-          <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Add to Cart</button>
-        </a>
       </div>
-
       <!-- Combo Pack -->
       <div class="bg-white shadow-lg rounded-lg p-6 text-center">
-        <img src="https://i.ibb.co/fVJFtnVB/Whats-App-Image-2025-09-20-at-11-05-53-PM.jpg" alt="Combo Pack" class="mx-auto mb-4 rounded-lg object-cover w-full h-56">
+        <img src="https://i.ibb.co/1GFpgckC/cropped-Gemini-Generated-Image-29gvb329gvb329gv.png" alt="Combo Pack" class="mx-auto mb-4 rounded-lg object-cover w-full h-56">
         <h3 class="text-xl font-semibold">Combo Pack</h3>
-        <p>Weight: 800g + 800g</p>
+        <p>Weight: 800+800g</p>
         <p>Price: ₹580</p>
-        <a href="cart.html?name=Combo%20Pack&price=580&weight=800g%2B800g&image=https://i.ibb.co/fVJFtnVB/Whats-App-Image-2025-09-20-at-11-05-53-PM.jpg">
-          <button class="mt-3 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600">Add to Cart</button>
-        </a>
       </div>
     </div>
   </div>
@@ -203,32 +201,27 @@
 
 <!-- Scripts -->
 <script>
-// Hero Slider Logic
-const heroSlides = document.querySelectorAll('#heroSlider video, #heroSlider img');
+// Hero slider logic
+const heroSlides = document.querySelectorAll('#heroSlider .hero-slide');
+const heroDots = document.querySelectorAll('#heroSlider .dot');
 let heroIndex = 0;
 
 function showHeroSlide(index){
-  heroSlides.forEach(s => s.classList.add('hidden'));
-  heroSlides[index].classList.remove('hidden');
+  heroSlides.forEach((slide,i)=>slide.classList.toggle('hidden',i!==index));
+  heroDots.forEach((dot,i)=>{ dot.classList.toggle('bg-white',i===index); dot.classList.toggle('bg-gray-300',i!==index); });
+  heroIndex = index;
 }
 
-setInterval(()=>{
-  heroIndex = (heroIndex + 1) % heroSlides.length;
-  showHeroSlide(heroIndex);
-}, 8000);
-
+document.getElementById('prevSlide').addEventListener('click',()=>{ showHeroSlide((heroIndex-1+heroSlides.length)%heroSlides.length); });
+document.getElementById('nextSlide').addEventListener('click',()=>{ showHeroSlide((heroIndex+1)%heroSlides.length); });
+heroDots.forEach((dot,i)=>{ dot.addEventListener('click',()=>showHeroSlide(i)); });
+setInterval(()=>{ showHeroSlide((heroIndex+1)%heroSlides.length); },8000);
 showHeroSlide(heroIndex);
 
-// Review Logic
+// Reviews logic
 const stars = document.querySelectorAll('#starContainer span');
 let selectedRating=0;
-stars.forEach(star=>{
-  star.addEventListener('click',()=>{
-    selectedRating=star.getAttribute('data-star');
-    stars.forEach(s=>s.textContent="☆");
-    for(let i=0;i<selectedRating;i++){stars[i].textContent="⭐";}
-  });
-});
+stars.forEach(star=>{ star.addEventListener('click',()=>{ selectedRating=star.getAttribute('data-star'); stars.forEach(s=>s.textContent="☆"); for(let i=0;i<selectedRating;i++){stars[i].textContent="⭐";} }); });
 
 const reviewForm=document.getElementById('reviewForm');
 const thankYou=document.getElementById('thankYou');
@@ -241,11 +234,16 @@ reviewForm.addEventListener('submit',async (e)=>{
   const reviewText=document.getElementById('reviewText').value.trim();
   if(selectedRating==0){alert("Please select a star rating!");return;}
   if(reviewText==""){alert("Please write your review!");return;}
+  
+  try { await fetch("https://script.google.com/macros/s/AKfycbzupwBG9lrM-rMEKUFD5huRM-zWWfG6zzXLCzlKF75HRIuRSkaY-62y7Cal0mB-rkE/exec", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({ name: name, rating: selectedRating, review: reviewText })
+  }); } catch(err){ console.error("Error saving review:", err); }
 
   const reviewCard=document.createElement('div');
   reviewCard.className="bg-white p-6 rounded-lg shadow text-center";
-  const starsText="⭐".repeat(selectedRating);
-  reviewCard.innerHTML=`<p class="text-orange-500 text-xl mb-2">${starsText}</p><p class="font-bold">${name}</p><p>${reviewText}</p>`;
+  reviewCard.innerHTML=`<p class="text-orange-500 text-xl mb-2">${'⭐'.repeat(selectedRating)}</p><p class="font-bold">${name}</p><p>${reviewText}</p>`;
   reviewsGrid.appendChild(reviewCard);
 
   thankYou.classList.remove('hidden');
@@ -254,7 +252,8 @@ reviewForm.addEventListener('submit',async (e)=>{
   selectedRating=0;
 });
 
-closeThankYou.addEventListener('click',()=>{thankYou.classList.add('hidden');});
+closeThankYou.addEventListener('click',()=>{ thankYou.classList.add('hidden'); });
 </script>
+
 </body>
 </html>
