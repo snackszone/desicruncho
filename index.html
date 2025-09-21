@@ -211,7 +211,7 @@
 
 <!-- Scripts -->
 <script>
-// Hero Slider Logic
+/* Hero Slider */
 const slides = document.querySelectorAll('.hero-slide');
 const dots = document.querySelectorAll('.dot');
 let currentSlide = 0;
@@ -221,53 +221,65 @@ function showSlide(index){
   dots.forEach(d=>d.classList.remove('bg-orange-500'));
   dots[index].classList.add('bg-orange-500');
 }
-document.getElementById('prevSlide').addEventListener('click', ()=>{
-  currentSlide = (currentSlide-1+slides.length)%slides.length; showSlide(currentSlide);
-});
-document.getElementById('nextSlide').addEventListener('click', ()=>{
-  currentSlide = (currentSlide+1)%slides.length; showSlide(currentSlide);
-});
-dots.forEach(dot=>{dot.addEventListener('click', ()=>{
-  currentSlide = parseInt(dot.dataset.index); showSlide(currentSlide);
-})});
+function nextSlide(){
+  currentSlide=(currentSlide+1)%slides.length;
+  showSlide(currentSlide);
+}
+function prevSlide(){
+  currentSlide=(currentSlide-1+slides.length)%slides.length;
+  showSlide(currentSlide);
+}
+document.getElementById('nextSlide').addEventListener('click', nextSlide);
+document.getElementById('prevSlide').addEventListener('click', prevSlide);
+dots.forEach(dot=>dot.addEventListener('click', ()=>{ currentSlide=parseInt(dot.dataset.index); showSlide(currentSlide); }));
 showSlide(currentSlide);
 
-// Review Logic
+/* Optional: Auto-slide every 4 sec */
+setInterval(nextSlide, 4000);
+
+/* Review Form Fast Submit */
 const stars = document.querySelectorAll('#starContainer span');
-let selectedRating=0;
-stars.forEach(star=>{
+let selectedRating = 0;
+stars.forEach(star => {
   star.addEventListener('click', ()=>{
-    selectedRating=star.dataset.star;
+    selectedRating = star.dataset.star;
     stars.forEach(s=>s.textContent="☆");
     for(let i=0;i<selectedRating;i++){stars[i].textContent="⭐";}
   });
 });
+
 const reviewForm=document.getElementById('reviewForm');
 const thankYou=document.getElementById('thankYou');
 const closeThankYou=document.getElementById('closeThankYou');
 const reviewsGrid=document.getElementById('reviewsGrid');
-reviewForm.addEventListener('submit', async (e)=>{
+
+reviewForm.addEventListener('submit', (e)=>{
   e.preventDefault();
   const name=document.getElementById('reviewName').value.trim();
   const reviewText=document.getElementById('reviewText').value.trim();
-  if(selectedRating==0){alert("Please select a star rating!"); return;}
-  if(reviewText==""){alert("Please write your review!"); return;}
-  try {
-    await fetch("https://script.google.com/macros/s/AKfycbzupwBG9lrM-rMEKUFD5huRM-zWWfG6zzXLCzlKF75HRIuRSkaY-62y7Cal0mB-rkE/exec", {
-      method:"POST",
-      headers:{"Content-Type":"application/x-www-form-urlencoded"},
-      body:new URLSearchParams({name:name,rating:selectedRating,review:reviewText})
-    });
-  } catch(err){ console.error("Error saving review:", err); }
+  if(selectedRating==0){alert("Please select a star rating!");return;}
+  if(reviewText==""){alert("Please write your review!");return;}
+
+  // Fast append review
   const reviewCard=document.createElement('div');
   reviewCard.className="bg-white p-6 rounded-lg shadow text-center";
   reviewCard.innerHTML=`<p class="text-orange-500 text-xl mb-2">${'⭐'.repeat(selectedRating)}</p><p class="font-bold">${name}</p><p>${reviewText}</p>`;
   reviewsGrid.appendChild(reviewCard);
+
   thankYou.classList.remove('hidden');
   reviewForm.reset();
   stars.forEach(s=>s.textContent="☆");
+  const ratingToSend = selectedRating;
   selectedRating=0;
+
+  // Send to Google Sheets asynchronously
+  fetch("https://script.google.com/macros/s/AKfycbzupwBG9lrM-rMEKUFD5huRM-zWWfG6zzXLCzlKF75HRIuRSkaY-62y7Cal0mB-rkE/exec", {
+    method:"POST",
+    headers:{"Content-Type":"application/x-www-form-urlencoded"},
+    body: new URLSearchParams({ name, rating: ratingToSend, review: reviewText })
+  }).catch(err=>console.error("Error saving review:", err));
 });
+
 closeThankYou.addEventListener('click', ()=>{ thankYou.classList.add('hidden'); });
 </script>
 </body>
