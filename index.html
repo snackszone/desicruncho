@@ -178,7 +178,21 @@
 </footer>
 
 <script>
-// Slider
+// === WebApp URLs ===
+const clickLogURL="https://script.google.com/macros/s/AKfycbx3pKTgDLMqBU8jNsbSQHvGe4W9W0HzbLui18O9yPTNmnK0WvA7SRMHHr2snJhovGueUA/exec";
+const reviewURL="https://script.google.com/macros/s/AKfycbzupwBG9lrM-rMEKUFD5huRM-zWWfG6zzXLCzlKF75HRIuRSkaY-62y7Cal0mB-rkE/exec";
+
+// Traffic Source Detector
+function detectSource(){
+  const ref=document.referrer.toLowerCase();
+  if(ref.includes("instagram")) return "Instagram";
+  if(ref.includes("facebook")) return "Facebook";
+  if(ref.includes("google")) return "Google";
+  if(ref==="") return "Direct";
+  return "Unknown";
+}
+
+// === Slider ===
 const slider=document.getElementById('slider'),dots=document.querySelectorAll('.dot');let currentIndex=0,totalSlides=slider.children.length,interval=null;
 function updateSlider(i){slider.style.transform=`translateX(-${i*100}%)`;dots.forEach(d=>d.classList.remove('bg-orange-700'));dots[i].classList.add('bg-orange-700');}
 function startAutoSlide(){interval=setInterval(()=>{currentIndex=(currentIndex+1)%totalSlides;updateSlider(currentIndex)},3000);}
@@ -188,32 +202,58 @@ document.getElementById('next').addEventListener('click',()=>{currentIndex=(curr
 dots.forEach(d=>d.addEventListener('click',()=>{currentIndex=parseInt(d.dataset.index);updateSlider(currentIndex);resetInterval();}));
 updateSlider(currentIndex);startAutoSlide();
 
-// Add to Cart + Sheet logging
-const webAppURL="https://script.google.com/macros/s/AKfycbx3pKTgDLMqBU8jNsbSQHvGe4W9W0HzbLui18O9yPTNmnK0WvA7SRMHHr2snJhovGueUA/exec";
+// === Page Visit Log ===
+window.addEventListener("load",()=>{
+  fetch(clickLogURL,{
+    method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({type:"Page Visit",product:"",referrer:detectSource()})
+  });
+});
+
+// === Add to Cart Logging ===
 document.querySelectorAll('.add-to-cart').forEach(btn=>{
   btn.addEventListener('click',()=>{
-    const product=btn.dataset.product,price=btn.dataset.price,weight=btn.dataset.weight,image=btn.dataset.image;
-    fetch(webAppURL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'order',product:product,price:price,weight:weight,referrer:document.referrer})});
+    const product=btn.dataset.product;
+    const price=btn.dataset.price;
+    const weight=btn.dataset.weight;
+    const image=btn.dataset.image;
+    fetch(clickLogURL,{
+      method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({type:"Add to Cart",product:product,referrer:detectSource()})
+    });
     const params=new URLSearchParams({name:product,price:price,weight:weight,image:image});
     window.location.href=`cart.html?${params.toString()}`;
   });
 });
 
-// Reviews
+// === Reviews Logging ===
 const stars=document.querySelectorAll('#starContainer span');let selectedRating=0;
 stars.forEach(star=>star.addEventListener('click',()=>{
-  selectedRating=star.dataset.star;stars.forEach(s=>s.textContent="☆");for(let i=0;i<selectedRating;i++){stars[i].textContent="⭐";}
+  selectedRating=star.dataset.star;
+  stars.forEach(s=>s.textContent="☆");
+  for(let i=0;i<selectedRating;i++){stars[i].textContent="⭐";}
 }));
-const reviewForm=document.getElementById('reviewForm');const thankYou=document.getElementById('thankYou');const closeThankYou=document.getElementById('closeThankYou');const reviewsGrid=document.getElementById('reviewsGrid');
+const reviewForm=document.getElementById('reviewForm');
+const thankYou=document.getElementById('thankYou');
+const closeThankYou=document.getElementById('closeThankYou');
+const reviewsGrid=document.getElementById('reviewsGrid');
 reviewForm.addEventListener('submit',async(e)=>{
   e.preventDefault();
   const name=document.getElementById('reviewName').value.trim();
   const reviewText=document.getElementById('reviewText').value.trim();
   if(selectedRating==0){alert("Please select a star rating!");return;}
   if(reviewText==""){alert("Please write your review!");return;}
-  try{await fetch(webAppURL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'review',name:name,review:reviewText,rating:selectedRating,referrer:document.referrer})});
-    const div=document.createElement('div');div.className="bg-white p-6 rounded-lg shadow text-center";div.innerHTML=`<p class="text-orange-500 text-xl mb-2">${"⭐".repeat(selectedRating)}</p><p class="font-bold">${name}</p><p>${reviewText}</p>`;reviewsGrid.appendChild(div);
-    reviewForm.reset();stars.forEach(s=>s.textContent="☆");selectedRating=0;thankYou.classList.remove('hidden');
+  try{
+    await fetch(reviewURL,{
+      method:"POST",mode:"no-cors",headers:{"Content-Type":"application/x-www-form-urlencoded"},
+      body:new URLSearchParams({name:name,rating:selectedRating,review:reviewText})
+    });
+    const div=document.createElement('div');
+    div.className="bg-white p-6 rounded-lg shadow text-center";
+    div.innerHTML=`<p class="text-orange-500 text-xl mb-2">${"⭐".repeat(selectedRating)}</p><p class="font-bold">${name}</p><p>${reviewText}</p>`;
+    reviewsGrid.appendChild(div);
+    reviewForm.reset();stars.forEach(s=>s.textContent="☆");selectedRating=0;
+    thankYou.classList.remove('hidden');
   }catch(err){alert("Error submitting review!");console.error(err);}
 });
 closeThankYou.addEventListener('click',()=>{thankYou.classList.add('hidden');});
