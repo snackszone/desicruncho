@@ -120,7 +120,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const qrImage = document.getElementById('qr-image');
     const qrTimer = document.getElementById('qr-timer');
 
-    const webAppURL = 'https://script.google.com/macros/s/AKfycbw7UUWzYY3kb_JfxwyYVDkC2W2feWF-DPqHco0kJWSCgbY_JQ1W5PsB-Kuk7IYWMSpI-A/exec';
+    // ✅ New Web App URL
+    const webAppURL = 'https://script.google.com/macros/s/AKfycbzo-39WVXvj8M_xflqso7GeLIRnSCaxxDN7DSK7nafBmOpT6TDnf61DKcRLyhGYhXfDxA/exec';
 
     function sendPaymentData(method){
         const data={productName,price:productPrice,customerName,customerPhone,customerAddress,paymentMethod:method};
