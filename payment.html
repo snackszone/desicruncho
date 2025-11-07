@@ -50,12 +50,12 @@ body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: fle
             <h2 class="text-xl font-bold">Order summary</h2>
             <span class="text-lg font-bold">₹<span id="total-price">0</span></span>
         </div>
-        <p class="text-gray-500 text-sm"><span id="total-items">1</span> items</p>
+        <p class="text-gray-500 text-sm"><span id="total-items">1</span> item</p>
         <div class="order-item">
             <img id="product-image" src="" alt="Product Image">
             <div class="order-item-details">
                 <p class="font-medium" id="product-name">Product Name</p>
-                <p class="text-gray-500 text-sm">Rs. <span id="item-price">0</span> + ₹50 Delivery</p>
+                <p class="text-gray-600 text-sm font-medium" id="price-line">Rs. 0 + ₹50 Delivery = ₹50</p>
             </div>
         </div>
     </div>
@@ -85,7 +85,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: fle
             <div class="cod-text">
                 <i class="fas fa-cash-register mr-2"></i> Partial COD
             </div>
-            <span id="cod-price">₹0 + ₹50.00</span>
+            <span id="cod-price">₹0 + ₹50</span>
         </button>
     </div>
 
@@ -116,9 +116,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const customerPhone = params.get('customerPhone') || '0000000000';
     const customerAddress = params.get('customerAddress') || 'Customer Address';
 
+    // 🚚 Delivery charge fixed
     const deliveryCharge = 50;
     const totalPrice = productPrice + deliveryCharge;
 
+    // ✅ Update all dynamic UI fields
     document.getElementById('product-name').textContent = productName;
     document.getElementById('item-price').textContent = productPrice;
     document.getElementById('total-price').textContent = totalPrice;
@@ -126,18 +128,27 @@ document.addEventListener('DOMContentLoaded', ()=>{
     document.getElementById('customer-name').textContent = customerName;
     document.getElementById('customer-phone').textContent = customerPhone;
     document.getElementById('customer-address').textContent = customerAddress;
+    document.getElementById('price-line').textContent = `Rs. ${productPrice} + ₹${deliveryCharge} Delivery = ₹${totalPrice}`;
 
+    // 💰 Update COD display
     const codBtn = document.getElementById('cod-btn');
+    const codPrice = document.getElementById('cod-price');
+    codPrice.textContent = `₹${productPrice} + ₹${deliveryCharge}`;
+
     const showQrBtn = document.getElementById('show-qr-btn');
     const qrImage = document.getElementById('qr-image');
     const qrTimer = document.getElementById('qr-timer');
 
+    // 🟢 Google Sheet webhook URL
     const webAppURL = 'https://script.google.com/macros/s/AKfycbw7UUWzYY3kb_JfxwyYVDkC2W2feWF-DPqHco0kJWSCgbY_JQ1W5PsB-Kuk7IYWMSpI-A/exec';
 
+    // 📤 Send order data
     function sendPaymentData(method){
         const data = {
             productName,
-            price: totalPrice, // includes delivery charge
+            productPrice,
+            deliveryCharge,
+            totalPrice,
             customerName,
             customerPhone,
             customerAddress,
@@ -151,37 +162,39 @@ document.addEventListener('DOMContentLoaded', ()=>{
         }).catch(err => console.error(err));
     }
 
+    // 💵 COD click
     codBtn.addEventListener('click', ()=>{
         sendPaymentData('COD');
-        codBtn.textContent='Order Confirmed';
-        codBtn.disabled=true;
-        codBtn.style.backgroundColor='#15803d';
+        codBtn.innerHTML = '<i class="fas fa-check mr-2"></i> Order Confirmed';
+        codBtn.disabled = true;
+        codBtn.style.backgroundColor = '#15803d';
         document.getElementById('payment-modal').classList.add('hidden');
-        const thankYou=document.getElementById('thank-you-modal');
+        const thankYou = document.getElementById('thank-you-modal');
         thankYou.classList.remove('hidden');
         thankYou.classList.add('active');
     });
 
+    // 📲 UPI (QR) click
     showQrBtn.addEventListener('click', ()=>{
         qrImage.classList.remove('blurred');
-        showQrBtn.style.display='none';
-        qrTimer.style.display='block';
+        showQrBtn.style.display = 'none';
+        qrTimer.style.display = 'block';
         sendPaymentData('UPI');
 
-        let timeLeft=120;
-        qrTimer.textContent="02:00";
-        const interval=setInterval(()=>{
+        let timeLeft = 120;
+        qrTimer.textContent = "02:00";
+        const interval = setInterval(()=>{
             timeLeft--;
-            let minutes=Math.floor(timeLeft/60);
-            let seconds=timeLeft%60;
-            qrTimer.textContent=`${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
-            if(timeLeft<=0){
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            qrTimer.textContent = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+            if(timeLeft <= 0){
                 clearInterval(interval);
                 qrImage.classList.add('blurred');
-                qrTimer.style.display='none';
-                showQrBtn.style.display='block';
+                qrTimer.style.display = 'none';
+                showQrBtn.style.display = 'block';
             }
-        },1000);
+        }, 1000);
     });
 });
 </script>
