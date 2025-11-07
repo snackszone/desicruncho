@@ -26,6 +26,14 @@ body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: fle
 #thank-you-modal.active { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 .cod-button { background-color: #3b82f6; color: white; font-weight: 600; border-radius: 0.5rem; padding: 1rem; cursor: pointer; width: 100%; border: none; display: flex; justify-content: space-between; align-items: center; transition: background-color 0.2s; margin-top:1rem;}
 .cod-button:hover { background-color: #2563eb; }
+
+/* 🌟 Golden Glow for Order Summary */
+.order-summary-glow {
+  background: linear-gradient(90deg, #fff8e1, #ffecb3);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
 </style>
 </head>
 <body>
@@ -36,7 +44,8 @@ body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: fle
         <h1 class="text-3xl font-bold" style="color: #FF5722;">Desi Cruncho</h1>
     </div>
 
-    <div class="section-container">
+    <!-- 🌟 Order Summary with Golden Glow -->
+    <div class="section-container order-summary-glow">
         <div class="flex justify-between items-center mb-2">
             <h2 class="text-xl font-bold">Order summary</h2>
             <span class="text-lg font-bold">₹<span id="total-price">0</span></span>
@@ -46,7 +55,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: fle
             <img id="product-image" src="" alt="Product Image">
             <div class="order-item-details">
                 <p class="font-medium" id="product-name">Product Name</p>
-                <p class="text-gray-500 text-sm">Rs. <span id="item-price">0</span></p>
+                <p class="text-gray-500 text-sm">Rs. <span id="item-price">0</span> + ₹50 Delivery</p>
             </div>
         </div>
     </div>
@@ -101,15 +110,18 @@ body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: fle
 document.addEventListener('DOMContentLoaded', ()=>{
     const params = new URLSearchParams(window.location.search);
     const productName = params.get('productName') || 'Product Name';
-    const productPrice = params.get('price') || '0';
+    const productPrice = parseInt(params.get('price')) || 0;
     const productImage = params.get('image') || 'https://placehold.co/60x60/d4d4d4/000?text=Product';
     const customerName = params.get('customerName') || 'Customer Name';
     const customerPhone = params.get('customerPhone') || '0000000000';
     const customerAddress = params.get('customerAddress') || 'Customer Address';
 
+    const deliveryCharge = 50;
+    const totalPrice = productPrice + deliveryCharge;
+
     document.getElementById('product-name').textContent = productName;
     document.getElementById('item-price').textContent = productPrice;
-    document.getElementById('total-price').textContent = productPrice;
+    document.getElementById('total-price').textContent = totalPrice;
     document.getElementById('product-image').src = productImage;
     document.getElementById('customer-name').textContent = customerName;
     document.getElementById('customer-phone').textContent = customerPhone;
@@ -120,12 +132,23 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const qrImage = document.getElementById('qr-image');
     const qrTimer = document.getElementById('qr-timer');
 
-    // ✅ New Web App URL
-    const webAppURL = 'https://script.google.com/macros/s/AKfycbzo-39WVXvj8M_xflqso7GeLIRnSCaxxDN7DSK7nafBmOpT6TDnf61DKcRLyhGYhXfDxA/exec';
+    const webAppURL = 'https://script.google.com/macros/s/AKfycbw7UUWzYY3kb_JfxwyYVDkC2W2feWF-DPqHco0kJWSCgbY_JQ1W5PsB-Kuk7IYWMSpI-A/exec';
 
     function sendPaymentData(method){
-        const data={productName,price:productPrice,customerName,customerPhone,customerAddress,paymentMethod:method};
-        fetch(webAppURL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).catch(err=>console.error(err));
+        const data = {
+            productName,
+            price: totalPrice, // includes delivery charge
+            customerName,
+            customerPhone,
+            customerAddress,
+            paymentMethod: method
+        };
+        fetch(webAppURL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        }).catch(err => console.error(err));
     }
 
     codBtn.addEventListener('click', ()=>{
