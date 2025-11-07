@@ -1,158 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Final Payment | Desi Cruncho</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Page</title>
 
-  <!-- ✅ Safe Content Security Policy (no inline script errors) -->
-  <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; img-src * data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src https://fonts.gstatic.com https://cdnjs.cloudflare.com; script-src 'self' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com; connect-src https://script.google.com;">
-
-  <!-- Tailwind + Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-        rel="stylesheet" />
 
   <style>
-    body {
-      font-family: "Inter", sans-serif;
-      background-color: #f0f2f5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-    .payment-card {
-      background: white;
-      border-radius: 1rem;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-      padding: 1.5rem;
-      width: 100%;
-      max-width: 400px;
-    }
-    .logo {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 1.5rem;
-    }
-    .qr-blur {
-      filter: blur(8px);
-      transition: 0.3s;
-    }
-    .qr-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .btn {
-      background-color: #3b82f6;
-      color: white;
-      font-weight: 600;
-      padding: 0.75rem;
-      border-radius: 0.5rem;
-      text-align: center;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    .btn:hover {
-      background-color: #2563eb;
-    }
-    .cod-btn {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      margin-top: 1rem;
-      background-color: #3b82f6;
-      color: white;
-      padding: 0.75rem;
-      border: none;
-      border-radius: 0.5rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .cod-btn:hover {
-      background-color: #2563eb;
-    }
-    .thank-you {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      background: white;
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      text-align: center;
-    }
+    body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+    .payment-modal { max-width: 420px; width: 100%; background-color: white; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; padding: 1.5rem; box-sizing: border-box; }
+    .section-container { padding: 1rem 0; border-bottom: 1px solid #e5e7eb; }
+    .section-container:last-of-type { border-bottom: none; }
+    .blurred { filter: blur(8px); transition: filter 0.3s ease; }
+    .qr-code-container { display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 1rem auto; }
+    #qr-image { width: 180px; height: 180px; border-radius: 0.5rem; object-fit: contain; margin-bottom: 0.5rem; }
+    .show-qr-btn { background-color: #3b82f6; color: white; padding: 0.5rem 1rem; border-radius: 9999px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 10px rgba(59,130,246,0.3); transition: background-color 0.2s; margin-top: 0.5rem; }
+    .show-qr-btn:hover { background-color: #2563eb; }
+    .timer { font-size: 1rem; font-weight: 700; color: #ef4444; display: none; text-align: center; margin-bottom: 0.5rem; }
+    .order-item { display: flex; align-items: center; margin-top: 1rem; }
+    .order-item img { width: 60px; height: 60px; border-radius: 0.5rem; margin-right: 1rem; }
+    .order-item-details { flex-grow: 1; }
+    .logo-section { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 2rem; }
+    #thank-you-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background-color: white; padding: 2.5rem; border-radius: 1rem; box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: center; z-index: 20; opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease; }
+    #thank-you-modal.active { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    .cod-button { background-color: #3b82f6; color: white; font-weight: 600; border-radius: 0.5rem; padding: 1rem; cursor: pointer; width: 100%; border: none; display: flex; justify-content: space-between; align-items: center; transition: background-color 0.2s; margin-top:1rem;}
+    .cod-button:hover { background-color: #2563eb; }
+    .order-summary-glow { background: linear-gradient(90deg, #fff8e1, #ffecb3); box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); border-radius: 0.75rem; padding: 1rem; }
   </style>
 </head>
+
 <body>
-  <div class="payment-card" id="payment-section">
-    <div class="logo">
-      <img src="https://i.ibb.co/jvTgqjjG/logo-png.png" class="w-16 h-16 rounded-full mb-2" />
-      <h1 class="text-3xl font-bold text-orange-600">Desi Cruncho</h1>
+  <div id="payment-modal" class="payment-modal">
+    <div class="logo-section">
+      <img src="https://i.ibb.co/jvTgqjjG/logo-png.png" alt="Desi Cruncho Logo" class="w-16 h-16 rounded-full mb-2">
+      <h1 class="text-3xl font-bold" style="color: #FF5722;">Desi Cruncho</h1>
     </div>
 
-    <div class="border-b border-gray-200 pb-2 mb-4">
-      <div class="flex justify-between items-center">
-        <h2 class="text-xl font-bold">Order Summary</h2>
-        <span class="font-bold text-lg">₹<span id="total-price">0</span></span>
+    <!-- 🌟 Order Summary -->
+    <div class="section-container order-summary-glow">
+      <div class="flex justify-between items-center mb-2">
+        <h2 class="text-xl font-bold">Order summary</h2>
+        <span class="text-lg font-bold">₹<span id="total-price">0</span></span>
       </div>
       <p class="text-gray-500 text-sm"><span id="total-items">1</span> item</p>
-
-      <div class="flex items-center mt-3">
-        <img id="product-image" src="" class="w-16 h-16 rounded-lg mr-3" />
-        <div>
-          <p id="product-name" class="font-medium">Product Name</p>
-          <p id="price-line" class="text-gray-600 text-sm">Rs. 0 + ₹50 Delivery = ₹50</p>
+      <div class="order-item">
+        <img id="product-image" src="" alt="Product Image">
+        <div class="order-item-details">
+          <p class="font-medium" id="product-name">Product Name</p>
+          <p class="text-gray-500 text-sm">Rs. <span id="item-price">0</span> + ₹50 Delivery</p>
         </div>
       </div>
     </div>
 
-    <div class="border-b border-gray-200 pb-2 mb-4">
-      <h2 class="text-xl font-bold mb-2">Delivery Details</h2>
-      <p id="customer-name" class="font-medium text-gray-700">Customer Name</p>
-      <p id="customer-address" class="text-sm text-gray-600 mb-2">Customer Address</p>
-      <p class="text-sm text-gray-600">+91 <span id="customer-phone">0000000000</span></p>
+    <!-- 🏠 Delivery -->
+    <div class="section-container">
+      <div class="flex justify-between items-center mb-2">
+        <h2 class="text-xl font-bold">Delivery details</h2>
+      </div>
+      <p class="text-gray-700 text-sm font-medium" id="customer-name">Customer Name</p>
+      <p class="text-gray-600 text-sm mb-2" id="customer-address">Customer Address</p>
+      <div class="mt-4 flex justify-between items-center text-gray-700">
+        <span>+91 <span id="customer-phone">0000000000</span></span>
+      </div>
     </div>
 
-    <div>
-      <h2 class="text-xl font-bold mb-3">Pay via</h2>
-      <div class="qr-container">
-        <img
-          id="qr-image"
-          src="https://i.ibb.co/sJCPGJR7/Whats-App-Image-2025-09-20-at-11-58-37-AM.jpg"
-          class="qr-blur rounded-lg w-44 h-44 mb-2"
-        />
-        <p id="qr-timer" class="text-red-500 font-semibold text-center hidden"></p>
-        <button id="show-qr-btn" class="btn w-full">Show QR</button>
+    <!-- 💳 Payment -->
+    <div class="section-container">
+      <h2 class="text-xl font-bold mb-4">Pay via</h2>
+      <div class="qr-code-container">
+        <img id="qr-image" 
+             src="https://i.ibb.co/sJCPGJR7/Whats-App-Image-2025-09-20-at-11-58-37-AM.jpg" 
+             class="blurred" alt="QR Code">
+        <div id="qr-timer" class="timer"></div>
+        <button id="show-qr-btn" class="show-qr-btn">Show QR</button>
       </div>
-
-      <button id="cod-btn" class="cod-btn">
-        <div><i class="fas fa-cash-register mr-2"></i> Partial COD</div>
+      <button id="cod-btn" class="cod-button">
+        <div class="cod-text">
+          <i class="fas fa-cash-register mr-2"></i> Partial COD
+        </div>
         <span id="cod-price">₹0 + ₹50.00</span>
       </button>
     </div>
 
-    <div class="text-gray-500 text-sm mt-4 text-center">
-      <i class="fas fa-phone mr-1"></i>Helpline:
-      <a href="tel:9324410301" class="text-blue-500 hover:underline">9324410301</a>
+    <div class="helpline-section">
+      <p class="text-gray-500 font-medium">
+        <i class="fas fa-phone mr-2"></i>Our helpline: <a href="tel:9324410301" class="text-blue-500 hover:underline">9324410301</a>
+      </p>
     </div>
   </div>
 
-  <div class="thank-you" id="thank-you">
-    <div class="bg-green-500 rounded-full p-4 mb-4">
-      <i class="fas fa-check text-white text-3xl"></i>
+  <!-- ✅ Thank You Modal -->
+  <div id="thank-you-modal" class="hidden">
+    <div class="flex flex-col items-center">
+      <div class="bg-green-500 rounded-full p-4 mb-4">
+        <i class="fas fa-check text-white text-4xl"></i>
+      </div>
+      <h2 class="text-3xl font-bold mb-2">Thank you!</h2>
+      <p class="text-gray-600">Your order has been confirmed.</p>
     </div>
-    <h2 class="text-2xl font-bold mb-2">Thank you!</h2>
-    <p class="text-gray-600">Your order has been confirmed.</p>
   </div>
 
-  <!-- ✅ External script file only -->
+  <!-- ✅ External JS -->
   <script src="payment.js" defer></script>
 </body>
 </html>
