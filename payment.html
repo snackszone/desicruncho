@@ -4,63 +4,47 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Payment Page</title>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f0f2f5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+body{
+    font-family:'Inter',sans-serif;
+    background:#f0f2f5;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
 }
-.payment-modal {
-    max-width: 420px;
-    width: 100%;
-    background-color: white;
-    border-radius: 1rem;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    overflow: hidden;
-    padding: 1.5rem;
+.payment-modal{
+    max-width:420px;
+    width:100%;
+    background:#fff;
+    border-radius:1rem;
+    box-shadow:0 10px 25px rgba(0,0,0,.1);
+    padding:1.5rem;
 }
-.section-container {
-    padding: 1rem 0;
-    border-bottom: 1px solid #e5e7eb;
+.section-container{
+    padding:1rem 0;
+    border-bottom:1px solid #e5e7eb;
 }
-.section-container:last-of-type { border-bottom: none; }
-.blurred { filter: blur(8px); }
-.qr-code-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.section-container:last-of-type{border-bottom:none;}
+.blurred{filter:blur(8px);}
+.cod-button{
+    background:#3b82f6;
+    color:#fff;
+    font-weight:600;
+    border-radius:.5rem;
+    padding:1rem;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:1rem;
 }
-#qr-image {
-    width: 180px;
-    height: 180px;
-    border-radius: 0.5rem;
-    margin-bottom: 0.5rem;
-}
-.show-qr-btn {
-    background-color: #3b82f6;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 9999px;
-    font-weight: 600;
-}
-.cod-button {
-    background-color: #3b82f6;
-    color: white;
-    font-weight: 600;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin-top: 1rem;
-}
+.cod-button:hover{background:#2563eb;}
 </style>
 </head>
 
@@ -68,12 +52,13 @@ body {
 
 <div id="payment-modal" class="payment-modal">
 
+    <!-- LOGO -->
     <div class="text-center mb-6">
         <img src="https://i.ibb.co/jvTgqjjG/logo-png.png" class="w-16 h-16 mx-auto rounded-full mb-2">
         <h1 class="text-3xl font-bold text-orange-500">Desi Cruncho</h1>
     </div>
 
-    <!-- Order summary -->
+    <!-- ORDER SUMMARY -->
     <div class="section-container">
         <div class="flex justify-between font-bold text-xl">
             <span>Order summary</span>
@@ -89,7 +74,7 @@ body {
         </div>
     </div>
 
-    <!-- Delivery details -->
+    <!-- DELIVERY DETAILS -->
     <div class="section-container">
         <h2 class="font-bold text-xl mb-2">Delivery details</h2>
         <p id="customer-name" class="font-medium"></p>
@@ -97,7 +82,7 @@ body {
         <p class="text-sm mt-2">+91 <span id="customer-phone"></span></p>
     </div>
 
-    <!-- PRICE DETAILS (NEW) -->
+    <!-- PRICE DETAILS -->
     <div class="section-container">
         <h2 class="font-bold text-xl mb-3">Price details</h2>
 
@@ -108,7 +93,7 @@ body {
 
         <div class="flex justify-between text-gray-600 mb-2">
             <span>Delivery charge</span>
-            <span>₹<span id="price-delivery">50</span></span>
+            <span>₹50</span>
         </div>
 
         <div class="flex justify-between font-bold border-t pt-2">
@@ -117,26 +102,20 @@ body {
         </div>
     </div>
 
-    <!-- Payment -->
+    <!-- PAYMENT -->
     <div class="section-container">
         <h2 class="font-bold text-xl mb-4">Pay via</h2>
 
-        <div class="qr-code-container">
-            <img id="qr-image" class="blurred"
-                 src="https://i.ibb.co/sJCPGJR7/Whats-App-Image-2025-09-20-at-11-58-37-AM.jpg">
-            <button id="show-qr-btn" class="show-qr-btn">Show QR</button>
-        </div>
-
         <button id="cod-btn" class="cod-button">
             <span><i class="fas fa-cash-register mr-2"></i> Partial COD</span>
-            <span id="cod-price">₹0 + ₹50</span>
+            <span id="cod-price">₹0</span>
         </button>
     </div>
 
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded',()=>{
 
     const params = new URLSearchParams(window.location.search);
 
@@ -150,6 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const DELIVERY_CHARGE = 50;
     const TOTAL = productPrice + DELIVERY_CHARGE;
 
+    // UI update
     document.getElementById('product-name').textContent = productName;
     document.getElementById('item-price').textContent = productPrice;
     document.getElementById('product-image').src = productImage;
@@ -161,7 +141,31 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('price-item').textContent = productPrice;
     document.getElementById('price-total').textContent = TOTAL;
     document.getElementById('total-price').textContent = TOTAL;
-    document.getElementById('cod-price').textContent = `₹${productPrice} + ₹${DELIVERY_CHARGE}`;
+    document.getElementById('cod-price').textContent = `₹${TOTAL}`;
+
+    // GOOGLE APPS SCRIPT URL
+    const webAppURL = "https://script.google.com/macros/s/AKfycbyPNN8IUPtvjZpYeXf7nGfcwBKVEqHcqugxztsvOnYP_vLxMeRPAJYzKnOvdnRFwr3w/exec";
+
+    function sendPaymentData(method){
+        fetch(webAppURL,{
+            method:'POST',
+            mode:'no-cors',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({
+                productName:productName,
+                price:TOTAL,
+                customerPhone:customerPhone,
+                customerAddress:customerAddress,
+                paymentMethod:method,
+                calls:"NA"
+            })
+        });
+    }
+
+    document.getElementById('cod-btn').addEventListener('click',()=>{
+        sendPaymentData("COD");
+        alert("Order Confirmed!");
+    });
 
 });
 </script>
