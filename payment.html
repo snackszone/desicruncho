@@ -11,40 +11,67 @@
 
 <style>
 body{
-    font-family:'Inter',sans-serif;
-    background:#f0f2f5;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
+  font-family:'Inter',sans-serif;
+  background:#f0f2f5;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
 }
 .payment-modal{
-    max-width:420px;
-    width:100%;
-    background:#fff;
-    border-radius:1rem;
-    box-shadow:0 10px 25px rgba(0,0,0,.1);
-    padding:1.5rem;
+  max-width:420px;
+  width:100%;
+  background:#fff;
+  border-radius:1rem;
+  box-shadow:0 10px 25px rgba(0,0,0,.1);
+  padding:1.5rem;
 }
 .section-container{
-    padding:1rem 0;
-    border-bottom:1px solid #e5e7eb;
+  padding:1rem 0;
+  border-bottom:1px solid #e5e7eb;
 }
 .section-container:last-of-type{border-bottom:none;}
 .blurred{filter:blur(8px);}
+.qr-code-container{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+#qr-image{
+  width:180px;
+  height:180px;
+  border-radius:.5rem;
+}
+.timer{
+  font-weight:700;
+  color:#ef4444;
+  margin-top:.5rem;
+  display:none;
+}
 .cod-button{
-    background:#3b82f6;
-    color:#fff;
-    font-weight:600;
-    border-radius:.5rem;
-    padding:1rem;
-    width:100%;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-top:1rem;
+  background:#3b82f6;
+  color:#fff;
+  font-weight:600;
+  border-radius:.5rem;
+  padding:1rem;
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  margin-top:1rem;
 }
 .cod-button:hover{background:#2563eb;}
+#thank-you-modal{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:#fff;
+  padding:2.5rem;
+  border-radius:1rem;
+  box-shadow:0 10px 30px rgba(0,0,0,.2);
+  text-align:center;
+  display:none;
+}
 </style>
 </head>
 
@@ -52,120 +79,139 @@ body{
 
 <div id="payment-modal" class="payment-modal">
 
-    <!-- LOGO -->
-    <div class="text-center mb-6">
-        <img src="https://i.ibb.co/jvTgqjjG/logo-png.png" class="w-16 h-16 mx-auto rounded-full mb-2">
-        <h1 class="text-3xl font-bold text-orange-500">Desi Cruncho</h1>
+  <!-- LOGO -->
+  <div class="text-center mb-6">
+    <img src="https://i.ibb.co/jvTgqjjG/logo-png.png" class="w-16 h-16 mx-auto rounded-full mb-2">
+    <h1 class="text-3xl font-bold text-orange-500">Desi Cruncho</h1>
+  </div>
+
+  <!-- ORDER SUMMARY -->
+  <div class="section-container">
+    <div class="flex justify-between font-bold text-xl">
+      <span>Order summary</span>
+      <span>₹<span id="total-price">0</span></span>
     </div>
 
-    <!-- ORDER SUMMARY -->
-    <div class="section-container">
-        <div class="flex justify-between font-bold text-xl">
-            <span>Order summary</span>
-            <span>₹<span id="total-price">0</span></span>
-        </div>
+    <div class="flex items-center mt-3">
+      <img id="product-image" class="w-14 h-14 rounded mr-3">
+      <div>
+        <p id="product-name" class="font-medium"></p>
+        <p class="text-gray-500 text-sm">₹<span id="item-price"></span></p>
+      </div>
+    </div>
+  </div>
 
-        <div class="flex items-center mt-3">
-            <img id="product-image" class="w-14 h-14 rounded mr-3">
-            <div>
-                <p id="product-name" class="font-medium"></p>
-                <p class="text-gray-500 text-sm">₹<span id="item-price"></span></p>
-            </div>
-        </div>
+  <!-- DELIVERY -->
+  <div class="section-container">
+    <h2 class="font-bold text-xl mb-2">Delivery details</h2>
+    <p id="customer-name" class="font-medium"></p>
+    <p id="customer-address" class="text-sm text-gray-600"></p>
+    <p class="text-sm mt-2">+91 <span id="customer-phone"></span></p>
+  </div>
+
+  <!-- PRICE DETAILS -->
+  <div class="section-container">
+    <div class="flex justify-between text-gray-600">
+      <span>Item total</span><span>₹<span id="price-item">0</span></span>
+    </div>
+    <div class="flex justify-between text-gray-600">
+      <span>Delivery</span><span>₹50</span>
+    </div>
+    <div class="flex justify-between font-bold border-t mt-2 pt-2">
+      <span>Total</span><span>₹<span id="price-total">0</span></span>
+    </div>
+  </div>
+
+  <!-- PAY VIA -->
+  <div class="section-container">
+    <h2 class="font-bold text-xl mb-4">Pay via</h2>
+
+    <!-- QR -->
+    <div class="qr-code-container">
+      <img id="qr-image" class="blurred"
+        src="https://i.ibb.co/sJCPGJR7/Whats-App-Image-2025-09-20-at-11-58-37-AM.jpg">
+      <div id="qr-timer" class="timer">01:00</div>
+      <button id="show-qr-btn" class="mt-2 text-blue-600 font-semibold">Show QR</button>
     </div>
 
-    <!-- DELIVERY DETAILS -->
-    <div class="section-container">
-        <h2 class="font-bold text-xl mb-2">Delivery details</h2>
-        <p id="customer-name" class="font-medium"></p>
-        <p id="customer-address" class="text-sm text-gray-600"></p>
-        <p class="text-sm mt-2">+91 <span id="customer-phone"></span></p>
-    </div>
+    <!-- COD -->
+    <button id="cod-btn" class="cod-button">
+      <span><i class="fas fa-cash-register mr-2"></i> Partial COD</span>
+      <span id="cod-price">₹0</span>
+    </button>
+  </div>
 
-    <!-- PRICE DETAILS -->
-    <div class="section-container">
-        <h2 class="font-bold text-xl mb-3">Price details</h2>
+</div>
 
-        <div class="flex justify-between text-gray-600 mb-1">
-            <span>Item total</span>
-            <span>₹<span id="price-item">0</span></span>
-        </div>
-
-        <div class="flex justify-between text-gray-600 mb-2">
-            <span>Delivery charge</span>
-            <span>₹50</span>
-        </div>
-
-        <div class="flex justify-between font-bold border-t pt-2">
-            <span>Total amount</span>
-            <span>₹<span id="price-total">0</span></span>
-        </div>
-    </div>
-
-    <!-- PAYMENT -->
-    <div class="section-container">
-        <h2 class="font-bold text-xl mb-4">Pay via</h2>
-
-        <button id="cod-btn" class="cod-button">
-            <span><i class="fas fa-cash-register mr-2"></i> Partial COD</span>
-            <span id="cod-price">₹0</span>
-        </button>
-    </div>
-
+<!-- THANK YOU -->
+<div id="thank-you-modal">
+  <i class="fas fa-check-circle text-green-500 text-5xl mb-3"></i>
+  <h2 class="text-2xl font-bold">Thank you!</h2>
+  <p>Your order has been placed.</p>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded',()=>{
 
-    const params = new URLSearchParams(window.location.search);
+  const p=new URLSearchParams(location.search);
+  const price=parseInt(p.get('price'))||0;
+  const DELIVERY=50;
+  const TOTAL=price+DELIVERY;
 
-    const productName = params.get('productName') || 'Product';
-    const productPrice = parseInt(params.get('price')) || 0;
-    const productImage = params.get('image') || '';
-    const customerName = params.get('customerName') || '';
-    const customerPhone = params.get('customerPhone') || '';
-    const customerAddress = params.get('customerAddress') || '';
+  document.getElementById('product-name').textContent=p.get('productName')||'Product';
+  document.getElementById('item-price').textContent=price;
+  document.getElementById('price-item').textContent=price;
+  document.getElementById('price-total').textContent=TOTAL;
+  document.getElementById('total-price').textContent=TOTAL;
+  document.getElementById('cod-price').textContent=`₹${TOTAL}`;
 
-    const DELIVERY_CHARGE = 50;
-    const TOTAL = productPrice + DELIVERY_CHARGE;
+  document.getElementById('product-image').src=p.get('image')||'';
+  document.getElementById('customer-name').textContent=p.get('customerName')||'';
+  document.getElementById('customer-phone').textContent=p.get('customerPhone')||'';
+  document.getElementById('customer-address').textContent=p.get('customerAddress')||'';
 
-    // UI update
-    document.getElementById('product-name').textContent = productName;
-    document.getElementById('item-price').textContent = productPrice;
-    document.getElementById('product-image').src = productImage;
+  const api="https://script.google.com/macros/s/AKfycbyPNN8IUPtvjZpYeXf7nGfcwBKVEqHcqugxztsvOnYP_vLxMeRPAJYzKnOvdnRFwr3w/exec";
 
-    document.getElementById('customer-name').textContent = customerName;
-    document.getElementById('customer-phone').textContent = customerPhone;
-    document.getElementById('customer-address').textContent = customerAddress;
-
-    document.getElementById('price-item').textContent = productPrice;
-    document.getElementById('price-total').textContent = TOTAL;
-    document.getElementById('total-price').textContent = TOTAL;
-    document.getElementById('cod-price').textContent = `₹${TOTAL}`;
-
-    // GOOGLE APPS SCRIPT URL
-    const webAppURL = "https://script.google.com/macros/s/AKfycbyPNN8IUPtvjZpYeXf7nGfcwBKVEqHcqugxztsvOnYP_vLxMeRPAJYzKnOvdnRFwr3w/exec";
-
-    function sendPaymentData(method){
-        fetch(webAppURL,{
-            method:'POST',
-            mode:'no-cors',
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({
-                productName:productName,
-                price:TOTAL,
-                customerPhone:customerPhone,
-                customerAddress:customerAddress,
-                paymentMethod:method,
-                calls:"NA"
-            })
-        });
-    }
-
-    document.getElementById('cod-btn').addEventListener('click',()=>{
-        sendPaymentData("COD");
-        alert("Order Confirmed!");
+  function send(method){
+    fetch(api,{method:'POST',mode:'no-cors',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        productName:p.get('productName'),
+        price:TOTAL,
+        customerPhone:p.get('customerPhone'),
+        customerAddress:p.get('customerAddress'),
+        paymentMethod:method,
+        calls:"NA"
+      })
     });
+  }
+
+  // QR TIMER
+  document.getElementById('show-qr-btn').onclick=()=>{
+    const img=document.getElementById('qr-image');
+    const t=document.getElementById('qr-timer');
+    img.classList.remove('blurred');
+    t.style.display='block';
+
+    let s=60;
+    const i=setInterval(()=>{
+      s--;
+      t.textContent=`00:${s.toString().padStart(2,'0')}`;
+      if(s<=0){
+        clearInterval(i);
+        img.classList.add('blurred');
+        t.style.display='none';
+      }
+    },1000);
+
+    send("UPI");
+  };
+
+  document.getElementById('cod-btn').onclick=()=>{
+    send("COD");
+    document.getElementById('payment-modal').style.display='none';
+    document.getElementById('thank-you-modal').style.display='block';
+  };
 
 });
 </script>
